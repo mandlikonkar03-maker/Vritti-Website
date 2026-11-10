@@ -1,0 +1,145 @@
+---
+// Reusable "Request a Free Demo" form. Posts to /api/demo-request.
+interface Props { product?: string; submitLabel?: string }
+const { product = 'Ekatm ERP', submitLabel = 'Request a Free Demo' } = Astro.props;
+---
+<form class="demo-form" novalidate data-demo-form>
+  <input type="hidden" name="product" value={product} />
+  <!-- Honeypot: hidden from people, bots tend to fill it -->
+  <div class="hp" aria-hidden="true">
+    <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="grid">
+    <div class="field">
+      <label for="df-name">Name <span class="req">*</span></label>
+      <input id="df-name" name="name" type="text" placeholder="Your full name" autocomplete="name" required maxlength="120" />
+      <p class="err" data-err="name"></p>
+    </div>
+    <div class="field">
+      <label for="df-email">Email address <span class="req">*</span></label>
+      <input id="df-email" name="email" type="email" placeholder="name@company.com" autocomplete="email" required maxlength="200" />
+      <p class="err" data-err="email"></p>
+    </div>
+    <div class="field">
+      <label for="df-location">Location <span class="req">*</span></label>
+      <input id="df-location" name="location" type="text" placeholder="City, state or country" autocomplete="address-level2" required maxlength="160" />
+      <p class="err" data-err="location"></p>
+    </div>
+    <div class="field">
+      <label for="df-mobile">Mobile number <span class="req">*</span></label>
+      <input id="df-mobile" name="mobile" type="tel" placeholder="+91 98765 43210" autocomplete="tel" required maxlength="20" />
+      <p class="err" data-err="mobile"></p>
+    </div>
+    <div class="field field--full">
+      <label for="df-message">Write to us</label>
+      <textarea id="df-message" name="message" rows="5" maxlength="3000"
+        placeholder="Tell us about your business and what you would like to see in the demo."></textarea>
+      <p class="err" data-err="message"></p>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">{submitLabel}</button>
+  <p class="note"><span class="req">*</span> Required fields</p>
+  <div class="status" role="status" aria-live="polite" hidden></div>
+</form>
+
+<script>
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const PHONE_RE = /^\+?[0-9 ()-]{7,20}$/;
+
+  function validate(data: Record<string, string>) {
+    const errors: Record<string, string> = {};
+    if (!data.name?.trim()) errors.name = 'Please enter your name.';
+    if (!EMAIL_RE.test(data.email?.trim() ?? '')) errors.email = 'Please enter a valid email address.';
+    if (!data.location?.trim()) errors.location = 'Please enter your location.';
+    if (!PHONE_RE.test(data.mobile?.trim() ?? '')) errors.mobile = 'Please enter a valid mobile number.';
+    return errors;
+  }
+
+  document.querySelectorAll<HTMLFormElement>('[data-demo-form]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.status')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const label = button.textContent;
+
+    const showErrors = (errors: Record<string, string>) => {
+      form.querySelectorAll<HTMLElement>('[data-err]').forEach((el) => {
+        const key = el.dataset.err!;
+        el.textContent = errors[key] ?? '';
+        form.querySelector(`[name="${key}"]`)?.setAttribute('aria-invalid', errors[key] ? 'true' : 'false');
+      });
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+      const errors = validate(data);
+      showErrors(errors);
+      status.hidden = true;
+      if (Object.keys(errors).length) {
+        form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      try {
+        const res = await fetch('/api/demo-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const body = await res.json().catch(() => ({}));
+        if (res.ok) {
+          form.reset();
+          status.className = 'status status--ok';
+          status.textContent = body.message ?? 'Thank you! Our team will contact you shortly to schedule your demo.';
+        } else {
+          if (body.errors) showErrors(body.errors);
+          status.className = 'status status--error';
+          status.textContent = body.message ?? 'Something went wrong. Please try again.';
+        }
+      } catch {
+        status.className = 'status status--error';
+        status.textContent = 'Could not reach the server. Please check your connection and try again.';
+      } finally {
+        status.hidden = false;
+        button.disabled = false;
+        button.textContent = label;
+      }
+    });
+  });
+</script>
+
+<style>
+  .demo-form { position: relative; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
+  .field--full { grid-column: 1 / -1; }
+  label { display: block; font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 8px; }
+  .req { color: var(--danger); }
+  input, textarea {
+    width: 100%;
+    font: 400 14.5px/1.4 var(--font);
+    color: var(--navy);
+    padding: 12px 13px;
+    border: 1px solid #c9d6e1;
+    border-radius: 6px;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  textarea { resize: vertical; min-height: 100px; }
+  input::placeholder, textarea::placeholder { color: #8d9ca9; }
+  input:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(3, 105, 161, 0.12); }
+  [aria-invalid='true'] { border-color: var(--danger); }
+  .err { min-height: 18px; margin: 4px 0 6px; font-size: 12px; color: var(--danger); }
+  .btn { margin-top: 4px; }
+  .note { margin: 14px 0 0; font-size: 12.5px; color: var(--muted); }
+  .status { margin-top: 16px; padding: 12px 14px; border-radius: 8px; font-size: 14px; font-weight: 500; }
+  .status--ok { background: #e7f6ee; color: #146c3c; }
+  .status--error { background: #fdecec; color: #a32525; }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .btn { width: 100%; }
+  }
+</style>

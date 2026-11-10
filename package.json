@@ -1,0 +1,17 @@
+{
+  "name": "vritti-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "node ./dist/server/entry.mjs"
+  },
+  "dependencies": {
+    "@astrojs/node": "9.5.5",
+    "astro": "5.18.2",
+    "nodemailer": "7.0.13"
+  }
+}

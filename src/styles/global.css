@@ -1,0 +1,133 @@
+/* Design tokens taken from the Figma export. Shared by every page. */
+:root {
+  --navy: #0f2a3d;
+  --blue: #0369a1;
+  --blue-dark: #025a8a;
+  --orange: #f39a2b;
+  --text: #3d566d;
+  --muted: #5d7182;
+  --line: #e3e9ef;
+  --bg-soft: #eef5fb;
+  --footer: #0b2233;
+  --danger: #d93838;
+  --radius: 14px;
+  --shadow-card: 0 18px 40px rgba(15, 42, 61, 0.08);
+  --font: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--navy);
+  background: #fff;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; height: auto; }
+
+h1, h2, h3 { margin: 0; line-height: 1.15; font-weight: 600; letter-spacing: -0.01em; }
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section { padding: 80px 0; }
+.section--soft { background: var(--bg-soft); }
+
+/* Small uppercase label above headings */
+.eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.eyebrow--muted { color: var(--text); font-weight: 500; letter-spacing: 0.16em; font-size: 12px; }
+.eyebrow--dash::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 2px;
+  background: var(--orange);
+  vertical-align: middle;
+  margin-right: 12px;
+}
+
+.section-title { font-size: clamp(28px, 3vw, 36px); }
+.section-title--lg { font-size: clamp(30px, 3.4vw, 41px); }
+.section-head { margin-bottom: 48px; }
+.section-head .eyebrow { margin-top: 12px; }
+.section-head--center { text-align: center; }
+.section-head--center .eyebrow { margin: 0 0 14px; }
+.section-head p.lead { color: var(--text); font-size: 17px; font-weight: 500; margin: 18px 0 0; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font: 600 15px/1 var(--font);
+  padding: 15px 24px;
+  border-radius: 999px;
+  border: 1.5px solid var(--blue);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary {
+  background: var(--blue);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(3, 105, 161, 0.28);
+}
+.btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+.btn-outline { background: #fff; color: var(--blue); }
+.btn-outline:hover { background: var(--bg-soft); }
+.btn:disabled { opacity: 0.6; cursor: wait; transform: none; }
+
+/* Carousel dots / arrows shared by sliders */
+.dots { display: flex; gap: 12px; align-items: center; }
+.dot {
+  width: 10px; height: 10px; border-radius: 999px; border: 0; padding: 0;
+  background: #b7cad9; cursor: pointer; transition: width 0.25s, background 0.25s;
+}
+.dot[aria-current='true'] { width: 28px; background: var(--blue); }
+.arrow {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid #d5e0e9; background: #fff; color: var(--blue);
+  display: inline-grid; place-items: center; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(15, 42, 61, 0.08);
+}
+.arrow:hover { border-color: var(--blue); }
+
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { left: 16px; top: 16px; z-index: 100; background: #fff; padding: 8px 12px; }
+
+:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .section { padding: 64px 0; }
+  .section-head { margin-bottom: 32px; }
+  .container { padding: 0 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}

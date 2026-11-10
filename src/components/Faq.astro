@@ -1,0 +1,53 @@
+---
+interface Props {
+  items: { q: string; a: string }[];
+  label?: string;
+  /** index of the item open on load, -1 for none */
+  openIndex?: number;
+}
+const { items, label, openIndex = 0 } = Astro.props;
+---
+<div class="faq">
+  {label && <p class="eyebrow faq-label">{label}</p>}
+  {items.map((item, i) => (
+    <details class="faq-item" name="faq" open={i === openIndex}>
+      <summary>
+        <span>{item.q}</span>
+        <span class="faq-icon" aria-hidden="true"></span>
+      </summary>
+      <p>{item.a}</p>
+    </details>
+  ))}
+</div>
+
+<style>
+  .faq-label { margin: 0 0 14px 4px; font-weight: 700; }
+  .faq-item { border-bottom: 1px solid #d6e2ec; }
+  .faq-item summary {
+    list-style: none;
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    padding: 18px 4px;
+    font-size: 17px; font-weight: 500; color: var(--navy);
+    cursor: pointer;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item[open] summary { color: var(--blue); padding-bottom: 8px; }
+  .faq-icon {
+    flex: none; position: relative;
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 1.5px solid var(--navy);
+  }
+  .faq-icon::before, .faq-icon::after {
+    content: ''; position: absolute; left: 50%; top: 50%;
+    width: 11px; height: 1.5px; background: var(--navy);
+    transform: translate(-50%, -50%);
+  }
+  .faq-icon::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .faq-item[open] .faq-icon { background: var(--blue); border-color: var(--blue); }
+  .faq-item[open] .faq-icon::before { background: #fff; }
+  .faq-item[open] .faq-icon::after { display: none; }
+  .faq-item p { margin: 0; padding: 4px 4px 18px; color: var(--text); font-size: 14.5px; line-height: 1.7; max-width: 680px; }
+  @media (max-width: 768px) {
+    .faq-item summary { font-size: 16px; }
+  }
+</style>

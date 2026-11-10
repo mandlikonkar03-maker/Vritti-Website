@@ -1,0 +1,478 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Faq from '../../components/Faq.astro';
+import DemoForm from '../../components/DemoForm.astro';
+import { heroSlides, problems, features, levelUp, integrations, testimonials, faqs } from '../../data/ekatm-erp';
+
+const tagline = 'Ekatm ERP. Simple enough to start. Powerful enough to scale.';
+const initialSlide = heroSlides.length - 1;
+---
+<BaseLayout
+  title="Ekatm ERP | Vritti"
+  description="Ekatm connects Sales, Purchase, Inventory, Production, MRP, Engineering, Quality, Finance, HR and After-Sales Service in one connected business platform."
+  footerLinks={[{ label: 'Back to Technology', href: '/technology' }]}
+  footerTagline={tagline}
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <Breadcrumbs items={[{ label: 'Vritti', href: '/' }, { label: 'Technology', href: '/technology' }, { label: 'Ekatm ERP' }]} />
+        <p class="eyebrow eyebrow--dash hero-eyebrow">Ekatm ERP</p>
+        <h1>Simple enough to start.<br /><span>Powerful enough to scale.</span></h1>
+        <p class="hero-text">
+          Ekatm connects Sales, Purchase, Inventory, Production, MRP, Engineering, Quality, Finance,
+          HR and After-Sales Service in one connected business platform.
+        </p>
+        <div class="hero-actions">
+          <a href="#demo" class="btn btn-primary">Get Your Free Ekatm ERP Demo</a>
+          <a href="#features" class="btn btn-outline">Explore Features</a>
+        </div>
+        <p class="eyebrow eyebrow--muted problems-label">Daily problems Ekatm ERP resolves</p>
+        <ul class="problems">
+          {problems.map((p) => <li>{p}</li>)}
+        </ul>
+      </div>
+
+      <div class="hero-card" data-carousel aria-roledescription="carousel" aria-label="Ekatm screens">
+        <div class="slides">
+          {heroSlides.map((s, i) => (
+            <figure class="slide" aria-roledescription="slide" aria-label={`${i + 1} of ${heroSlides.length}`} hidden={i !== initialSlide}>
+              <div class="slide-media"><img src={s.image} alt={s.alt} loading={i === initialSlide ? 'eager' : 'lazy'} /></div>
+              <figcaption>
+                <p class="eyebrow">{s.eyebrow}</p>
+                <h2>{s.title}</h2>
+                <p>{s.text}</p>
+              </figcaption>
+            </figure>
+          ))}
+          <button class="arrow arrow--prev" data-prev aria-label="Previous slide">
+            <svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true"><path d="M8 2 2 8l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="arrow arrow--next" data-next aria-label="Next slide">
+            <svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true"><path d="m2 2 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="dots hero-dots">
+          {heroSlides.map((s, i) => (
+            <button class="dot" data-dot={i} aria-label={`Show ${s.eyebrow}`} aria-current={i === initialSlide ? 'true' : 'false'}></button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="section section--soft">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <p class="eyebrow">Features</p>
+        <h2 class="section-title section-title--lg">One Ekatm. Multiple features.</h2>
+        <p class="lead">Explore the functional areas that make Ekatm a complete enterprise platform.</p>
+      </div>
+      <ul class="feature-grid">
+        {features.map((f) => (
+          <li>
+            <span class="feature-icon"><img src={`/images/features/${f.icon}.png`} alt="" width="48" height="48" loading="lazy" /></span>
+            <span class="feature-label">{f.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- LEVEL UP -->
+  <section class="section levelup">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Level up your work with Ekatm.</h2>
+        <p class="eyebrow eyebrow--muted">Dashboard, work management and workspace views</p>
+      </div>
+      <div class="levelup-grid">
+        <img class="levelup-img" src="/images/level-up-collage.png" width="960" height="540" loading="lazy"
+          alt="Ekatm screens: birthday widget, dashboard, timesheet and work management board, and workspace panel" />
+        <ul class="levelup-list">
+          {levelUp.map((l) => (
+            <li>
+              <h3>{l.title}</h3>
+              <p>{l.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTEGRATIONS -->
+  <section class="section integrations">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Fastest integration into<br />your existing system.</h2>
+        <p class="eyebrow eyebrow--muted">We grow together.</p>
+      </div>
+    </div>
+    <div class="integrations-banner">
+      <img src="/images/integrations.png" width="1728" height="490" loading="lazy"
+        alt="Ekatm ERP integrates with Amazon, Shopify, IndiaMART, Trade India, Google Ads, Tally, Excel, WhatsApp and Meta" />
+    </div>
+    <div class="integrations-mobile container">
+      <img class="ekatm-logo" src="/images/integrations/ekatm-erp.png" width="450" height="122" alt="Ekatm ERP – Soul of Organisation" loading="lazy" />
+      <ul class="logo-grid">
+        {integrations.map((i) => (
+          <li>
+            <span class="logo-tile"><img src={`/images/integrations/${i.logo}.png`} alt="" loading="lazy" /></span>
+            <span>{i.name}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section testimonials">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title">Trusted by businesses.<br />Proven through experience.</h2>
+        <p class="eyebrow eyebrow--muted">Customer reviews</p>
+      </div>
+      <div data-slider>
+        <ul class="t-track" data-track>
+          {testimonials.map((t) => (
+            <li class="t-card">
+              <span class="t-quote" aria-hidden="true">
+                <svg width="18" height="14" viewBox="0 0 18 14"><path fill="currentColor" d="M0 14V8.4C0 3.9 2.3 1 6.6 0l.8 1.7C5 2.5 3.9 4 3.8 6.3H7.6V14H0Zm10.4 0V8.4c0-4.5 2.3-7.4 6.6-8.4l.8 1.7c-2.4.8-3.5 2.3-3.6 4.6H18V14h-7.6Z"/></svg>
+              </span>
+              <blockquote>{t.quote}</blockquote>
+              <div class="t-person">
+                <span class="t-avatar">{t.initials}</span>
+                <div>
+                  <p class="t-name">{t.name}</p>
+                  <p class="t-role">{t.role}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div class="t-controls">
+          <button class="arrow" data-prev aria-label="Previous review">
+            <svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true"><path d="M8 2 2 8l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dots">
+            {testimonials.map((t, i) => (
+              <button class="dot" data-dot={i} aria-label={`Review ${i + 1}`} aria-current={i === 0 ? 'true' : 'false'}></button>
+            ))}
+          </div>
+          <button class="arrow" data-next aria-label="Next review">
+            <svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true"><path d="m2 2 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--soft">
+    <div class="container faq-grid">
+      <div class="faq-intro">
+        <h2 class="section-title">Frequently<br />asked questions.</h2>
+        <p class="eyebrow eyebrow--muted">About Ekatm ERP</p>
+        <p class="faq-text">Want to see how Ekatm fits your business processes? Ask for a demo and we will walk you through it.</p>
+        <a href="#demo" class="btn btn-primary">Get Your Free Ekatm ERP Demo</a>
+      </div>
+      <Faq items={faqs} label="The Platform" />
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section id="demo" class="section demo">
+    <div class="container demo-grid">
+      <div class="demo-intro">
+        <p class="eyebrow">See Ekatm in action</p>
+        <h2 class="section-title">Get Your Free<br />Ekatm ERP Demo</h2>
+        <p class="demo-text">Discover how Ekatm ERP can connect your business processes and support your operational needs.</p>
+        <div class="demo-illustration">
+          <img src="/images/demo-illustration.png" width="348" height="238" loading="lazy" alt="Illustration of a team working around an ERP dashboard" />
+        </div>
+      </div>
+      <div class="demo-card">
+        <DemoForm product="Ekatm ERP" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Hero carousel
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.slide')];
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    let index = slides.findIndex((s) => !s.hidden);
+    let timer: number | undefined;
+
+    const show = (i: number) => {
+      index = (i + slides.length) % slides.length;
+      slides.forEach((s, n) => (s.hidden = n !== index));
+      dots.forEach((d, n) => d.setAttribute('aria-current', String(n === index)));
+    };
+    const restart = () => {
+      window.clearInterval(timer);
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        timer = window.setInterval(() => show(index + 1), 6000);
+      }
+    };
+    root.querySelector('[data-prev]')?.addEventListener('click', () => { show(index - 1); restart(); });
+    root.querySelector('[data-next]')?.addEventListener('click', () => { show(index + 1); restart(); });
+    dots.forEach((d, n) => d.addEventListener('click', () => { show(n); restart(); }));
+    root.addEventListener('mouseenter', () => window.clearInterval(timer));
+    root.addEventListener('mouseleave', restart);
+    restart();
+  });
+
+  // Testimonials slider (scroll-snap track)
+  document.querySelectorAll<HTMLElement>('[data-slider]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]')!;
+    const cards = [...track.children] as HTMLElement[];
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+
+    const current = () => {
+      const left = track.scrollLeft;
+      let best = 0;
+      cards.forEach((c, i) => {
+        if (Math.abs(c.offsetLeft - track.offsetLeft - left) < Math.abs(cards[best].offsetLeft - track.offsetLeft - left)) best = i;
+      });
+      // At the end of the track, the last dot is active
+      if (left + track.clientWidth >= track.scrollWidth - 4 && left > 0) best = cards.length - 1;
+      return best;
+    };
+    const go = (i: number) => {
+      const n = Math.max(0, Math.min(cards.length - 1, i));
+      track.scrollTo({ left: cards[n].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+    };
+    const sync = () => {
+      const c = current();
+      dots.forEach((d, n) => d.setAttribute('aria-current', String(n === c)));
+    };
+    root.querySelector('[data-prev]')?.addEventListener('click', () => go(current() - 1));
+    root.querySelector('[data-next]')?.addEventListener('click', () => go(current() + 1));
+    dots.forEach((d, n) => d.addEventListener('click', () => go(n)));
+    track.addEventListener('scroll', () => window.requestAnimationFrame(sync), { passive: true });
+  });
+</script>
+
+<style>
+  /* HERO */
+  .hero { padding: 36px 0 84px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+    gap: 40px;
+    align-items: start;
+  }
+  .hero-eyebrow { margin: 34px 0 14px; }
+  .hero h1 { font-size: clamp(32px, 3.3vw, 46px); line-height: 1.14; }
+  .hero h1 { white-space: nowrap; }
+  .hero h1 span { color: var(--blue); }
+  .hero-text { color: var(--text); font-size: 15.5px; line-height: 1.8; max-width: 430px; margin: 22px 0 28px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .problems-label { margin: 34px 0 18px; }
+  .problems { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .problems li {
+    position: relative;
+    padding-left: 28px;
+    font-weight: 500;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .problems li::before {
+    content: '';
+    position: absolute; left: 0; top: 1px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #d2e6f6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l2.6 2.6L9 1.2' fill='none' stroke='%230369a1' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 10px no-repeat;
+  }
+
+  .hero-card {
+    margin-top: 30px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow-card);
+    padding: 16px 16px 26px;
+  }
+  .slides { position: relative; }
+  .slide { margin: 0; }
+  .slide-media {
+    aspect-ratio: 520 / 290;
+    background: #f3f6f9;
+    border-radius: 8px;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  .slide-media img { width: 100%; height: 100%; object-fit: contain; }
+  .slide figcaption { padding: 34px 4px 0; }
+  .slide figcaption .eyebrow { font-size: 11px; margin: 0 0 6px; }
+  .slide h2 { font-size: 18px; font-weight: 500; margin: 0 0 6px; }
+  .slide figcaption p:last-child { margin: 0; color: var(--text); font-size: 13px; }
+  .slides .arrow {
+    position: absolute;
+    top: calc((100% - 120px) / 2);
+    width: 38px; height: 38px;
+  }
+  .arrow--prev { left: -10px; }
+  .arrow--next { right: -10px; }
+  .hero-dots { padding: 22px 4px 0; gap: 14px; }
+  .hero-dots .dot { width: 10px; height: 10px; }
+  .hero-dots .dot[aria-current='true'] { width: 24px; }
+
+  /* FEATURES */
+  .feature-grid {
+    list-style: none; padding: 0; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 26px 24px;
+    max-width: 1010px;
+  }
+  .feature-grid li { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .feature-icon {
+    width: 68px; height: 68px; border-radius: 12px;
+    background: #fff;
+    display: grid; place-items: center;
+    box-shadow: 0 6px 16px rgba(15, 42, 61, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .feature-grid li:hover .feature-icon { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(15, 42, 61, 0.1); }
+  .feature-icon img { width: 48px; height: 48px; }
+  .feature-label { font-size: 14px; font-weight: 500; text-align: center; }
+
+  /* LEVEL UP */
+  .levelup-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+  }
+  .levelup-img { width: 100%; display: block; }
+  .levelup-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 24px; }
+  .levelup-list li { border-left: 2px solid var(--orange); padding: 0 0 0 16px; }
+  .levelup-list h3 { font-size: 17px; font-weight: 500; margin-bottom: 6px; }
+  .levelup-list p { margin: 0; color: var(--text); font-size: 14.5px; line-height: 1.65; }
+
+  /* INTEGRATIONS */
+  .levelup { padding-bottom: 40px; }
+  .integrations { padding-top: 48px; padding-bottom: 0; }
+  .integrations .section-head { margin-bottom: 36px; }
+  .integrations-banner { overflow: hidden; }
+  .integrations-banner img { display: block; width: 100%; min-width: 900px; position: relative; left: 50%; transform: translateX(-50%); }
+  .integrations-mobile { display: none; }
+  .ekatm-logo { display: block; width: 220px; margin: 0 auto 28px; mix-blend-mode: multiply; }
+  .logo-grid {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 12px;
+  }
+  .logo-grid li { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; text-align: center; }
+  .logo-tile {
+    width: 76px; height: 64px; border-radius: 12px; background: #fff;
+    box-shadow: 0 6px 16px rgba(15, 42, 61, 0.08);
+    display: grid; place-items: center; padding: 8px;
+  }
+  .logo-tile img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+  /* TESTIMONIALS */
+  .t-track {
+    list-style: none; padding: 4px; margin: 0 -4px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 3 * 20px) / 4);
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .t-track::-webkit-scrollbar { display: none; }
+  .t-card {
+    scroll-snap-align: start;
+    display: flex; flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px;
+    background: #fff;
+  }
+  .t-quote {
+    width: 34px; height: 34px; border-radius: 8px;
+    background: #e3eff8; color: var(--blue);
+    display: grid; place-items: center;
+  }
+  .t-quote svg { width: 13px; }
+  .t-card blockquote { margin: 26px 0 20px; font-size: 14.5px; line-height: 1.6; flex: 1; }
+  .t-person { display: flex; gap: 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .t-avatar {
+    flex: none; width: 44px; height: 44px; border-radius: 10px;
+    background: #e8f1f8; color: var(--blue);
+    display: grid; place-items: center; font-weight: 600; font-size: 14px;
+  }
+  .t-name { margin: 0; font-weight: 600; font-size: 14px; }
+  .t-role { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+  .t-controls { display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: 50px; }
+
+  /* FAQ */
+  .faq-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 72px; align-items: start; }
+  .faq-intro { padding-top: 10px; }
+  .faq-intro .eyebrow { margin: 14px 0 0; }
+  .faq-text { color: var(--text); font-size: 14.5px; line-height: 1.75; margin: 18px 0 22px; max-width: 300px; }
+
+  /* DEMO */
+  .demo-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: 60px; align-items: start; }
+  .demo-intro { padding-left: 16px; }
+  .demo-intro .eyebrow { margin: 0 0 14px; font-weight: 700; }
+  .demo-text { color: var(--text); font-size: 16px; font-weight: 500; line-height: 1.75; margin: 24px 0 26px; max-width: 390px; }
+  .demo-illustration {
+    width: 100%; max-width: 306px;
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px; background: #fff;
+  }
+  .demo-illustration img { display: block; width: 100%; }
+  .demo-card {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: var(--shadow-card);
+    padding: 34px 28px 30px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .hero h1 { white-space: normal; }
+    .hero-grid, .levelup-grid, .faq-grid, .demo-grid { grid-template-columns: 1fr; }
+    .hero-card { max-width: 640px; margin-top: 8px; }
+    .feature-grid { grid-template-columns: repeat(4, 1fr); }
+    .t-track { grid-auto-columns: calc((100% - 20px) / 2); }
+    .demo-intro { padding-left: 0; }
+    .faq-text { max-width: 520px; }
+    .faq-grid, .demo-grid { gap: 40px; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 24px 0 64px; }
+    .hero-eyebrow { margin-top: 24px; }
+    .hero-text { font-size: 16px; }
+    .hero-actions .btn { flex: 1 1 100%; }
+    .hero-card { padding: 12px 12px 22px; }
+    .slides .arrow { width: 32px; height: 32px; }
+    .arrow--prev { left: -6px; }
+    .arrow--next { right: -6px; }
+    .feature-grid { grid-template-columns: repeat(3, 1fr); gap: 28px 12px; }
+    .feature-icon { width: 60px; height: 60px; }
+    .feature-icon img { width: 42px; height: 42px; }
+    .feature-label { font-size: 13px; }
+    .t-track { grid-auto-columns: 86%; }
+    .integrations-banner { display: none; }
+    .integrations-mobile {
+      display: block;
+      padding-top: 32px; padding-bottom: 40px;
+      background: linear-gradient(180deg, #f3f8fd, #eaf3fb);
+      max-width: none;
+    }
+    .t-controls { margin-top: 32px; }
+    .demo-card { padding: 24px 16px; }
+  }
+</style>

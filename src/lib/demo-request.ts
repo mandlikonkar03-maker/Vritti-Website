@@ -52,7 +52,7 @@ export async function deliverDemoRequest(req: DemoRequest, meta: { ip: string; u
     delivered = true;
   }
 
-  const to = env('DEMO_REQUEST_TO');
+  const to = env('DEMO_REQUEST_TO') || 'enquiry@vritti.co.in';
   const host = env('SMTP_HOST');
   if (to && host) {
     const port = Number(env('SMTP_PORT') ?? 465);

@@ -1,12 +1,11 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
 
-// Pages are pre-rendered to static HTML. Only /api/* routes run on the server.
-// To deploy on Vercel or Netlify instead of a Node server, swap this adapter
-// for @astrojs/vercel or @astrojs/netlify (see README).
+// Pages are pre-rendered to static HTML. Only /api/* routes run as
+// serverless functions on Vercel.
 export default defineConfig({
   output: 'static',
-  adapter: node({ mode: 'standalone' }),
+  adapter: vercel(),
   trailingSlash: 'ignore',
 });

@@ -33,7 +33,7 @@ export const problems = [
 // Add an href when a module gets its own page.
 export const features: { label: string; icon: string; href?: string }[] = [
   { label: 'Work', icon: 'work' },
-  { label: 'PDM', icon: 'pdm' },
+  { label: 'PDM', icon: 'pdm', href: '/technology/ekatm-erp/pdm' },
   { label: 'Manufacturing', icon: 'manufacturing' },
   { label: 'Purchase', icon: 'purchase', href: '/technology/ekatm-erp/purchase' },
   { label: 'Inventory', icon: 'inventory' },

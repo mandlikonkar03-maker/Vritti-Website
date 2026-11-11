@@ -4,13 +4,15 @@ interface Props {
   label?: string;
   /** index of the item open on load, -1 for none */
   openIndex?: number;
+  /** accordion group: only one item with the same name is open at a time */
+  name?: string;
 }
-const { items, label, openIndex = 0 } = Astro.props;
+const { items, label, openIndex = 0, name = 'faq' } = Astro.props;
 ---
 <div class="faq">
   {label && <p class="eyebrow faq-label">{label}</p>}
   {items.map((item, i) => (
-    <details class="faq-item" name="faq" open={i === openIndex}>
+    <details class="faq-item" name={name} open={i === openIndex}>
       <summary>
         <span>{item.q}</span>
         <span class="faq-icon" aria-hidden="true"></span>

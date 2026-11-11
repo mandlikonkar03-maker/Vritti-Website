@@ -134,7 +134,7 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
       <div class="map">
         <img src={presence.map} alt="World map showing where Vritti Group operates" width="1160" height="760" loading="lazy" />
         {presence.pins.map((p) => (
-          <span class="pin" style={`left:${p.x}%;top:${p.y}%`}>
+          <span class:list={['pin', p.side && `pin--${p.side}`]} style={`left:${p.x}%;top:${p.y}%`}>
             <span class="pin-dot" aria-hidden="true"></span>
             <span class="pin-label">{p.label}</span>
           </span>
@@ -340,6 +340,8 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
     border-radius: 999px;
     white-space: nowrap;
   }
+  .pin--left { flex-direction: row; transform: translate(calc(-100% + 8px), -50%); }
+  .pin--left .pin-label { margin: 0 6px 0 0; }
   .pin-dot {
     width: 16px;
     height: 16px;

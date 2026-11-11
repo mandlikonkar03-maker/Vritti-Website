@@ -1,0 +1,96 @@
+---
+// Simple auto-advancing slideshow. Shows a placeholder while there are no slides.
+interface Props {
+  slides: { src: string; alt: string }[];
+  interval?: number;
+}
+const { slides, interval = 4500 } = Astro.props;
+---
+<div class="slideshow" data-interval={interval} aria-roledescription="carousel" aria-label="Vritti Foundation photos">
+  {slides.length ? (
+    <>
+      {slides.map((s, i) => (
+        <img class:list={['slide', { 'is-active': i === 0 }]} src={s.src} alt={s.alt} loading="lazy" />
+      ))}
+      {slides.length > 1 && (
+        <div class="slide-dots">
+          {slides.map((_, i) => (
+            <button type="button" aria-label={`Show photo ${i + 1}`} aria-current={i === 0 ? 'true' : 'false'}></button>
+          ))}
+        </div>
+      )}
+    </>
+  ) : (
+    <div class="slide-empty">Foundation photos coming soon</div>
+  )}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.slideshow').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.slide')];
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('.slide-dots button')];
+    if (slides.length < 2) return;
+    let index = 0;
+    const show = (n: number) => {
+      index = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle('is-active', i === index));
+      dots.forEach((d, i) => d.setAttribute('aria-current', String(i === index)));
+    };
+    dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let timer = window.setInterval(() => show(index + 1), Number(root.dataset.interval) || 4500);
+    root.addEventListener('mouseenter', () => clearInterval(timer));
+    root.addEventListener('mouseleave', () => {
+      timer = window.setInterval(() => show(index + 1), Number(root.dataset.interval) || 4500);
+    });
+  });
+</script>
+
+<style>
+  .slideshow {
+    position: relative;
+    aspect-ratio: 746 / 528;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #d9d9d9;
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s;
+  }
+  .slide.is-active { opacity: 1; }
+  .slide-empty {
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: #555;
+    font-size: 15px;
+    padding: 16px;
+    text-align: center;
+  }
+  .slide-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  .slide-dots button {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    border: 0;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: width 0.2s;
+  }
+  .slide-dots button[aria-current='true'] { width: 26px; background: #fff; }
+</style>

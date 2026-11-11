@@ -145,8 +145,16 @@ export const brandVideo = {
   title: 'The people of Vritti',
 };
 
-export const groupNav = [
-  { label: 'About Us', href: '/about-us' },
+export type NavItem = { label: string; href?: string; children?: { label: string; href: string }[] };
+
+export const groupNav: NavItem[] = [
+  {
+    label: 'Vritti Group',
+    children: [
+      { label: 'About Us', href: '/about-us' },
+      { label: 'Meet our Management', href: '/meet-our-management' },
+    ],
+  },
   { label: 'Business', href: '/#businesses' },
   { label: 'Vritti Foundation', href: '/#foundation' },
   { label: 'Careers', href: '/careers' },

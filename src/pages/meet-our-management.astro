@@ -19,6 +19,7 @@ import { hero, ceo, leaders } from '../data/management';
     <div class="ceo-copy">
       <p class="ceo-eyebrow" id="ceo-heading">{ceo.eyebrow}</p>
       <blockquote>“{ceo.quote}”</blockquote>
+      {ceo.intro && <p class="ceo-intro">{ceo.intro}</p>}
       <div class="ceo-foot">
         <div>
           <p class="ceo-name">{ceo.name}</p>
@@ -98,6 +99,12 @@ import { hero, ceo, leaders } from '../data/management';
     font-size: clamp(20px, 2.5vw, 42px);
     font-weight: 500;
     line-height: 1.12;
+  }
+  .ceo-intro {
+    margin: clamp(20px, 2.2vw, 36px) 0 0;
+    font-size: clamp(14px, 1.1vw, 18px);
+    line-height: 1.6;
+    opacity: 0.9;
   }
   .ceo-foot {
     margin-top: clamp(28px, 3.2vw, 56px);
@@ -182,7 +189,13 @@ import { hero, ceo, leaders } from '../data/management';
   @media (max-width: 760px) {
     .ceo { grid-template-columns: 1fr; }
     .ceo-photo img { aspect-ratio: 4 / 3; height: auto; object-position: 40% 30%; }
-    .ceo-foot { flex-wrap: wrap; }
+    .ceo-intro {
+    margin: clamp(20px, 2.2vw, 36px) 0 0;
+    font-size: clamp(14px, 1.1vw, 18px);
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+  .ceo-foot { flex-wrap: wrap; }
   }
   @media (max-width: 520px) {
     .leader-grid { grid-template-columns: 1fr; max-width: 360px; }

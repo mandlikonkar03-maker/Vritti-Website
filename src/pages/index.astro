@@ -3,6 +3,7 @@
 import GroupLayout from '../layouts/GroupLayout.astro';
 import StoryCard from '../components/group/StoryCard.astro';
 import Slideshow from '../components/group/Slideshow.astro';
+import GlobalPresence from '../components/group/GlobalPresence.astro';
 import {
   hero,
   whoWeAre,
@@ -10,7 +11,6 @@ import {
   legacy,
   innovation,
   awards,
-  presence,
   foundation,
 } from '../data/home';
 
@@ -124,24 +124,8 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
     </div>
   </section>
 
-  <!-- Global presence -->
-  <section class="g-section" id="presence">
-    <div class="g-container">
-      <div class="g-head">
-        <h2 class="g-title">{presence.title}</h2>
-        <p class="g-sub">{presence.subtitle}</p>
-      </div>
-      <div class="map">
-        <img src={presence.map} alt="World map showing where Vritti Group operates" width="1160" height="760" loading="lazy" />
-        {presence.pins.map((p) => (
-          <span class:list={['pin', p.side && `pin--${p.side}`]} style={`left:${p.x}%;top:${p.y}%`}>
-            <span class="pin-dot" aria-hidden="true"></span>
-            <span class="pin-label">{p.label}</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  </section>
+  <!-- Global presence (office cards + map, content in src/data/presence.ts) -->
+  <GlobalPresence />
 
   <!-- Vritti Foundation -->
   <section class="foundation" id="foundation">
@@ -407,36 +391,6 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
   }
 
   /* Map */
-  .map { position: relative; max-width: 1160px; margin: 0 auto; }
-  .map img { display: block; width: 100%; height: auto; }
-  .pin { position: absolute; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; }
-  .pin-label {
-    order: -1;
-    margin-bottom: 6px;
-    background: var(--g-blue);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 999px;
-    white-space: nowrap;
-  }
-  .pin--left { flex-direction: row; transform: translate(calc(-100% + 8px), -50%); }
-  .pin--left .pin-label { margin: 0 6px 0 0; }
-  .pin-dot {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--g-orange);
-    border: 3px solid #fff;
-    box-shadow: 0 0 0 0 rgba(235, 158, 46, 0.6);
-    animation: ping 2s infinite;
-  }
-  @keyframes ping {
-    70% { box-shadow: 0 0 0 14px rgba(235, 158, 46, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(235, 158, 46, 0); }
-  }
-
   /* Foundation */
   .foundation { padding-top: clamp(40px, 4vw, 64px); }
   .foundation-head { margin-bottom: 32px; }
@@ -453,8 +407,6 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
   .foundation-tagline { margin: 6px 0 0; font-size: clamp(16px, 1.45vw, 24px); line-height: 1.05; }
   .foundation-tagline span { display: block; }
   .foundation-text { margin: 60px 0 0; font-size: clamp(16px, 1.45vw, 24px); line-height: 1.04; max-width: 600px; }
-
-  @media (prefers-reduced-motion: reduce) { .pin-dot { animation: none; } }
 
   @media (max-width: 1100px) {
     .tile-grid { grid-template-columns: repeat(5, 1fr); }
@@ -481,7 +433,5 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
   @media (max-width: 600px) {
     .tile-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
     .tile:nth-child(n + 13) { display: none; }
-    .pin-label { font-size: 10px; padding: 2px 7px; }
-    .pin-dot { width: 12px; height: 12px; border-width: 2px; }
   }
 </style>

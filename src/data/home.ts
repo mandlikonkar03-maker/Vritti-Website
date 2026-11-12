@@ -129,18 +129,6 @@ export const awards = {
   ] as Story[],
 };
 
-export const presence = {
-  title: 'Global Presence',
-  subtitle: 'Excellence earned. Recognition celebrated.',
-  map: '/images/home/world-map.png',
-  // x / y are percentages across the map image. Add one entry per location.
-  // side: 'left' puts the label beside the dot instead of above it (for pins close together).
-  pins: [
-    { label: 'India', x: 66.8, y: 61.5 },
-    { label: 'Middle East', x: 62.1, y: 60.2, side: 'left' },
-  ] as { label: string; x: number; y: number; side?: 'left' }[],
-};
-
 export const foundation = {
   title: 'Vritti Foundation',
   subtitle: '15 years of enabling change, enriching life.',

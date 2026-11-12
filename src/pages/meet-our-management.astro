@@ -1,0 +1,190 @@
+---
+import GroupLayout from '../layouts/GroupLayout.astro';
+import { hero, ceo, leaders } from '../data/management';
+---
+<GroupLayout title="Meet our Management – Vritti Group" description={hero.text}>
+  <!-- Hero (placeholder banner until the carousel image is ready) -->
+  <section class="m-hero" style={`background-image: url('${hero.image}')`}>
+    <div class="g-container">
+      <h1>{hero.title}</h1>
+      <p>{hero.text}</p>
+    </div>
+  </section>
+
+  <!-- CEO words -->
+  <section class="ceo" aria-labelledby="ceo-heading">
+    <div class="ceo-photo">
+      <img src={ceo.photo} alt={`${ceo.name}, ${ceo.title}`} width="786" height="817" loading="lazy" />
+    </div>
+    <div class="ceo-copy">
+      <p class="ceo-eyebrow" id="ceo-heading">{ceo.eyebrow}</p>
+      <blockquote>“{ceo.quote}”</blockquote>
+      <div class="ceo-foot">
+        <div>
+          <p class="ceo-name">{ceo.name}</p>
+          <p class="ceo-title">{ceo.title}</p>
+        </div>
+        {ceo.readMoreHref && <a class="ceo-more" href={ceo.readMoreHref}>Read more</a>}
+      </div>
+    </div>
+  </section>
+
+  <!-- Leaders -->
+  <section class="g-section leaders" aria-label="Management team">
+    <div class="g-container">
+      <ul class="leader-grid">
+        {leaders.map((l) => (
+          <li class="leader">
+            <img src={l.photo} alt={l.name} width="420" height="460" loading="lazy" />
+            <div class="leader-info">
+              <h2>{l.name}</h2>
+              <p>{l.title}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</GroupLayout>
+
+<style>
+  .m-hero {
+    background-color: #0a3f78;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    min-height: clamp(260px, 32vw, 560px);
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+  .m-hero h1 {
+    margin: 0;
+    font-size: clamp(30px, 3.4vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.25);
+  }
+  .m-hero p {
+    margin: 14px 0 0;
+    font-size: clamp(15px, 1.3vw, 20px);
+    font-weight: 500;
+    opacity: 0.9;
+  }
+
+  .ceo {
+    display: grid;
+    grid-template-columns: 45.5% 1fr;
+    background: var(--g-blue);
+    color: #fff;
+  }
+  .ceo-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .ceo-copy {
+    padding: clamp(40px, 6.5vw, 112px) clamp(24px, 5vw, 92px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .ceo-eyebrow {
+    margin: 0 0 clamp(16px, 2vw, 32px);
+    color: var(--g-orange);
+    font-size: clamp(16px, 1.75vw, 30px);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .ceo blockquote {
+    margin: 0;
+    font-size: clamp(20px, 2.5vw, 42px);
+    font-weight: 500;
+    line-height: 1.12;
+  }
+  .ceo-foot {
+    margin-top: clamp(28px, 3.2vw, 56px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .ceo-name {
+    margin: 0;
+    font-size: clamp(16px, 1.55vw, 26px);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .ceo-name::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    margin: 10px 0;
+    background: #e8747c;
+  }
+  .ceo-title { margin: 0; font-size: clamp(14px, 1.3vw, 22px); }
+  .ceo-more {
+    flex: none;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 999px;
+    padding: 9px 26px;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .ceo-more:hover { background: #fff; color: var(--g-blue); }
+
+  .leader-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(20px, 3vw, 56px);
+  }
+  .leader {
+    background: var(--g-blue);
+    box-shadow: 0 18px 40px rgba(6, 97, 169, 0.12);
+    display: flex;
+    flex-direction: column;
+  }
+  .leader img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 420 / 460;
+    object-fit: cover;
+    object-position: top;
+  }
+  .leader-info {
+    flex: 1;
+    color: #fff;
+    text-align: center;
+    padding: 28px 16px 34px;
+  }
+  .leader h2 {
+    margin: 0;
+    font-size: clamp(14px, 1.05vw, 18px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+  .leader h2::after {
+    content: '';
+    display: block;
+    width: 54px;
+    height: 2px;
+    margin: 12px auto 18px;
+    background: #e8747c;
+  }
+  .leader p { margin: 0; font-size: clamp(13px, 0.95vw, 16px); }
+
+  @media (max-width: 1100px) {
+    .leader-grid { grid-template-columns: repeat(2, 1fr); max-width: 760px; margin: 0 auto; }
+  }
+  @media (max-width: 760px) {
+    .ceo { grid-template-columns: 1fr; }
+    .ceo-photo img { aspect-ratio: 4 / 3; height: auto; object-position: 40% 30%; }
+    .ceo-foot { flex-wrap: wrap; }
+  }
+  @media (max-width: 520px) {
+    .leader-grid { grid-template-columns: 1fr; max-width: 360px; }
+  }
+</style>

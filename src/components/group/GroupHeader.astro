@@ -23,7 +23,7 @@ const isCurrent = (href: string) => !href.includes('#') && (current === href || 
                 class="g-sub-toggle"
                 aria-expanded="false"
                 aria-controls={`group-sub-${i}`}
-                data-active={item.children.some((c) => isCurrent(c.href)) ? 'true' : undefined}
+                data-active={item.children.some((c) => isCurrent(c.href) || c.items?.some((x) => isCurrent(x.href))) ? 'true' : undefined}
               >
                 {item.label}
                 <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
@@ -31,7 +31,16 @@ const isCurrent = (href: string) => !href.includes('#') && (current === href || 
               <ul class="g-sub" id={`group-sub-${i}`}>
                 {item.children.map((c) => (
                   <li>
-                    <a href={c.href} aria-current={isCurrent(c.href) ? 'page' : undefined}>{c.label}</a>
+                    <a href={c.href} class={c.items ? 'g-sub-head' : undefined} aria-current={isCurrent(c.href) && !c.items ? 'page' : undefined}>{c.label}</a>
+                    {c.items && (
+                      <ul class="g-sub-items">
+                        {c.items.map((x) => (
+                          <li>
+                            <a href={x.href} class={x.hover === 'orange' ? 'g-hover-orange' : undefined} aria-current={isCurrent(x.href) ? 'page' : undefined}>{x.label}</a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -158,6 +167,30 @@ const isCurrent = (href: string) => !href.includes('#') && (current === href || 
     white-space: nowrap;
   }
   .g-sub a:hover, .g-sub a:focus-visible { background: #f2f7fc; }
+  /* A heading entry with sub-links (Technology) stays blue, even on hover. */
+  .g-nav .g-sub a.g-sub-head,
+  .g-nav .g-sub a.g-sub-head:hover,
+  .g-nav .g-sub a.g-sub-head:focus-visible { color: var(--g-blue); background: none; }
+  /* Grey sub-links under a dropdown entry (Business › Technology › Ekatm, …) */
+  .g-nav .g-sub-items {
+    display: block;
+    margin: -4px 0 6px;
+    padding: 0;
+  }
+  .g-nav .g-sub-items a {
+    padding: 6px 20px 6px 36px;
+    color: #9a9a9a;
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: none;
+  }
+  .g-nav .g-sub-items a:hover,
+  .g-nav .g-sub-items a:focus-visible { color: var(--g-blue); }
+  /* Ekatm brand orange (--orange in global.css) */
+  .g-nav .g-sub-items a.g-hover-orange:hover,
+  .g-nav .g-sub-items a.g-hover-orange:focus-visible { color: #f39a2b; }
+  /* Stay grey on their own page too (only hover/focus turns them blue). */
+  .g-nav .g-sub-items a[aria-current='page']:not(:hover):not(:focus-visible) { color: #9a9a9a; }
   .g-sub-toggle[aria-expanded='true'] + .g-sub { display: flex; }
   @media (hover: hover) and (min-width: 901px) {
     .g-has-sub:hover .g-sub,
@@ -219,5 +252,8 @@ const isCurrent = (href: string) => !href.includes('#') && (current === href || 
     }
     .g-nav .g-sub::before { display: none; }
     .g-sub a { padding: 12px 4px; font-size: 13px; white-space: normal; }
+    .g-nav .g-sub li:has(> .g-sub-items) > a { border-bottom: 0; }
+    .g-nav .g-sub-items { margin: -8px 0 0; padding-bottom: 6px; border-bottom: 1px solid #eee; }
+    .g-nav .g-sub-items a { padding: 8px 4px 8px 16px; border-bottom: 0; }
   }
 </style>

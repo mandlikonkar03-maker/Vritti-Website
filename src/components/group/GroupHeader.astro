@@ -91,7 +91,14 @@ const current = Astro.url.pathname;
     align-items: center;
     justify-content: space-between;
     min-height: 110px;
+    width: 100%;
     max-width: 1320px; /* matches the Ekatm header */
+    margin: 0 auto;
+    padding: 0 24px;
+    /* Colours are set here too, so the header looks the same on the Ekatm pages
+       (BaseLayout), which don't carry the group-site colour variables. */
+    --g-blue: #0661a9;
+    --g-orange: #eb9e2e;
   }
   .g-logo img { display: block; width: 170px; height: auto; }
   .g-nav ul {
@@ -180,6 +187,11 @@ const current = Astro.url.pathname;
   }
   @media (max-width: 900px) {
     .g-header-inner { min-height: 68px; }
+  }
+  @media (max-width: 768px) {
+    .g-header-inner { padding: 0 16px; }
+  }
+  @media (max-width: 900px) {
     .g-logo img { width: 120px; }
     .g-nav-toggle { display: block; }
     .g-nav {

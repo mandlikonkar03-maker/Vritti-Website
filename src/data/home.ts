@@ -94,39 +94,50 @@ export const legacy = {
   ] as Story[],
 };
 
-export const innovation = {
-  title: '20 Years of Innovation & Impact',
-  subtitle: 'Built over time. Growing with purpose.',
-  columns: [{ title: 'Innovation' }, { title: 'Impact' }],
+// "Built over time." band: 12 photos from OM's Vritti photo folder (files are already
+// greyscale, square ~480px, in public/images/home/built/) + stats.
+export const builtOverTime = {
+  title: 'Built over time.',
+  photos: [
+    { src: '/images/home/built/01.jpg', alt: 'Early Vritti team' },
+    { src: '/images/home/built/02.jpg', alt: 'Vritti leadership team' },
+    { src: '/images/home/built/03.jpg', alt: 'Vritti team at a company event' },
+    { src: '/images/home/built/04.jpg', alt: 'Vritti team at the Asian Leadership Forum & Awards' },
+    { src: '/images/home/built/05.jpg', alt: 'Vritti office celebration' },
+    { src: '/images/home/built/06.jpg', alt: 'Vritti team award ceremony' },
+    { src: '/images/home/built/07.jpg', alt: 'Vritti annual meet' },
+    { src: '/images/home/built/08.jpg', alt: 'Vritti team conference' },
+    { src: '/images/home/built/09.jpg', alt: 'Vritti Award 2023' },
+    { src: '/images/home/built/10.jpg', alt: 'Vritti Award 2024' },
+    { src: '/images/home/built/11.jpg', alt: 'Vritti annual celebration' },
+    { src: '/images/home/built/12.jpg', alt: 'Vritti office team' },
+  ] as { src: string; alt: string }[],
+  stats: [
+    { value: '30', plus: true, label: ['Years in', 'industry'], big: true },
+    { value: '12,999', plus: true, label: ['Clients'] },
+    { value: '112+', label: ['Awards &', 'recognition'] },
+  ],
 };
 
+// Repeating strip between the blue bands.
+export const vrittiWay = 'The Vritti Way';
+
+export const coreValues = {
+  title: 'How we think',
+  subtitle: 'Our core values.',
+  values: [
+    { title: 'We see differently', text: 'We look beyond the obvious.' },
+    { title: 'We build boldly', text: 'We turn ideas into action.' },
+    { title: 'We own the outcome', text: 'We take responsibility for what we create.' },
+    { title: 'We keep moving', text: 'We never stop improving.' },
+  ],
+};
+
+// 5 x 3 grid: 14 award slots (placeholders) + a final "99+" tile.
 export const awards = {
   title: 'Awards & Recognition',
-  subtitle: 'Excellence earned. Recognition celebrated.',
-  stories: [
-    {
-      title: 'Corporate Excellence Awards 2025 at Rural Conclave 2025 by RMAI',
-      image: '/images/home/rural-conclave.jpg',
-      alt: 'Vritti receiving the Corporate Excellence Award at Rural Conclave 2025',
-      upper: true,
-    },
-    {
-      title: '20+ years with expansion across enterprise tech and rural media-led marketing',
-      image: '/images/home/vritti-20-years.jpg',
-      alt: 'Vritti leadership at the 20 years celebration',
-    },
-    {
-      title: '20+ years with expansion across enterprise tech and rural media-led marketing',
-      image: '/images/home/vritti-20-years.jpg',
-      alt: 'Vritti leadership at the 20 years celebration',
-    },
-    {
-      title: 'Corporate Excellence Awards 2025 at Rural Conclave 2025 by RMAI',
-      image: '/images/home/rural-conclave.jpg',
-      alt: 'Vritti receiving the Corporate Excellence Award at Rural Conclave 2025',
-      upper: true,
-    },
-  ] as Story[],
+  slotCount: 14,
+  more: '99+',
 };
 
 export const foundation = {

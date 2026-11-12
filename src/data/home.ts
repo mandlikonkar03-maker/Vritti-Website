@@ -162,8 +162,10 @@ export const brandVideo = {
 };
 
 export type NavLink = { label: string; href: string };
+/** `hover: 'orange'` turns a grey sub-link orange instead of blue on hover (Ekatm). */
+export type NavSubLink = NavLink & { hover?: 'orange' };
 /** A dropdown entry; `items` are smaller grey sub-links listed under it (e.g. Technology › Ekatm). */
-export type NavChild = NavLink & { items?: NavLink[] };
+export type NavChild = NavLink & { items?: NavSubLink[] };
 export type NavItem = { label: string; href?: string; children?: NavChild[] };
 
 export const groupNav: NavItem[] = [
@@ -181,7 +183,7 @@ export const groupNav: NavItem[] = [
         label: 'Technology',
         href: '/technology/ekatm-erp',
         items: [
-          { label: 'Ekatm', href: '/technology/ekatm-erp' },
+          { label: 'Ekatm', href: '/technology/ekatm-erp', hover: 'orange' },
           // Placeholders until these product pages exist.
           { label: 'Simplify Practice', href: '/#businesses' },
           { label: 'PetroSoft', href: '/#businesses' },
@@ -232,7 +234,7 @@ export const groupFooter = {
   ],
   quickLinks: [
     [
-      { label: 'Ekatm', href: '/technology/ekatm-erp' },
+      { label: 'Ekatm', href: '/technology/ekatm-erp', hover: 'orange' },
       { label: 'AdatSoft', href: '#' },
       { label: 'PetroSoft India', href: '#' },
       { label: 'Simplify Practices', href: '#' },

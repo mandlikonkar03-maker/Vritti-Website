@@ -13,9 +13,25 @@ export const whoWeAre = {
   eyebrow: 'Who we are',
   title: 'One Group. One Purpose.',
   text: 'Vritti began with technology and has evolved into a diversified group spanning enterprise software, IT services, AI, media and marketing solutions.',
-  // Add logos/photos here, e.g. { src: '/images/home/clients/acme.png', alt: 'Acme' }.
+  // Photos from Vritti's early days, shown black and white (the files are already greyscale).
+  // To swap one, replace the file in public/images/home/who/ (square, ~480px) or edit this list.
   // While this list is empty the grid shows 14 placeholder tiles.
-  tiles: [] as { src: string; alt: string }[],
+  tiles: [
+    { src: '/images/home/who/01.jpg', alt: 'Early days: a Vritti founder speaking at an event' },
+    { src: '/images/home/who/02.jpg', alt: 'Early days: the first Vritti team' },
+    { src: '/images/home/who/03.jpg', alt: 'Early days: speech at an early Vritti event' },
+    { src: '/images/home/who/04.jpg', alt: 'Early days: the Vritti team at an event' },
+    { src: '/images/home/who/05.jpg', alt: "Vritti's early shop" },
+    { src: '/images/home/who/06.jpg', alt: 'An early Vritti office' },
+    { src: '/images/home/who/07.jpg', alt: "Vritti Solutions' Pune office" },
+    { src: '/images/home/who/08.jpg', alt: 'Flame Awards, Delhi 2016' },
+    { src: '/images/home/who/09.jpg', alt: 'Jaipur city visit during the quarterly meeting, July 2016' },
+    { src: '/images/home/who/10.jpg', alt: 'Annual picnic of the Chandigarh, Delhi and Jaipur offices, 2017' },
+    { src: '/images/home/who/11.jpg', alt: 'ACEF award, Mumbai 2018' },
+    { src: '/images/home/who/12.jpg', alt: 'Tree plantation drive' },
+    { src: '/images/home/who/13.jpg', alt: 'Vritti team at the LSP Awards' },
+    { src: '/images/home/who/14.jpg', alt: 'Vritti team outing' },
+  ] as { src: string; alt: string }[],
   placeholderCount: 14,
 };
 

@@ -42,7 +42,7 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
       </div>
       <ul class="tile-grid">
         {whoWeAre.tiles.length
-          ? whoWeAre.tiles.map((t) => <li class="tile"><img src={t.src} alt={t.alt} loading="lazy" /></li>)
+          ? whoWeAre.tiles.map((t, i) => <li class="tile tile--photo" style={`--i:${i}`}><img src={t.src} alt={t.alt} width="480" height="480" loading="lazy" /></li>)
           : placeholders.map(() => <li class="tile tile--empty" aria-hidden="true"></li>)}
       </ul>
     </div>
@@ -163,6 +163,34 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
   </section>
 </GroupLayout>
 
+<script>
+  // Photo grid "developing" animation (styles in the who-we-are section above).
+  const grid = document.querySelector<HTMLElement>('#who-we-are .tile-grid');
+  if (
+    grid &&
+    grid.querySelector('.tile--photo') &&
+    'IntersectionObserver' in window &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    // Jump straight to the washed-out start state (no transition), then let it develop.
+    grid.classList.add('who-anim', 'who-prep');
+    void grid.offsetWidth;
+    grid.classList.remove('who-prep');
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        grid.classList.add('is-developed');
+        // After the last photo settles, switch to the quicker hover transitions.
+        const total = 1600 + grid.children.length * 110;
+        window.setTimeout(() => grid.classList.add('is-done'), total);
+      },
+      { rootMargin: '0px 0px -15% 0px' },
+    );
+    io.observe(grid);
+  }
+</script>
+
 <style>
   /* Hero */
   .hero {
@@ -232,6 +260,46 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
   }
   .tile { aspect-ratio: 1; display: grid; place-items: center; background: #fff; }
   .tile img { max-width: 80%; max-height: 80%; object-fit: contain; }
+  .tile--photo { overflow: hidden; background: #222; }
+  .tile--photo { position: relative; transition: box-shadow 0.4s ease; }
+  .tile--photo img {
+    width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover;
+    filter: grayscale(1);
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s ease;
+  }
+  /* Soft vignette, like an old print. */
+  .tile--photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.35);
+    transition: box-shadow 0.4s ease;
+  }
+  .tile--photo:hover { box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22); z-index: 1; }
+  .tile--photo:hover img { transform: scale(1.08); filter: grayscale(1) contrast(1.08); }
+  .tile--photo:hover::after { box-shadow: inset 0 0 0 rgba(0, 0, 0, 0); }
+
+  /* "Developing" effect: each photo starts washed out and comes into focus, one after another,
+     when the grid scrolls into view. Only applies once the script above adds .who-anim, so the
+     photos stay visible without JavaScript, and is skipped for reduced motion. */
+  :global(.who-anim) .tile--photo img {
+    filter: grayscale(1) brightness(1.9) contrast(0.6) blur(6px);
+    transform: scale(1.12);
+    transition:
+      filter 1.4s ease calc(var(--i) * 110ms),
+      transform 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--i) * 110ms);
+  }
+  :global(.who-prep) .tile--photo img { transition: none !important; }
+  :global(.who-anim.is-developed) .tile--photo img { filter: grayscale(1); transform: none; }
+  :global(.who-anim.is-developed.is-done) .tile--photo img {
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s ease;
+  }
+  :global(.who-anim.is-developed) .tile--photo:hover img { transform: scale(1.08); filter: grayscale(1) contrast(1.08); }
+  @media (prefers-reduced-motion: reduce) {
+    .tile--photo img, .tile--photo::after { transition: none !important; }
+    .tile--photo:hover img { transform: none; }
+  }
   .tile--empty {
     background-color: #f6f6f6;
     background-image:
@@ -400,7 +468,7 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
 
   @media (max-width: 600px) {
     .tile-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .tile--empty:nth-child(n + 13) { display: none; }
+    .tile:nth-child(n + 13) { display: none; }
     .pin-label { font-size: 10px; padding: 2px 7px; }
     .pin-dot { width: 12px; height: 12px; border-width: 2px; }
   }

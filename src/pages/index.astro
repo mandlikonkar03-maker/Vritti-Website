@@ -64,7 +64,7 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
                 <img src={b.logo} alt={b.logoAlt} style={`width:${b.logoWidth}px`} loading="lazy" />
               </div>
               <h3 class="biz-label">{b.label}</h3>
-              <p class="biz-text">{b.lead && (b.href ? <span class="biz-lead">{b.lead}</span> : <strong>{b.lead}</strong>)} {b.text}</p>
+              <p class="biz-text">{b.lead && <span class="biz-lead">{b.lead}</span>} {b.text}</p>
               <span class={`biz-explore${b.href ? '' : ' is-soon'}`} title={b.href ? undefined : 'Page coming soon'}>
                 Explore <span aria-hidden="true">→</span>
               </span>
@@ -327,7 +327,8 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  a.biz-card:hover { transform: translateY(-4px); box-shadow: 0 18px 48px rgba(6, 97, 169, 0.18); }
+  /* All cards react to hover, linked or not */
+  .biz-card:hover { transform: translateY(-4px); box-shadow: 0 18px 48px rgba(6, 97, 169, 0.18); }
   .biz-logo {
     width: 100%;
     height: 108px;
@@ -356,16 +357,15 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
     font-size: clamp(17px, 1.4vw, 23px);
   }
   .biz-explore span { color: var(--g-orange); margin-left: 4px; }
-  /* Light blue until the card is hovered: "coming soon" cards stay light, linked
-     cards (Technology) turn full dark blue on hover. */
+  /* Light blue until the card is hovered, then full dark blue. */
   .biz-explore { opacity: 0.55; transition: opacity 0.3s ease; }
-  a.biz-card:hover .biz-explore,
+  .biz-card:hover .biz-explore,
   a.biz-card:focus-visible .biz-explore { opacity: 1; }
-  /* Linked card's lead-in (Ekatm ERP): regular weight, bolds smoothly on hover.
+  /* Card lead-in (Ekatm ERP, Vritti iMedia): regular weight, bolds smoothly on hover.
      The bold is drawn with a text-shadow so the letters never get wider and the
      paragraph never re-wraps (no layout shift). */
   .biz-lead { text-shadow: 0 0 0 transparent, 0 0 0 transparent; transition: text-shadow 0.35s ease; }
-  a.biz-card:hover .biz-lead,
+  .biz-card:hover .biz-lead,
   a.biz-card:focus-visible .biz-lead {
     text-shadow: 0.65px 0 0 currentColor, -0.65px 0 0 currentColor;
   }

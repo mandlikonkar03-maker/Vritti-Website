@@ -94,10 +94,24 @@ export const legacy = {
   ] as Story[],
 };
 
-// "Built over time." band: 12 photo slots (placeholders until OM picks photos) + stats.
+// "Built over time." band: 12 photos from OM's Vritti photo folder (files are already
+// greyscale, square ~480px, in public/images/home/built/) + stats.
 export const builtOverTime = {
   title: 'Built over time.',
-  photoCount: 12,
+  photos: [
+    { src: '/images/home/built/01.jpg', alt: 'Early Vritti team' },
+    { src: '/images/home/built/02.jpg', alt: 'Vritti leadership team' },
+    { src: '/images/home/built/03.jpg', alt: 'Vritti team at a company event' },
+    { src: '/images/home/built/04.jpg', alt: 'Vritti team at the Asian Leadership Forum & Awards' },
+    { src: '/images/home/built/05.jpg', alt: 'Vritti office celebration' },
+    { src: '/images/home/built/06.jpg', alt: 'Vritti team award ceremony' },
+    { src: '/images/home/built/07.jpg', alt: 'Vritti annual meet' },
+    { src: '/images/home/built/08.jpg', alt: 'Vritti team conference' },
+    { src: '/images/home/built/09.jpg', alt: 'Vritti Award 2023' },
+    { src: '/images/home/built/10.jpg', alt: 'Vritti Award 2024' },
+    { src: '/images/home/built/11.jpg', alt: 'Vritti annual celebration' },
+    { src: '/images/home/built/12.jpg', alt: 'Vritti office team' },
+  ] as { src: string; alt: string }[],
   stats: [
     { value: '30', plus: true, label: ['Years in', 'industry'], big: true },
     { value: '12,999', plus: true, label: ['Clients'] },

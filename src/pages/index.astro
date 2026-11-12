@@ -108,7 +108,9 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
         </svg>
       </h2>
       <ul class="bot-grid">
-        {Array.from({ length: builtOverTime.photoCount }).map(() => <li class="bot-photo"></li>)}
+        {builtOverTime.photos.map((ph) => (
+          <li class="bot-photo"><img src={ph.src} alt={ph.alt} width="480" height="480" loading="lazy" /></li>
+        ))}
       </ul>
       <ul class="bot-stats">
         {builtOverTime.stats.map((st) => (
@@ -318,6 +320,17 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
     box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.35);
     transition: box-shadow 0.4s ease;
   }
+  /* White tint so the photos sit back behind the heading; it lifts on hover. */
+  .tile--photo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: rgba(255, 255, 255, 0.45);
+    transition: background-color 0.4s ease;
+  }
+  .tile--photo:hover::before { background: rgba(255, 255, 255, 0.1); }
   .tile--photo:hover { box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22); z-index: 1; }
   .tile--photo:hover img { transform: scale(1.08); filter: grayscale(1) contrast(1.08); }
   .tile--photo:hover::after { box-shadow: inset 0 0 0 rgba(0, 0, 0, 0); }
@@ -434,7 +447,14 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
     grid-template-columns: repeat(6, 1fr);
     gap: 2px;
   }
-  .bot-photo { aspect-ratio: 1; background: #d9d9d9; }
+  .bot-photo { aspect-ratio: 1; background: #d9d9d9; overflow: hidden; }
+  .bot-photo img {
+    display: block; width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1);
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .bot-photo:hover img { transform: scale(1.06); }
+  @media (prefers-reduced-motion: reduce) { .bot-photo img { transition: none; } .bot-photo:hover img { transform: none; } }
   .bot-stats {
     list-style: none;
     margin: clamp(24px, 2.6vw, 40px) 0 0;

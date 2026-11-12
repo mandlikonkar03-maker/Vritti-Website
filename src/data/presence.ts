@@ -31,7 +31,7 @@ export const presence = {
   map: '/images/home/presence/dots-map.svg',
   mapRatio: [760, 463],
   offices: [
-    { id: 'pune', city: 'Pune', region: 'Maharashtra', hq: true, x: 51.87, y: 55.29, side: 'right' },
+    { id: 'pune', city: 'Pune', region: 'India', hq: true, x: 51.87, y: 55.29, side: 'right' },
     { id: 'mumbai', city: 'Mumbai', region: 'Maharashtra', x: 49.74, y: 53.29, side: 'left' },
     { id: 'bengaluru', city: 'Bengaluru', region: 'Karnataka', x: 59.98, y: 75.11, side: 'right' },
     { id: 'chandigarh', city: 'Chandigarh', region: 'Punjab & Haryana', x: 58.22, y: 11.68, side: 'right' },

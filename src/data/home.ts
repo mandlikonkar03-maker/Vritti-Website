@@ -155,7 +155,15 @@ export const groupNav: NavItem[] = [
       { label: 'Meet our Management', href: '/meet-our-management' },
     ],
   },
-  { label: 'Business', href: '/#businesses' },
+  {
+    label: 'Business',
+    children: [
+      { label: 'Technology', href: '/technology/ekatm-erp' },
+      // Placeholders until these business pages exist: they scroll to the home page's Businesses section.
+      { label: 'Rural Marketing', href: '/#businesses' },
+      { label: 'Media', href: '/#businesses' },
+    ],
+  },
   { label: 'Vritti Foundation', href: '/#foundation' },
   { label: 'Careers', href: '/careers' },
   { label: 'News', href: '/news' },

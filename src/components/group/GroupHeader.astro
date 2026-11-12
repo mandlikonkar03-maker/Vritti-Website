@@ -1,7 +1,9 @@
 ---
 import { groupNav } from '../../data/home';
 import { site } from '../../data/site';
-const current = Astro.url.pathname;
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+// A page (or any page below it, e.g. /technology/ekatm-erp/purchase) highlights its menu entry.
+const isCurrent = (href: string) => !href.includes('#') && (current === href || current.startsWith(href + '/'));
 ---
 <header class="g-header">
   <div class="g-container g-header-inner">
@@ -21,7 +23,7 @@ const current = Astro.url.pathname;
                 class="g-sub-toggle"
                 aria-expanded="false"
                 aria-controls={`group-sub-${i}`}
-                data-active={item.children.some((c) => c.href === current) ? 'true' : undefined}
+                data-active={item.children.some((c) => isCurrent(c.href)) ? 'true' : undefined}
               >
                 {item.label}
                 <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
@@ -29,7 +31,7 @@ const current = Astro.url.pathname;
               <ul class="g-sub" id={`group-sub-${i}`}>
                 {item.children.map((c) => (
                   <li>
-                    <a href={c.href} aria-current={current === c.href ? 'page' : undefined}>{c.label}</a>
+                    <a href={c.href} aria-current={isCurrent(c.href) ? 'page' : undefined}>{c.label}</a>
                   </li>
                 ))}
               </ul>

@@ -21,6 +21,9 @@ const routes = p.offices.filter((o) => o.international).map((o) => {
     <div class="pr-grid">
       <div class="pr-side">
         <p class="pr-intro">{p.intro}</p>
+        <ul class="pr-stats">
+          {p.stats.map((st) => <li><strong>{st.value}</strong><span>{st.label}</span></li>)}
+        </ul>
         <ul class="pr-list">
           {p.offices.map((o) => (
             <li class:list={['pr-card', o.hq && 'is-hq', o.international && 'is-intl']} data-loc={o.id} tabindex="0">
@@ -42,7 +45,7 @@ const routes = p.offices.filter((o) => o.international).map((o) => {
         {p.offices.map((o) => (
           <span class:list={['pr-pin', `pr-pin--${o.side ?? 'right'}`, o.hq && 'is-hq', o.international && 'is-intl']} data-loc={o.id} style={`left:${o.x}%;top:${o.y}%`}>
             <span class="pr-dot"></span>
-            <span class="pr-label">{o.city}{o.international && <small>International</small>}</span>
+            <span class="pr-label">{o.label ?? o.city}{o.international && <small>International</small>}</span>
           </span>
         ))}
       </div>
@@ -65,7 +68,12 @@ const routes = p.offices.filter((o) => o.international).map((o) => {
 
 <style>
   .pr-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
-  .pr-intro { margin: 0 0 22px; color: var(--g-text); font-size: 16px; line-height: 1.6; max-width: 560px; }
+  .pr-stats { list-style: none; margin: 0 0 24px; padding: 0; display: flex; gap: 0; }
+  .pr-stats li { display: flex; flex-direction: column; padding: 0 28px; border-left: 1px solid #dbe5ef; }
+  .pr-stats li:first-child { padding-left: 0; border-left: 0; }
+  .pr-stats strong { font-size: clamp(32px, 3vw, 44px); font-weight: 800; color: var(--g-blue); line-height: 1.05; }
+  .pr-stats span { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--g-text); }
+  .pr-intro { margin: 0 0 18px; color: var(--g-text); font-size: 16px; line-height: 1.6; max-width: 560px; }
   .pr-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .pr-card {
     border: 1px solid #dbe5ef; border-radius: 12px; padding: 14px 18px; background: #fff;

@@ -16,12 +16,18 @@ export type Office = {
   x: number;
   y: number;
   side?: 'left' | 'right';
+  /** Shorter pin label than the card title (e.g. 'UAE'). */
+  label?: string;
 };
 
 export const presence = {
   title: 'Global Presence',
-  subtitle: '11 cities. One Vritti.',
-  intro: 'From our headquarters in Pune, Vritti Group works with clients across India and beyond, with offices in 11 cities and an international office in Dubai.',
+  subtitle: '11 cities. 2 countries. One Vritti.',
+  intro: 'From our headquarters in Pune, Vritti Group works with clients through offices in 11 cities across India, and internationally from the UAE.',
+  stats: [
+    { value: '11', label: 'Cities in India' },
+    { value: '2', label: 'Countries' },
+  ],
   map: '/images/home/presence/dots-map.svg',
   mapRatio: [760, 463],
   offices: [
@@ -31,6 +37,6 @@ export const presence = {
     { id: 'chandigarh', city: 'Chandigarh', region: 'Punjab & Haryana', x: 58.22, y: 11.68, side: 'right' },
     { id: 'goa', city: 'Goa', region: 'Goa', x: 51.8, y: 66.11, side: 'left' },
     { id: 'jaipur', city: 'Jaipur', region: 'Rajasthan', x: 56.07, y: 25.32, side: 'left' },
-    { id: 'dubai', city: 'Dubai', region: 'United Arab Emirates', international: true, x: 11.46, y: 31.43, side: 'right' },
+    { id: 'uae', city: 'UAE', region: 'Dubai, United Arab Emirates', international: true, x: 11.46, y: 31.43, side: 'right' },
   ] as Office[],
 };

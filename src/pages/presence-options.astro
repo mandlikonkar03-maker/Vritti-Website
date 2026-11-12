@@ -1,0 +1,21 @@
+---
+// Preview only: three candidate designs for the home page's Global Presence section.
+// Not linked from the site. Delete this page once OM picks one.
+import GroupLayout from '../layouts/GroupLayout.astro';
+import PresenceWorld from '../components/group/presence/PresenceWorld.astro';
+import PresenceRegion from '../components/group/presence/PresenceRegion.astro';
+import PresenceGlobe from '../components/group/presence/PresenceGlobe.astro';
+---
+<GroupLayout title="Global Presence – design options" description="Preview of Global Presence options">
+  <div class="opt-label"><div class="g-container"><strong>Option A</strong> · World map with routes from Pune, counters and city chips</div></div>
+  <PresenceWorld />
+  <div class="opt-label"><div class="g-container"><strong>Option B</strong> · Office cards beside a zoomed map (hover a card or pin)</div></div>
+  <PresenceRegion />
+  <div class="opt-label"><div class="g-container"><strong>Option C</strong> · Navy band with a turning 3D globe, counters and city list</div></div>
+  <PresenceGlobe />
+</GroupLayout>
+
+<style>
+  .opt-label { background: #fff6e8; border-block: 1px dashed var(--g-orange); padding: 10px 0; font-size: 14px; color: #8a5a12; }
+  .opt-label strong { color: #111; }
+</style>

@@ -1,0 +1,208 @@
+---
+import { groupNav } from '../../data/home';
+import { site } from '../../data/site';
+const current = Astro.url.pathname;
+---
+<header class="g-header">
+  <div class="g-container g-header-inner">
+    <a href="/" class="g-logo" aria-label={`${site.name} Group home`}>
+      <img src="/images/vritti-logo.png" alt={`${site.name} – ${site.tagline}`} width="170" height="70" />
+    </a>
+    <button class="g-nav-toggle" aria-expanded="false" aria-controls="group-nav" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="group-nav" class="g-nav" aria-label="Main">
+      <ul>
+        {groupNav.map((item, i) =>
+          item.children ? (
+            <li class="g-has-sub">
+              <button
+                type="button"
+                class="g-sub-toggle"
+                aria-expanded="false"
+                aria-controls={`group-sub-${i}`}
+                data-active={item.children.some((c) => c.href === current) ? 'true' : undefined}
+              >
+                {item.label}
+                <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" /></svg>
+              </button>
+              <ul class="g-sub" id={`group-sub-${i}`}>
+                {item.children.map((c) => (
+                  <li>
+                    <a href={c.href} aria-current={current === c.href ? 'page' : undefined}>{c.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <a href={item.href} aria-current={item.href !== '/' && current === item.href ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          )
+        )}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.g-nav-toggle');
+  const nav = document.getElementById('group-nav');
+  const setOpen = (open: boolean) => {
+    toggle?.setAttribute('aria-expanded', String(open));
+    toggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    nav?.classList.toggle('is-open', open);
+  };
+  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  nav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+  // "Vritti Group" dropdown: opens on hover/focus on desktop, and on click/tap everywhere.
+  const subToggles = document.querySelectorAll<HTMLButtonElement>('.g-sub-toggle');
+  const closeSubs = (except?: HTMLButtonElement) =>
+    subToggles.forEach((b) => b !== except && b.setAttribute('aria-expanded', 'false'));
+  subToggles.forEach((btn) =>
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeSubs(btn);
+      btn.setAttribute('aria-expanded', String(btn.getAttribute('aria-expanded') !== 'true'));
+    })
+  );
+  document.addEventListener('click', () => closeSubs());
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const open = document.querySelector<HTMLButtonElement>('.g-sub-toggle[aria-expanded="true"]');
+    closeSubs();
+    open?.focus();
+  });
+</script>
+
+<style>
+  .g-header {
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  }
+  .g-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 110px;
+  }
+  .g-logo img { display: block; width: 170px; height: auto; }
+  .g-nav ul {
+    display: flex;
+    gap: clamp(28px, 3.6vw, 62px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .g-nav a,
+  .g-sub-toggle {
+    color: var(--g-blue);
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .g-nav a:hover, .g-nav a[aria-current='page'],
+  .g-sub-toggle:hover, .g-sub-toggle[data-active='true'] { color: var(--g-orange); }
+
+  /* Dropdown */
+  .g-has-sub { position: relative; }
+  .g-sub-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 0;
+    padding: 0;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .g-sub-toggle svg { transition: transform 0.2s; }
+  .g-sub-toggle[aria-expanded='true'] svg { transform: rotate(180deg); }
+  .g-nav .g-sub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -20px;
+    min-width: 260px;
+    flex-direction: column;
+    gap: 0;
+    padding: 10px 0;
+    margin-top: 14px;
+    background: #fff;
+    border-top: 3px solid var(--g-orange);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+  }
+  /* invisible bridge so the menu stays open while the pointer moves down to it */
+  .g-nav .g-sub::before { content: ''; position: absolute; left: 0; right: 0; top: -17px; height: 17px; }
+  .g-sub a {
+    display: block;
+    padding: 12px 20px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .g-sub a:hover, .g-sub a:focus-visible { background: #f2f7fc; }
+  .g-sub-toggle[aria-expanded='true'] + .g-sub { display: flex; }
+  @media (hover: hover) and (min-width: 901px) {
+    .g-has-sub:hover .g-sub,
+    .g-has-sub:focus-within .g-sub { display: flex; }
+  }
+  .g-nav-toggle {
+    display: none;
+    background: none;
+    border: 0;
+    padding: 10px;
+    cursor: pointer;
+  }
+  .g-nav-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    margin: 5px 0;
+    background: var(--g-blue);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .g-nav-toggle[aria-expanded='true'] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .g-nav-toggle[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+  .g-nav-toggle[aria-expanded='true'] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 1100px) {
+    .g-header-inner { min-height: 88px; }
+    .g-logo img { width: 140px; }
+    .g-nav a, .g-sub-toggle { font-size: 14px; }
+  }
+  @media (max-width: 900px) {
+    .g-header-inner { min-height: 68px; }
+    .g-logo img { width: 120px; }
+    .g-nav-toggle { display: block; }
+    .g-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+    .g-nav.is-open { display: block; }
+    .g-nav ul { flex-direction: column; gap: 0; padding: 8px 16px 16px; }
+    .g-nav a { display: block; padding: 14px 4px; border-bottom: 1px solid #eee; }
+    .g-sub-toggle { width: 100%; justify-content: space-between; padding: 14px 4px; border-bottom: 1px solid #eee; }
+    .g-nav .g-sub {
+      position: static;
+      margin: 0;
+      padding: 0 0 0 16px;
+      min-width: 0;
+      border-top: 0;
+      box-shadow: none;
+    }
+    .g-nav .g-sub::before { display: none; }
+    .g-sub a { padding: 12px 4px; font-size: 13px; white-space: normal; }
+  }
+</style>

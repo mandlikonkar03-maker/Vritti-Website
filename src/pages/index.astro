@@ -1,4 +1,406 @@
 ---
-// Temporary: the home page design is not built yet, so send visitors to Ekatm ERP.
-return Astro.redirect('/technology/ekatm-erp');
+// Vritti Group home page. Content lives in src/data/home.ts.
+import GroupLayout from '../layouts/GroupLayout.astro';
+import StoryCard from '../components/group/StoryCard.astro';
+import Slideshow from '../components/group/Slideshow.astro';
+import {
+  hero,
+  whoWeAre,
+  businesses,
+  legacy,
+  innovation,
+  awards,
+  presence,
+  foundation,
+} from '../data/home';
+
+const placeholders = Array.from({ length: whoWeAre.placeholderCount });
 ---
+<GroupLayout
+  title="Vritti Group – Building Businesses. Enabling Growth."
+  description={hero.text}
+>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="g-container hero-inner">
+      <div class="hero-copy">
+        <p class="hero-eyebrow">{hero.eyebrow}</p>
+        <h1>{hero.title.map((line) => <span>{line}</span>)}</h1>
+        <p class="hero-text">{hero.text}</p>
+      </div>
+    </div>
+    <img class="hero-img" src={hero.image} alt={hero.imageAlt} width="938" height="795" fetchpriority="high" />
+  </section>
+
+  <!-- Who we are -->
+  <section class="g-section who" id="who-we-are">
+    <div class="g-container">
+      <div class="who-head">
+        <p class="who-eyebrow">{whoWeAre.eyebrow}</p>
+        <h2 class="g-title">{whoWeAre.title}</h2>
+        <p class="who-text">{whoWeAre.text}</p>
+      </div>
+      <ul class="tile-grid">
+        {whoWeAre.tiles.length
+          ? whoWeAre.tiles.map((t) => <li class="tile"><img src={t.src} alt={t.alt} loading="lazy" /></li>)
+          : placeholders.map(() => <li class="tile tile--empty" aria-hidden="true"></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Businesses -->
+  <section class="g-section businesses" id="businesses">
+    <div class="g-container">
+      <div class="g-head">
+        <h2 class="g-title">Businesses</h2>
+        <p class="g-sub">Our diverse portfolio.</p>
+      </div>
+      <div class="biz-grid">
+        {businesses.map((b) => {
+          const Tag = b.href ? 'a' : 'div';
+          return (
+            <Tag class="biz-card" href={b.href} aria-label={b.href ? `${b.label}: explore ${b.lead ?? b.label}` : undefined}>
+              <div class="biz-logo">
+                <img src={b.logo} alt={b.logoAlt} style={`width:${b.logoWidth}px`} loading="lazy" />
+              </div>
+              <h3 class="biz-label">{b.label}</h3>
+              <p class="biz-text">{b.lead && <strong>{b.lead} </strong>}{b.text}</p>
+              <span class={`biz-explore${b.href ? '' : ' is-soon'}`} title={b.href ? undefined : 'Page coming soon'}>
+                Explore <span aria-hidden="true">→</span>
+              </span>
+            </Tag>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Legacy & Leadership -->
+  <section class="g-section" id="legacy">
+    <div class="g-container">
+      <div class="g-head">
+        <h2 class="g-title">{legacy.title}</h2>
+        <p class="g-sub">{legacy.subtitle}</p>
+      </div>
+      <div class="story-row">
+        {legacy.stories.map((s, i) => <StoryCard story={s} wide={i === 1} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 years of innovation & impact -->
+  <section class="g-section" id="innovation">
+    <div class="g-container">
+      <div class="g-head">
+        <h2 class="g-title">{innovation.title}</h2>
+        <p class="g-sub">{innovation.subtitle}</p>
+      </div>
+      <div class="forum-grid">
+        {innovation.columns.map((c) => (
+          <div class="forum-col">
+            <h3 class="forum-title">{c.title}</h3>
+            <div class="forum-box"><span>Content coming soon</span></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Awards & Recognition -->
+  <section class="g-section" id="awards">
+    <div class="g-container">
+      <div class="g-head">
+        <h2 class="g-title">{awards.title}</h2>
+        <p class="g-sub">{awards.subtitle}</p>
+      </div>
+      <div class="story-stack">
+        <div class="story-row">
+          {awards.stories.slice(0, 2).map((s, i) => <StoryCard story={s} wide={i === 1} />)}
+        </div>
+        <div class="story-row">
+          {awards.stories.slice(2, 4).map((s, i) => <StoryCard story={s} wide={i === 0} />)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global presence -->
+  <section class="g-section" id="presence">
+    <div class="g-container">
+      <div class="g-head">
+        <h2 class="g-title">{presence.title}</h2>
+        <p class="g-sub">{presence.subtitle}</p>
+      </div>
+      <div class="map">
+        <img src={presence.map} alt="World map showing where Vritti Group operates" width="1160" height="760" loading="lazy" />
+        {presence.pins.map((p) => (
+          <span class:list={['pin', p.side && `pin--${p.side}`]} style={`left:${p.x}%;top:${p.y}%`}>
+            <span class="pin-dot" aria-hidden="true"></span>
+            <span class="pin-label">{p.label}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Vritti Foundation -->
+  <section class="foundation" id="foundation">
+    <div class="g-container g-head foundation-head">
+      <h2 class="g-title">{foundation.title}</h2>
+      <p class="g-sub">{foundation.subtitle}</p>
+    </div>
+    <div class="foundation-band">
+      <div class="g-container foundation-inner">
+        <div class="foundation-copy">
+          <img src={foundation.logo} alt="Vritti Foundation" width="180" height="62" loading="lazy" />
+          <h3>{foundation.heading}</h3>
+          <p class="foundation-tagline">{foundation.tagline.map((l) => <span>{l}</span>)}</p>
+          <p class="foundation-text">{foundation.text}</p>
+        </div>
+        <Slideshow slides={foundation.slides} />
+      </div>
+    </div>
+  </section>
+</GroupLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    background: linear-gradient(to right, var(--g-blue) 86.67%, var(--g-orange) 86.67%);
+    color: #fff;
+    overflow: hidden;
+    min-height: 47.3vw;
+    display: flex;
+    align-items: center;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-copy { max-width: min(660px, 40vw); padding: 48px 0; }
+  .hero-eyebrow {
+    margin: 0 0 14px;
+    color: var(--g-orange);
+    font-size: clamp(16px, 1.75vw, 30px);
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 3.6vw, 60px);
+    font-weight: 700;
+    line-height: 1.08;
+  }
+  .hero h1 span { display: block; }
+  .hero-text {
+    margin: clamp(18px, 2.4vw, 40px) 0 0;
+    font-size: clamp(16px, 1.65vw, 27px);
+    line-height: 1.12;
+    font-weight: 500;
+  }
+  .hero-img {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 55.83vw;
+    height: auto;
+    display: block;
+  }
+
+  /* Who we are */
+  .who-head { text-align: center; max-width: 1140px; margin: 0 auto 48px; }
+  .who-eyebrow {
+    margin: 0 0 14px;
+    font-size: clamp(12px, 1.1vw, 18px);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #444;
+  }
+  .who-text {
+    margin: 10px 0 0;
+    color: var(--g-text);
+    font-size: clamp(16px, 1.6vw, 26px);
+    font-weight: 600;
+    line-height: 1.15;
+  }
+  .tile-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 14px;
+  }
+  .tile { aspect-ratio: 1; display: grid; place-items: center; background: #fff; }
+  .tile img { max-width: 80%; max-height: 80%; object-fit: contain; }
+  .tile--empty {
+    background-color: #f6f6f6;
+    background-image:
+      linear-gradient(45deg, #ececec 25%, transparent 25%, transparent 75%, #ececec 75%),
+      linear-gradient(45deg, #ececec 25%, transparent 25%, transparent 75%, #ececec 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 8px 8px;
+  }
+
+  /* Businesses */
+  .biz-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(20px, 2.2vw, 36px);
+  }
+  .biz-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #fff;
+    color: var(--g-ink);
+    text-decoration: none;
+    padding: 40px clamp(20px, 5vw, 72px) 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  a.biz-card:hover { transform: translateY(-4px); box-shadow: 0 18px 48px rgba(6, 97, 169, 0.18); }
+  .biz-logo {
+    width: 100%;
+    height: 108px;
+    display: grid;
+    place-items: center;
+    border-bottom: 1px solid #c8c8c8;
+    margin-bottom: 30px;
+  }
+  .biz-logo img { max-width: 100%; height: auto; }
+  .biz-label {
+    color: var(--g-blue);
+    font-size: clamp(20px, 1.75vw, 29px);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .biz-text {
+    margin: 12px 0 28px;
+    font-size: clamp(16px, 1.35vw, 22px);
+    line-height: 1.12;
+    flex: 1;
+  }
+  .biz-explore {
+    color: var(--g-blue);
+    font-weight: 700;
+    font-size: clamp(17px, 1.4vw, 23px);
+  }
+  .biz-explore span { color: var(--g-orange); margin-left: 4px; }
+  .biz-explore.is-soon { opacity: 0.55; }
+
+  /* Story rows (legacy + awards) */
+  .story-row { display: flex; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); }
+  .story-stack { display: flex; flex-direction: column; }
+
+  /* Innovation */
+  .forum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 2.6vw, 42px); }
+  .forum-title {
+    color: var(--g-blue);
+    font-size: clamp(28px, 2.7vw, 46px);
+    font-weight: 700;
+    padding-top: 14px;
+    position: relative;
+    margin-bottom: 36px;
+  }
+  .forum-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: clamp(96px, 7.5vw, 126px);
+    height: 9px;
+    background: var(--g-orange);
+  }
+  .forum-box {
+    aspect-ratio: 700 / 524;
+    background: #fff;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    display: grid;
+    place-items: center;
+    color: #9a9a9a;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 14px;
+  }
+
+  /* Map */
+  .map { position: relative; max-width: 1160px; margin: 0 auto; }
+  .map img { display: block; width: 100%; height: auto; }
+  .pin { position: absolute; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; }
+  .pin-label {
+    order: -1;
+    margin-bottom: 6px;
+    background: var(--g-blue);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .pin--left { flex-direction: row; transform: translate(calc(-100% + 8px), -50%); }
+  .pin--left .pin-label { margin: 0 6px 0 0; }
+  .pin-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--g-orange);
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 0 rgba(235, 158, 46, 0.6);
+    animation: ping 2s infinite;
+  }
+  @keyframes ping {
+    70% { box-shadow: 0 0 0 14px rgba(235, 158, 46, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(235, 158, 46, 0); }
+  }
+
+  /* Foundation */
+  .foundation { padding-top: clamp(40px, 4vw, 64px); }
+  .foundation-head { margin-bottom: 32px; }
+  .foundation-band { background: var(--g-blue); color: #fff; padding: 38px 0 52px; }
+  .foundation-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(32px, 5vw, 120px);
+    align-items: start;
+  }
+  .foundation-copy { padding: 26px 0 0 50px; }
+  .foundation-copy img { width: 180px; height: auto; display: block; }
+  .foundation-copy h3 { margin-top: 14px; font-size: clamp(26px, 2.3vw, 38px); font-weight: 700; }
+  .foundation-tagline { margin: 6px 0 0; font-size: clamp(16px, 1.45vw, 24px); line-height: 1.05; }
+  .foundation-tagline span { display: block; }
+  .foundation-text { margin: 60px 0 0; font-size: clamp(16px, 1.45vw, 24px); line-height: 1.04; max-width: 600px; }
+
+  @media (prefers-reduced-motion: reduce) { .pin-dot { animation: none; } }
+
+  @media (max-width: 1100px) {
+    .tile-grid { grid-template-columns: repeat(5, 1fr); }
+    .biz-card { padding: 32px 22px; }
+    .foundation-copy { padding-left: 0; }
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      flex-direction: column;
+      align-items: stretch;
+      background: var(--g-blue);
+      min-height: 0;
+    }
+    .hero-copy { max-width: 600px; padding: 48px 0 32px; }
+    .hero-img { position: static; width: 100%; }
+    .biz-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+    .story-row { flex-direction: column; }
+    .forum-grid { grid-template-columns: 1fr; }
+    .foundation-inner { grid-template-columns: 1fr; }
+    .foundation-text { margin-top: 28px; }
+  }
+
+  @media (max-width: 600px) {
+    .tile-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .tile--empty:nth-child(n + 13) { display: none; }
+    .pin-label { font-size: 10px; padding: 2px 7px; }
+    .pin-dot { width: 12px; height: 12px; border-width: 2px; }
+  }
+</style>

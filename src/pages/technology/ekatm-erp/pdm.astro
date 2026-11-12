@@ -1,0 +1,359 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import Faq from '../../../components/Faq.astro';
+import DemoForm from '../../../components/DemoForm.astro';
+import ScreenCarousel from '../../../components/ScreenCarousel.astro';
+import Icon from '../../../components/Icon.astro';
+import { pdmSlides, hero, workflow, capabilities, changes, costing, execution, why, faqs } from '../../../data/ekatm-pdm';
+
+const rows = [workflow.steps.slice(0, 5), workflow.steps.slice(5)];
+---
+<BaseLayout
+  title="Ekatm Product Data Management (PDM) | Vritti"
+  description="Ekatm PDM connects product definition, BOMs, processes, routings, machines, production lines, quality parameters and costing with manufacturing in one ERP."
+  footerLinks={[{ label: 'Back to Technology', href: '/technology' }]}
+  footerTagline="Ekatm ERP. Simple enough to start. Powerful enough to scale."
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <Breadcrumbs items={[
+          { label: 'Vritti', href: '/' },
+          { label: 'Technology', href: '/technology' },
+          { label: 'Ekatm ERP', href: '/technology/ekatm-erp' },
+          { label: 'Product Data Management' },
+        ]} />
+        <p class="eyebrow eyebrow--dash hero-eyebrow">Product Data Management</p>
+        <h1>{hero.title}<br /><span>{hero.titleAccent}</span></h1>
+        <p class="hero-text">{hero.text}</p>
+        <div class="hero-actions">
+          <a href="#demo" class="btn btn-primary">Get Your Free Ekatm ERP Demo</a>
+          <a href="#capabilities" class="btn btn-outline">Explore Features</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <ScreenCarousel slides={pdmSlides} label="Ekatm PDM screens" eager />
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKFLOW -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <p class="eyebrow">{workflow.eyebrow}</p>
+        <h2 class="section-title section-title--lg">{workflow.title}<br />{workflow.titleBreak}</h2>
+        <p class="workflow-text">{workflow.text}</p>
+      </div>
+      <ol class="flow" aria-label="From product definition to production">
+        {rows.map((row) => (
+          <li class="flow-row">
+            <ol>
+              {row.map((s, i) => (
+                <li class="flow-step">
+                  <span class="flow-chip">
+                    <span class="icon-tile icon-tile--sm"><Icon name={s.icon} size={16} /></span>
+                    {s.label}
+                  </span>
+                  {i < row.length - 1 && <span class="flow-arrow" aria-hidden="true">→</span>}
+                </li>
+              ))}
+            </ol>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section id="capabilities" class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">{capabilities.eyebrow}</p>
+        <h2 class="section-title section-title--lg">{capabilities.title}<br />{capabilities.titleBreak}</h2>
+        <p class="lead">{capabilities.text}</p>
+      </div>
+      <ul class="grid-3 cap-grid">
+        {capabilities.items.map((c) => (
+          <li class="card cap-card">
+            <div class="card-head">
+              <span class="icon-tile"><Icon name={c.icon} /></span>
+              <h3>{c.title}</h3>
+            </div>
+            <p class="card-text">{c.text}</p>
+            <ul class="points">{c.points.map((p) => <li>{p}</li>)}</ul>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ENGINEERING CHANGES -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title section-title--lg">{changes.title}<br />{changes.titleBreak}</h2>
+        <p class="lead">{changes.text}</p>
+      </div>
+      <div class="changes-grid">
+        <ul class="change-list">
+          {changes.items.map((c) => (
+            <li class="change-card">
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
+            </li>
+          ))}
+        </ul>
+        <div class="highlight">
+          <h3>{changes.highlight.title}</h3>
+          {changes.highlight.paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COSTING -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title section-title--lg">{costing.title}</h2>
+        <p class="lead">{costing.text}</p>
+      </div>
+      <ul class="grid-3">
+        {costing.items.map((c) => (
+          <li class="card tile-card">
+            <span class="icon-tile icon-tile--lg"><Icon name={c.icon} /></span>
+            <h3>{c.title}</h3>
+            <p class="card-text">{c.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- EXECUTION -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title section-title--lg narrow-title">{execution.title}</h2>
+        <p class="lead">{execution.text}</p>
+      </div>
+      <ul class="grid-3">
+        {execution.items.map((c) => (
+          <li class="card tile-card">
+            <span class="icon-tile icon-tile--lg"><Icon name={c.icon} /></span>
+            <h3>{c.title}</h3>
+            <p class="card-text">{c.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="section-title section-title--lg">{why.title}</h2>
+        <p class="lead">{why.text}</p>
+      </div>
+      <ul class="grid-3">
+        {why.items.map((c) => (
+          <li class="card why-card">
+            <div class="card-head">
+              <span class="icon-tile"><Icon name={c.icon} /></span>
+              <h3>{c.title}</h3>
+            </div>
+            <p class="card-text">{c.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section--soft">
+    <div class="container faq-grid">
+      <div class="faq-intro">
+        <h2 class="section-title">Frequently<br />asked questions.</h2>
+        <p class="eyebrow eyebrow--muted">About Ekatm ERP</p>
+        <p class="faq-text">Want to see how Ekatm fits your business processes? Ask for a demo and we will walk you through it.</p>
+        <a href="#demo" class="btn btn-primary">Get Your Free Ekatm ERP Demo</a>
+      </div>
+      <Faq items={faqs} label="The Platform" name="faq-pdm" />
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section id="demo" class="section demo">
+    <div class="container demo-grid">
+      <div class="demo-intro">
+        <p class="eyebrow">See Ekatm in action</p>
+        <h2 class="section-title">Get Your Free<br />Ekatm ERP Demo</h2>
+        <p class="demo-text">Discover how Ekatm ERP can connect your business processes and support your operational needs.</p>
+        <div class="demo-illustration">
+          <img src="/images/demo-illustration.png" width="348" height="238" loading="lazy" alt="Illustration of a team working around an ERP dashboard" />
+        </div>
+      </div>
+      <div class="demo-card">
+        <DemoForm product="Ekatm ERP – Product Data Management" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .hero { padding: 36px 0 84px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+    gap: 40px;
+    align-items: start;
+  }
+  .hero-eyebrow { margin: 34px 0 14px; }
+  .hero h1 { font-size: clamp(32px, 3.3vw, 46px); line-height: 1.14; }
+  .hero h1 span { color: var(--blue); }
+  .hero-text { color: var(--text); font-size: 15.5px; line-height: 1.8; max-width: 470px; margin: 22px 0 28px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-card { margin-top: 30px; }
+
+  /* SHARED */
+  .icon-tile {
+    flex: none;
+    width: 40px; height: 40px; border-radius: 8px;
+    background: #e8f2fa; color: var(--blue);
+    display: grid; place-items: center;
+  }
+  .icon-tile--sm { width: 30px; height: 30px; border-radius: 6px; }
+  .icon-tile--lg { width: 46px; height: 46px; }
+  .section-head .lead { max-width: 960px; }
+  .grid-3 {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px 20px 24px;
+  }
+  .card h3 { font-size: 15px; font-weight: 600; line-height: 1.4; margin: 0; }
+  .card-head { display: flex; align-items: center; gap: 12px; }
+  .card-text { margin: 0; color: var(--text); font-size: 13.5px; line-height: 1.6; }
+
+  /* WORKFLOW */
+  .workflow-text { color: var(--text); font-size: 13.5px; line-height: 1.7; max-width: 900px; margin: 18px auto 0; }
+  .flow, .flow-row ol { list-style: none; padding: 0; margin: 0; }
+  .flow { display: grid; gap: 28px; }
+  .flow-row ol { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; }
+  .flow-step { display: flex; align-items: center; }
+  .flow-chip {
+    flex: 1; min-width: 0;
+    display: flex; align-items: center; gap: 10px;
+    background: #fff; border: 1px solid var(--line); border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 14px; font-weight: 600; color: var(--navy);
+  }
+  .flow-arrow { flex: none; width: 52px; text-align: center; color: var(--blue); font-size: 22px; line-height: 1; }
+  .flow-step:last-child .flow-chip { margin-right: 0; }
+  .flow-row ol { column-gap: 0; }
+
+  /* CAPABILITIES */
+  .cap-card .card-text { margin: 22px 0 12px; }
+  .points { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .points li { position: relative; padding-left: 16px; font-size: 13.5px; color: var(--text); line-height: 1.5; }
+  .points li::before { content: '·'; position: absolute; left: 4px; top: 0; font-weight: 700; }
+
+  /* ENGINEERING CHANGES */
+  .changes-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.5fr); gap: 20px; align-items: stretch; }
+  .change-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .change-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--blue);
+    border-radius: 10px;
+    padding: 18px 16px 20px;
+  }
+  .change-card h3 { font-size: 14.5px; font-weight: 600; margin: 0 0 8px; }
+  .change-card p { margin: 0; color: var(--text); font-size: 13px; line-height: 1.55; }
+  .highlight {
+    border-radius: 14px;
+    padding: 32px 26px;
+    color: #fff;
+    background: linear-gradient(135deg, #0b3a5c 0%, #1f78b4 55%, #3aa8ea 100%);
+  }
+  .highlight h3 { color: #fff; font-size: clamp(22px, 2vw, 28px); font-weight: 600; line-height: 1.25; margin: 0 0 32px; }
+  .highlight p { margin: 0 0 20px; font-size: 15px; line-height: 1.5; }
+  .highlight p:last-child { margin-bottom: 0; }
+
+  /* COSTING / EXECUTION */
+  .tile-card h3 { margin: 18px 0 10px; }
+  .narrow-title { max-width: 620px; }
+
+  /* WHY */
+  .why-card { padding-bottom: 28px; }
+  .why-card .card-text { margin-top: 24px; }
+
+  /* FAQ */
+  .faq-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 72px; align-items: start; }
+  .faq-intro .eyebrow { margin: 14px 0 0; }
+  .faq-text { color: var(--text); font-size: 14.5px; line-height: 1.75; margin: 18px 0 22px; max-width: 300px; }
+
+  /* DEMO */
+  .demo-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: 60px; align-items: start; }
+  .demo-intro { padding-left: 16px; }
+  .demo-intro .eyebrow { margin: 0 0 14px; font-weight: 700; }
+  .demo-text { color: var(--text); font-size: 16px; font-weight: 500; line-height: 1.75; margin: 24px 0 26px; max-width: 390px; }
+  .demo-illustration {
+    width: 100%; max-width: 306px;
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px; background: #fff;
+  }
+  .demo-illustration img { display: block; width: 100%; }
+  .demo-card {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: var(--shadow-card);
+    padding: 34px 28px 30px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .hero-grid, .faq-grid, .demo-grid, .changes-grid { grid-template-columns: 1fr; }
+    .hero-card { max-width: 640px; margin-top: 8px; }
+    .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .flow-arrow { width: 32px; font-size: 18px; }
+    .flow-chip { padding: 8px; gap: 8px; font-size: 13px; }
+    .demo-intro { padding-left: 0; }
+    .faq-text { max-width: 520px; }
+    .faq-grid, .demo-grid { gap: 40px; }
+  }
+  @media (max-width: 760px) {
+    /* Flow becomes one vertical sequence */
+    .flow { gap: 0; }
+    .flow-row ol { grid-template-columns: 1fr; }
+    .flow-step { flex-direction: column; align-items: stretch; }
+    .flow-arrow { width: auto; height: 26px; line-height: 26px; transform: rotate(90deg); }
+    .flow-row:first-child .flow-step:last-child::after {
+      content: '→'; display: block; text-align: center; color: var(--blue);
+      font-size: 18px; height: 26px; line-height: 26px; transform: rotate(90deg);
+    }
+    .flow-chip { padding: 10px 12px; font-size: 14px; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 24px 0 64px; }
+    .hero-eyebrow { margin-top: 24px; }
+    .hero-text { font-size: 16px; }
+    .hero-actions .btn { flex: 1 1 100%; }
+    .grid-3, .change-list { grid-template-columns: 1fr; gap: 14px; }
+    .changes-grid { gap: 14px; }
+    .highlight { padding: 26px 20px; }
+    .highlight h3 { margin-bottom: 20px; }
+    .demo-card { padding: 24px 16px; }
+    .section-title--lg br { display: none; }
+  }
+</style>

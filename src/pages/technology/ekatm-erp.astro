@@ -3,10 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Faq from '../../components/Faq.astro';
 import DemoForm from '../../components/DemoForm.astro';
+import ScreenCarousel from '../../components/ScreenCarousel.astro';
 import { heroSlides, problems, features, levelUp, integrations, testimonials, faqs } from '../../data/ekatm-erp';
 
 const tagline = 'Ekatm ERP. Simple enough to start. Powerful enough to scale.';
-const initialSlide = heroSlides.length - 1;
 ---
 <BaseLayout
   title="Ekatm ERP | Vritti"
@@ -35,30 +35,8 @@ const initialSlide = heroSlides.length - 1;
         </ul>
       </div>
 
-      <div class="hero-card" data-carousel aria-roledescription="carousel" aria-label="Ekatm screens">
-        <div class="slides">
-          {heroSlides.map((s, i) => (
-            <figure class="slide" aria-roledescription="slide" aria-label={`${i + 1} of ${heroSlides.length}`} hidden={i !== initialSlide}>
-              <div class="slide-media"><img src={s.image} alt={s.alt} loading={i === initialSlide ? 'eager' : 'lazy'} /></div>
-              <figcaption>
-                <p class="eyebrow">{s.eyebrow}</p>
-                <h2>{s.title}</h2>
-                <p>{s.text}</p>
-              </figcaption>
-            </figure>
-          ))}
-          <button class="arrow arrow--prev" data-prev aria-label="Previous slide">
-            <svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true"><path d="M8 2 2 8l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button class="arrow arrow--next" data-next aria-label="Next slide">
-            <svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true"><path d="m2 2 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-        <div class="dots hero-dots">
-          {heroSlides.map((s, i) => (
-            <button class="dot" data-dot={i} aria-label={`Show ${s.eyebrow}`} aria-current={i === initialSlide ? 'true' : 'false'}></button>
-          ))}
-        </div>
+      <div class="hero-card">
+        <ScreenCarousel slides={heroSlides} eager />
       </div>
     </div>
   </section>
@@ -72,12 +50,13 @@ const initialSlide = heroSlides.length - 1;
         <p class="lead">Explore the functional areas that make Ekatm a complete enterprise platform.</p>
       </div>
       <ul class="feature-grid">
-        {features.map((f) => (
-          <li>
+        {features.map((f) => {
+          const inner = <>
             <span class="feature-icon"><img src={`/images/features/${f.icon}.png`} alt="" width="48" height="48" loading="lazy" /></span>
             <span class="feature-label">{f.label}</span>
-          </li>
-        ))}
+          </>;
+          return <li>{f.href ? <a class="feature-link" href={f.href}>{inner}</a> : inner}</li>;
+        })}
       </ul>
     </div>
   </section>
@@ -203,32 +182,6 @@ const initialSlide = heroSlides.length - 1;
 </BaseLayout>
 
 <script>
-  // Hero carousel
-  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
-    const slides = [...root.querySelectorAll<HTMLElement>('.slide')];
-    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dot]')];
-    let index = slides.findIndex((s) => !s.hidden);
-    let timer: number | undefined;
-
-    const show = (i: number) => {
-      index = (i + slides.length) % slides.length;
-      slides.forEach((s, n) => (s.hidden = n !== index));
-      dots.forEach((d, n) => d.setAttribute('aria-current', String(n === index)));
-    };
-    const restart = () => {
-      window.clearInterval(timer);
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        timer = window.setInterval(() => show(index + 1), 6000);
-      }
-    };
-    root.querySelector('[data-prev]')?.addEventListener('click', () => { show(index - 1); restart(); });
-    root.querySelector('[data-next]')?.addEventListener('click', () => { show(index + 1); restart(); });
-    dots.forEach((d, n) => d.addEventListener('click', () => { show(n); restart(); }));
-    root.addEventListener('mouseenter', () => window.clearInterval(timer));
-    root.addEventListener('mouseleave', restart);
-    restart();
-  });
-
   // Testimonials slider (scroll-snap track)
   document.querySelectorAll<HTMLElement>('[data-slider]').forEach((root) => {
     const track = root.querySelector<HTMLElement>('[data-track]')!;
@@ -291,39 +244,7 @@ const initialSlide = heroSlides.length - 1;
     background: #d2e6f6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l2.6 2.6L9 1.2' fill='none' stroke='%230369a1' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 10px no-repeat;
   }
 
-  .hero-card {
-    margin-top: 30px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    box-shadow: var(--shadow-card);
-    padding: 16px 16px 26px;
-  }
-  .slides { position: relative; }
-  .slide { margin: 0; }
-  .slide-media {
-    aspect-ratio: 520 / 290;
-    background: #f3f6f9;
-    border-radius: 8px;
-    overflow: hidden;
-    display: grid;
-    place-items: center;
-  }
-  .slide-media img { width: 100%; height: 100%; object-fit: contain; }
-  .slide figcaption { padding: 34px 4px 0; }
-  .slide figcaption .eyebrow { font-size: 11px; margin: 0 0 6px; }
-  .slide h2 { font-size: 18px; font-weight: 500; margin: 0 0 6px; }
-  .slide figcaption p:last-child { margin: 0; color: var(--text); font-size: 13px; }
-  .slides .arrow {
-    position: absolute;
-    top: calc((100% - 120px) / 2);
-    width: 38px; height: 38px;
-  }
-  .arrow--prev { left: -10px; }
-  .arrow--next { right: -10px; }
-  .hero-dots { padding: 22px 4px 0; gap: 14px; }
-  .hero-dots .dot { width: 10px; height: 10px; }
-  .hero-dots .dot[aria-current='true'] { width: 24px; }
+  .hero-card { margin-top: 30px; }
 
   /* FEATURES */
   .feature-grid {
@@ -333,7 +254,9 @@ const initialSlide = heroSlides.length - 1;
     gap: 26px 24px;
     max-width: 1010px;
   }
-  .feature-grid li { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .feature-grid li, .feature-link { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .feature-link { color: inherit; text-decoration: none; }
+  .feature-link:hover .feature-label { color: var(--blue); }
   .feature-icon {
     width: 68px; height: 68px; border-radius: 12px;
     background: #fff;
@@ -456,10 +379,6 @@ const initialSlide = heroSlides.length - 1;
     .hero-eyebrow { margin-top: 24px; }
     .hero-text { font-size: 16px; }
     .hero-actions .btn { flex: 1 1 100%; }
-    .hero-card { padding: 12px 12px 22px; }
-    .slides .arrow { width: 32px; height: 32px; }
-    .arrow--prev { left: -6px; }
-    .arrow--next { right: -6px; }
     .feature-grid { grid-template-columns: repeat(3, 1fr); gap: 28px 12px; }
     .feature-icon { width: 60px; height: 60px; }
     .feature-icon img { width: 42px; height: 42px; }

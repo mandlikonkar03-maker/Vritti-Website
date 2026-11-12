@@ -1,0 +1,115 @@
+---
+// Card with product screenshots, a caption per slide, arrows and dots.
+// Used in the Ekatm ERP hero and on every module page.
+interface Slide { image: string; alt: string; eyebrow: string; title: string; text: string }
+interface Props {
+  slides: Slide[];
+  label?: string;
+  /** slide shown on load; defaults to the last one, as in the design */
+  initial?: number;
+  /** load the first visible image eagerly (use for the hero only) */
+  eager?: boolean;
+}
+const { slides, label = 'Ekatm screens', initial = slides.length - 1, eager = false } = Astro.props;
+---
+<div class="screen-card" data-carousel aria-roledescription="carousel" aria-label={label}>
+  <div class="slides">
+    {slides.map((s, i) => (
+      <figure class="slide" aria-roledescription="slide" aria-label={`${i + 1} of ${slides.length}`} hidden={i !== initial}>
+        <div class="slide-media"><img src={s.image} alt={s.alt} loading={eager && i === initial ? 'eager' : 'lazy'} /></div>
+        <figcaption>
+          <p class="eyebrow">{s.eyebrow}</p>
+          <p class="slide-title">{s.title}</p>
+          <p class="slide-text">{s.text}</p>
+        </figcaption>
+      </figure>
+    ))}
+    <button class="arrow arrow--prev" data-prev aria-label="Previous slide">
+      <svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true"><path d="M8 2 2 8l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="arrow arrow--next" data-next aria-label="Next slide">
+      <svg width="10" height="16" viewBox="0 0 10 16" aria-hidden="true"><path d="m2 2 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+  <div class="dots screen-dots">
+    {slides.map((s, i) => (
+      <button class="dot" data-dot={i} aria-label={`Show ${s.eyebrow}`} aria-current={i === initial ? 'true' : 'false'}></button>
+    ))}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.slide')];
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    let index = slides.findIndex((s) => !s.hidden);
+    let timer: number | undefined;
+    let visible = false;
+
+    const show = (i: number) => {
+      index = (i + slides.length) % slides.length;
+      slides.forEach((s, n) => (s.hidden = n !== index));
+      dots.forEach((d, n) => d.setAttribute('aria-current', String(n === index)));
+    };
+    const stop = () => window.clearInterval(timer);
+    const restart = () => {
+      stop();
+      if (visible && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        timer = window.setInterval(() => show(index + 1), 6000);
+      }
+    };
+    root.querySelector('[data-prev]')?.addEventListener('click', () => { show(index - 1); restart(); });
+    root.querySelector('[data-next]')?.addEventListener('click', () => { show(index + 1); restart(); });
+    dots.forEach((d, n) => d.addEventListener('click', () => { show(n); restart(); }));
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', restart);
+    // Only auto-advance carousels that are on screen
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      restart();
+    }, { threshold: 0.3 }).observe(root);
+  });
+</script>
+
+<style>
+  .screen-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow-card);
+    padding: 16px 16px 26px;
+  }
+  .slides { position: relative; }
+  .slide { margin: 0; }
+  .slide-media {
+    aspect-ratio: 520 / 290;
+    background: #f3f6f9;
+    border-radius: 8px;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+  .slide-media img { width: 100%; height: 100%; object-fit: contain; }
+  .slide figcaption { padding: 34px 4px 0; }
+  .slide figcaption .eyebrow { font-size: 11px; margin: 0 0 6px; }
+  .slide-title { font-size: 18px; font-weight: 500; margin: 0 0 6px; line-height: 1.3; }
+  .slide-text { margin: 0; color: var(--text); font-size: 13px; }
+  .slides .arrow {
+    position: absolute;
+    top: calc((100% - 120px) / 2);
+    width: 38px; height: 38px;
+  }
+  .arrow--prev { left: -10px; }
+  .arrow--next { right: -10px; }
+  .screen-dots { padding: 22px 4px 0; gap: 14px; }
+  .screen-dots .dot { width: 10px; height: 10px; }
+  .screen-dots .dot[aria-current='true'] { width: 24px; }
+
+  @media (max-width: 640px) {
+    .screen-card { padding: 12px 12px 22px; }
+    .slides .arrow { width: 32px; height: 32px; }
+    .arrow--prev { left: -6px; }
+    .arrow--next { right: -6px; }
+    .slide figcaption { padding-top: 24px; }
+  }
+</style>

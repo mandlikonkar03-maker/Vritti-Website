@@ -1,0 +1,319 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import Faq from '../../../components/Faq.astro';
+import DemoForm from '../../../components/DemoForm.astro';
+import ScreenCarousel from '../../../components/ScreenCarousel.astro';
+import Icon from '../../../components/Icon.astro';
+import { purchaseSlides, hero, capabilities, why, faqGroups } from '../../../data/ekatm-purchase';
+
+const num = (i: number) => String(i + 1).padStart(2, '0');
+---
+<BaseLayout
+  title="Ekatm Purchase Management | Vritti"
+  description="Ekatm Purchase connects purchase planning, supplier sourcing, delivery, quality, invoicing, payment and vendor performance with business controls throughout."
+  footerLinks={[{ label: 'Back to Technology', href: '/technology' }]}
+  footerTagline="Ekatm ERP. Simple enough to start. Powerful enough to scale."
+>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <Breadcrumbs items={[
+          { label: 'Vritti', href: '/' },
+          { label: 'Technology', href: '/technology' },
+          { label: 'Ekatm ERP', href: '/technology/ekatm-erp' },
+          { label: 'Purchase' },
+        ]} />
+        <p class="eyebrow eyebrow--dash hero-eyebrow">Purchase</p>
+        <h1>{hero.title}<br /><span>{hero.titleAccent}</span></h1>
+        <p class="hero-text">{hero.text}</p>
+        <div class="hero-actions">
+          <a href="#demo" class="btn btn-primary">Get Your Free Ekatm ERP Demo</a>
+          <a href="#capabilities" class="btn btn-outline">Explore Features</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <ScreenCarousel slides={purchaseSlides} label="Ekatm Purchase screens" eager />
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITY OVERVIEW -->
+  <section id="capabilities" class="section section--soft">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <p class="eyebrow">Features</p>
+        <h2 class="section-title section-title--lg">Purchase Capabilities</h2>
+        <p class="lead">A quick view of the major capabilities available in Ekatm Purchase.</p>
+      </div>
+      <ul class="cap-grid">
+        {capabilities.map((c) => (
+          <li>
+            <a class="cap-card" href={`#${c.id}`}>
+              <span class="icon-tile"><Icon name={c.icon} /></span>
+              <h3>{c.title}</h3>
+              <p>{c.summary}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- CAPABILITY DETAIL -->
+  <section class="section explore">
+    <div class="container">
+      <div class="explore-head">
+        <h2 class="section-title">Explore the Purchase Capabilities</h2>
+        <p>The sections below explain how these capabilities work together to solve real purchasing problems—not simply repeat the feature list.</p>
+      </div>
+
+      {capabilities.map((c, i) => (
+        <article id={c.id} class:list={['cap', { 'cap--flip': i % 2 === 1 }]}>
+          <div class="cap-copy">
+            <p class="eyebrow cap-eyebrow">Purchase Capability {num(i)}</p>
+            <h3 class="cap-title">{c.title}</h3>
+            <p class="cap-tagline">{c.tagline}</p>
+            <p class="cap-body">{c.body}</p>
+            <div class="enables">
+              <p class="enables-title">What this enables</p>
+              <ul>{c.enables.map((e) => <li>{e}</li>)}</ul>
+            </div>
+          </div>
+          <div class="cap-media">
+            <ScreenCarousel slides={c.slides ?? purchaseSlides} label={`${c.title} screens`} />
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- WHY + FAQ -->
+  <section class="section section--soft why">
+    <div class="container">
+      <div class="section-head section-head--center">
+        <p class="eyebrow">{why.eyebrow}</p>
+        <h2 class="section-title section-title--lg">{why.title}</h2>
+        <p class="lead why-lead">{why.text}</p>
+      </div>
+      <ul class="why-grid">
+        {why.points.map((p) => (
+          <li class="why-card">
+            <span class="icon-tile"><Icon name={p.icon} /></span>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </li>
+        ))}
+      </ul>
+
+      <div class="faq-grid">
+        <div class="faq-intro">
+          <h2 class="section-title">Frequently<br />asked questions.</h2>
+          <p class="eyebrow eyebrow--muted">About Ekatm ERP</p>
+          <p class="faq-text">Want to see how Ekatm fits your business processes? Ask for a demo and we will walk you through it.</p>
+          <a href="#demo" class="btn btn-primary">Get Your Free Ekatm ERP Demo</a>
+        </div>
+        <div>
+          <p class="eyebrow faq-label">The Platform</p>
+          {faqGroups.map((g, i) => (
+            <details class="faq-group" name="faq-group" open={i === 0}>
+              <summary>
+                <span>{i + 1}. {g.title}</span>
+                <span class="group-icon" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 12 12"><path d="m3 4.5 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </summary>
+              <div class="faq-group-body">
+                <Faq items={g.items} name={`faq-${i}`} />
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section id="demo" class="section demo">
+    <div class="container demo-grid">
+      <div class="demo-intro">
+        <p class="eyebrow">See Ekatm in action</p>
+        <h2 class="section-title">Get Your Free<br />Ekatm ERP Demo</h2>
+        <p class="demo-text">Discover how Ekatm ERP can connect your business processes and support your operational needs.</p>
+        <div class="demo-illustration">
+          <img src="/images/demo-illustration.png" width="348" height="238" loading="lazy" alt="Illustration of a team working around an ERP dashboard" />
+        </div>
+      </div>
+      <div class="demo-card">
+        <DemoForm product="Ekatm ERP – Purchase" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .hero { padding: 36px 0 84px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+    gap: 40px;
+    align-items: start;
+  }
+  .hero-eyebrow { margin: 34px 0 14px; }
+  .hero h1 { font-size: clamp(32px, 3.3vw, 46px); line-height: 1.14; }
+  .hero h1 span { color: var(--blue); }
+  .hero-text { color: var(--text); font-size: 15.5px; line-height: 1.8; max-width: 470px; margin: 22px 0 28px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-card { margin-top: 30px; }
+
+  /* SHARED */
+  .icon-tile {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: #e8f2fa; color: var(--blue);
+    display: grid; place-items: center;
+  }
+
+  /* CAPABILITY OVERVIEW */
+  .cap-grid {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  }
+  .cap-grid li { display: flex; }
+  .cap-card {
+    flex: 1;
+    display: block;
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 18px 22px;
+    color: inherit; text-decoration: none;
+    box-shadow: 0 6px 18px rgba(15, 42, 61, 0.05);
+    border: 1px solid transparent;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .cap-card:hover { transform: translateY(-3px); border-color: #cfe1ef; box-shadow: 0 12px 26px rgba(15, 42, 61, 0.09); }
+  .cap-card h3 { font-size: 14.5px; font-weight: 600; line-height: 1.45; margin: 22px 0 8px; }
+  .cap-card p { margin: 0; color: var(--text); font-size: 13px; line-height: 1.6; }
+
+  /* CAPABILITY DETAIL */
+  .explore-head { margin-bottom: 30px; }
+  .explore-head p { margin: 14px 0 0; color: var(--text); font-weight: 600; font-size: 15px; }
+  .cap {
+    display: grid;
+    grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+    padding: 44px 0 56px;
+    scroll-margin-top: 20px;
+  }
+  .cap + .cap { border-top: 1px solid var(--line); }
+  .cap--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr); }
+  .cap--flip .cap-copy { order: 2; }
+  .cap-media { padding-top: 6px; }
+  .cap--flip .cap-media { padding-top: 0; }
+  .cap-eyebrow { font-size: 12px; font-weight: 700; margin: 0 0 12px; }
+  .cap-title { font-size: clamp(24px, 2.3vw, 29px); font-weight: 600; }
+  .cap-tagline { color: var(--blue); font-weight: 600; font-size: 16px; line-height: 1.6; margin: 14px 0 0; }
+  .cap-body { color: var(--text); font-size: 14.5px; line-height: 1.75; margin: 18px 0 24px; }
+  .enables {
+    background: #f2f8fd;
+    border: 1px solid #e1edf6;
+    border-radius: 10px;
+    padding: 16px 18px 18px;
+  }
+  .enables-title { margin: 0 0 12px; font-size: 13.5px; font-weight: 600; }
+  .enables ul {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 24px;
+  }
+  .enables li { position: relative; padding-left: 16px; font-size: 13.5px; color: var(--text); line-height: 1.5; }
+  .enables li::before {
+    content: ''; position: absolute; left: 2px; top: 0.6em;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--blue);
+  }
+
+  /* WHY */
+  .why-lead { max-width: 760px; margin-left: auto !important; margin-right: auto !important; }
+  .why-grid {
+    list-style: none; padding: 0; margin: 0 0 96px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  }
+  .why-card { background: #fff; border-radius: 12px; padding: 22px 20px 24px; box-shadow: 0 6px 18px rgba(15, 42, 61, 0.05); }
+  .why-card h3 { font-size: 15px; font-weight: 600; line-height: 1.45; margin: 28px 0 10px; }
+  .why-card p { margin: 0; color: var(--text); font-size: 13.5px; line-height: 1.65; }
+
+  /* FAQ */
+  .faq-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 72px; align-items: start; }
+  .faq-intro { padding-top: 10px; }
+  .faq-intro .eyebrow { margin: 14px 0 0; }
+  .faq-text { color: var(--text); font-size: 14.5px; line-height: 1.75; margin: 18px 0 22px; max-width: 300px; }
+  .faq-label { margin: 0 0 6px 4px; font-weight: 700; }
+  .faq-group { border-bottom: 1px solid #d6e2ec; }
+  .faq-group > summary {
+    list-style: none;
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    padding: 16px 4px 16px 8px;
+    font-size: 16px; font-weight: 500; color: var(--blue);
+    cursor: pointer;
+  }
+  .faq-group > summary::-webkit-details-marker { display: none; }
+  .group-icon {
+    flex: none; width: 26px; height: 26px; border-radius: 50%;
+    background: var(--blue); color: #fff;
+    display: grid; place-items: center;
+    transition: transform 0.2s;
+  }
+  .faq-group[open] .group-icon { transform: rotate(180deg); }
+  .faq-group-body { padding: 0 0 8px; }
+  .faq-group-body :global(.faq-item:last-child) { border-bottom: 0; }
+  .faq-group-body :global(.faq-item summary) { font-size: 16px; }
+  .faq-group-body :global(.faq-item[open] summary) { color: var(--navy); }
+
+  /* DEMO */
+  .demo-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: 60px; align-items: start; }
+  .demo-intro { padding-left: 16px; }
+  .demo-intro .eyebrow { margin: 0 0 14px; font-weight: 700; }
+  .demo-text { color: var(--text); font-size: 16px; font-weight: 500; line-height: 1.75; margin: 24px 0 26px; max-width: 390px; }
+  .demo-illustration {
+    width: 100%; max-width: 306px;
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px; background: #fff;
+  }
+  .demo-illustration img { display: block; width: 100%; }
+  .demo-card {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: var(--shadow-card);
+    padding: 34px 28px 30px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .hero-grid, .faq-grid, .demo-grid { grid-template-columns: 1fr; }
+    .hero-card { max-width: 640px; margin-top: 8px; }
+    .cap-grid, .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .cap, .cap--flip { grid-template-columns: 1fr; gap: 32px; }
+    .cap--flip .cap-copy { order: 0; }
+    .cap-media { max-width: 640px; padding-top: 0; }
+    .demo-intro { padding-left: 0; }
+    .faq-text { max-width: 520px; }
+    .faq-grid, .demo-grid { gap: 40px; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 24px 0 64px; }
+    .hero-eyebrow { margin-top: 24px; }
+    .hero-text { font-size: 16px; }
+    .hero-actions .btn { flex: 1 1 100%; }
+    .cap-grid { gap: 12px; }
+    .cap-card { padding: 14px 14px 18px; }
+    .cap-card h3 { font-size: 13.5px; margin-top: 16px; }
+    .cap-card p { font-size: 12.5px; }
+    .why-grid { grid-template-columns: 1fr; margin-bottom: 64px; }
+    .cap { padding: 32px 0 40px; }
+    .cap-body { font-size: 15px; }
+    .enables ul { grid-template-columns: 1fr; }
+    .demo-card { padding: 24px 16px; }
+  }
+</style>

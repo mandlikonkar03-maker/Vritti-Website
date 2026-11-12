@@ -188,6 +188,14 @@ export const groupNav: NavItem[] = [
           { label: 'AdatSoft', href: '/#businesses' },
         ],
       },
+      {
+        label: 'IT Services',
+        href: '/#businesses', // placeholder until the IT Services page exists
+        items: [
+          { label: 'UI UX Designing', href: '/#businesses' },
+          { label: 'Website Designing', href: '/#businesses' },
+        ],
+      },
       // Placeholders until these business pages exist: they scroll to the home page's Businesses section.
       { label: 'Rural Marketing', href: '/#businesses' },
       { label: 'Media', href: '/#businesses' },

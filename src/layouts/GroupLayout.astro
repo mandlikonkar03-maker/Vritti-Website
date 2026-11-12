@@ -8,9 +8,11 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  // false hides the team-photo strip above the footer on this page.
+  footerStrip?: boolean;
 }
 
-const { title, description = 'Vritti Group' } = Astro.props;
+const { title, description = 'Vritti Group', footerStrip = true } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -34,7 +36,7 @@ const { title, description = 'Vritti Group' } = Astro.props;
       <slot />
     </main>
     <slot name="before-footer" />
-    <GroupFooter />
+    <GroupFooter showStrip={footerStrip} />
   </body>
 </html>
 

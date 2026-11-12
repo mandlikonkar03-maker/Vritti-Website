@@ -2,8 +2,14 @@
 import { brandVideo, groupFooter as f } from '../../data/home';
 import { site } from '../../data/site';
 const year = new Date().getFullYear();
+
+interface Props {
+  // Set to false to leave out the black team-photo strip above the footer.
+  showStrip?: boolean;
+}
+const { showStrip = true } = Astro.props;
 ---
-<section class="g-video" aria-label={brandVideo.title}>
+{showStrip && <section class="g-video" aria-label={brandVideo.title}>
   {brandVideo.src ? (
     <video
       class="g-video-media"
@@ -19,9 +25,9 @@ const year = new Date().getFullYear();
   ) : (
     <div class="g-video-empty">Video coming soon</div>
   )}
-</section>
+</section>}
 
-<footer class="g-footer">
+<footer class={showStrip ? 'g-footer' : 'g-footer g-footer--no-strip'}>
   <svg class="g-curve" viewBox="0 0 1680 184" preserveAspectRatio="none" aria-hidden="true">
     <path d="M0 0H1680C1250 0 1000 45 840 184C680 45 430 0 0 0Z" fill="#000" />
   </svg>
@@ -99,6 +105,7 @@ const year = new Date().getFullYear();
     color: var(--g-ink);
     padding-top: clamp(40px, 5vw, 84px);
   }
+  .g-footer--no-strip { margin-top: clamp(24px, 4vw, 64px); }
   .g-curve {
     position: absolute;
     top: -1px;

@@ -31,7 +31,7 @@ const isCurrent = (href: string) => !href.includes('#') && (current === href || 
               <ul class="g-sub" id={`group-sub-${i}`}>
                 {item.children.map((c) => (
                   <li>
-                    <a href={c.href} aria-current={isCurrent(c.href) && !c.items ? 'page' : undefined}>{c.label}</a>
+                    <a href={c.href} class={c.items ? 'g-sub-head' : undefined} aria-current={isCurrent(c.href) && !c.items ? 'page' : undefined}>{c.label}</a>
                     {c.items && (
                       <ul class="g-sub-items">
                         {c.items.map((x) => (
@@ -167,6 +167,10 @@ const isCurrent = (href: string) => !href.includes('#') && (current === href || 
     white-space: nowrap;
   }
   .g-sub a:hover, .g-sub a:focus-visible { background: #f2f7fc; }
+  /* A heading entry with sub-links (Technology) stays blue, even on hover. */
+  .g-nav .g-sub a.g-sub-head,
+  .g-nav .g-sub a.g-sub-head:hover,
+  .g-nav .g-sub a.g-sub-head:focus-visible { color: var(--g-blue); background: none; }
   /* Grey sub-links under a dropdown entry (Business › Technology › Ekatm, …) */
   .g-nav .g-sub-items {
     display: block;

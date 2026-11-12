@@ -36,7 +36,7 @@ const isCurrent = (href: string) => !href.includes('#') && (current === href || 
                       <ul class="g-sub-items">
                         {c.items.map((x) => (
                           <li>
-                            <a href={x.href} class={x.hover === 'orange' ? 'g-hover-orange' : undefined} aria-current={isCurrent(x.href) ? 'page' : undefined}>{x.label}</a>
+                            <a href={x.href} aria-current={isCurrent(x.href) ? 'page' : undefined}>{x.label}</a>
                           </li>
                         ))}
                       </ul>
@@ -184,11 +184,9 @@ const isCurrent = (href: string) => !href.includes('#') && (current === href || 
     font-size: 13px;
     text-transform: none;
   }
+  /* Hover: Ekatm brand orange (--orange in global.css) */
   .g-nav .g-sub-items a:hover,
-  .g-nav .g-sub-items a:focus-visible { color: var(--g-blue); }
-  /* Ekatm brand orange (--orange in global.css) */
-  .g-nav .g-sub-items a.g-hover-orange:hover,
-  .g-nav .g-sub-items a.g-hover-orange:focus-visible { color: #f39a2b; }
+  .g-nav .g-sub-items a:focus-visible { color: #f39a2b; }
   /* Stay grey on their own page too (only hover/focus turns them blue). */
   .g-nav .g-sub-items a[aria-current='page']:not(:hover):not(:focus-visible) { color: #9a9a9a; }
   .g-sub-toggle[aria-expanded='true'] + .g-sub { display: flex; }

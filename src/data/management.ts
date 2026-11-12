@@ -16,9 +16,6 @@ export const ceo = {
   name: 'Veerendra Jamdade',
   title: 'CEO, Vritti Group',
   photo: '/images/management/veerendra-jamdade.jpg',
-  // Short intro shown under the quote on Meet our Management.
-  intro:
-    'Along with his team, Veerendra Jamdade founded Vritti Solutions in 2005. A Mechanical Engineer from an agricultural background with 38 years of experience, he has always focused on bringing breakthrough technology to semi-rural and rural India.',
   // Where "Read more" goes. Leave empty to hide the button.
   readMoreHref: '/meet-our-management/veerendra-jamdade',
 };
@@ -28,9 +25,6 @@ export const ceoProfile = {
   name: 'Veerendra Jamdade',
   title: 'Co-founder, CEO',
   photo: '/images/management/veerendra-jamdade.jpg',
-  // TODO: placeholder quote from the design. Replace with his real words.
-  quote:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
   bio: [
     'Along with his team, he founded Vritti Solutions in the year 2005. Having an experience of 38 years, he has always focused on introducing breakthrough technology in the semi-rural and rural areas of India. Coming from an agricultural background and being qualified as a Mechanical Engineer, he sowed the seed of helping urban and rural people to grow their businesses through innovative IT solutions like AdatSoft and PetroSoft. Nonetheless, he wanted to cater to the SMEs through Ekatm ERP and Simplify Practice. His idea of creating a unique audio medium, the Audiowala Bus Stand has today emerged as an impactful and cost-effective platform for brands to mass promote their products and services.',
     'In 2007, he spearheaded the ISO process and streamlined the processes with innovation and creativity.',

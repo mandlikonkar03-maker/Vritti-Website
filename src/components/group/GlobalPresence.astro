@@ -1,8 +1,16 @@
 ---
-// Home page Global Presence: office cards beside a dotted map of India.
+// Home page Global Presence: office cards beside a dotted map of India and the Gulf.
+// International offices get a tag and a dashed route from HQ.
 // Hovering (or focusing) a card lights up its pin, and hovering a pin lights up its card.
 // Content lives in src/data/presence.ts.
 import { presence as p } from '../../data/presence';
+const [mw, mh] = p.mapRatio;
+const hq = p.offices.find((o) => o.hq)!;
+const routes = p.offices.filter((o) => o.international).map((o) => {
+  const x1 = (hq.x / 100) * mw, y1 = (hq.y / 100) * mh, x2 = (o.x / 100) * mw, y2 = (o.y / 100) * mh;
+  const cx = (x1 + x2) / 2, cy = Math.min(y1, y2) - Math.hypot(x2 - x1, y2 - y1) * 0.25;
+  return `M${x1.toFixed(1)} ${y1.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+});
 ---
 <section class="g-section pr" id="presence">
   <div class="g-container">
@@ -15,10 +23,11 @@ import { presence as p } from '../../data/presence';
         <p class="pr-intro">{p.intro}</p>
         <ul class="pr-list">
           {p.offices.map((o) => (
-            <li class:list={['pr-card', o.hq && 'is-hq']} data-loc={o.id} tabindex="0">
+            <li class:list={['pr-card', o.hq && 'is-hq', o.international && 'is-intl']} data-loc={o.id} tabindex="0">
               <div class="pr-card-top">
                 <span class="pr-city">{o.city}</span>
                 {o.hq && <span class="pr-badge">Headquarters</span>}
+                {o.international && <span class="pr-badge pr-badge--intl">International</span>}
               </div>
               <span class="pr-region">{o.region}</span>
             </li>
@@ -26,11 +35,14 @@ import { presence as p } from '../../data/presence';
         </ul>
       </div>
       <div class="pr-map">
-        <img class="pr-dots" src={p.map} alt="" aria-hidden="true" width="600" height="525" loading="lazy" />
+        <img class="pr-dots" src={p.map} alt="" aria-hidden="true" width={mw} height={mh} loading="lazy" />
+        <svg class="pr-routes" viewBox={`0 0 ${mw} ${mh}`} aria-hidden="true">
+          {routes.map((d) => <path d={d} />)}
+        </svg>
         {p.offices.map((o) => (
-          <span class:list={['pr-pin', `pr-pin--${o.side ?? 'right'}`, o.hq && 'is-hq']} data-loc={o.id} style={`left:${o.x}%;top:${o.y}%`}>
+          <span class:list={['pr-pin', `pr-pin--${o.side ?? 'right'}`, o.hq && 'is-hq', o.international && 'is-intl']} data-loc={o.id} style={`left:${o.x}%;top:${o.y}%`}>
             <span class="pr-dot"></span>
-            <span class="pr-label">{o.city}</span>
+            <span class="pr-label">{o.city}{o.international && <small>International</small>}</span>
           </span>
         ))}
       </div>
@@ -52,7 +64,7 @@ import { presence as p } from '../../data/presence';
 </script>
 
 <style>
-  .pr-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
+  .pr-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
   .pr-intro { margin: 0 0 22px; color: var(--g-text); font-size: 16px; line-height: 1.6; max-width: 560px; }
   .pr-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .pr-card {
@@ -68,11 +80,19 @@ import { presence as p } from '../../data/presence';
   .pr-card.is-hq .pr-city { color: #fff; font-size: 20px; }
   .pr-badge { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--g-orange); color: #fff; padding: 3px 8px; border-radius: 4px; }
   .pr-region { font-size: 13px; color: var(--g-text); }
+  .pr-badge--intl { background: #e8f1fa; color: var(--g-blue); border: 1px solid #b9d2ea; }
+  .pr-routes { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .pr-routes path { fill: none; stroke: var(--g-blue); stroke-width: 1.6; stroke-dasharray: 5 5; opacity: .55; animation: pr-flow 1.4s linear infinite; }
+  @keyframes pr-flow { to { stroke-dashoffset: -10; } }
+  @media (prefers-reduced-motion: reduce) { .pr-routes path { animation: none; } }
+  .pr-pin.is-intl .pr-dot { background: #fff; border: 3px solid var(--g-blue); box-shadow: 0 0 0 4px rgba(6,97,169,.15); }
+  .pr-label small { display: block; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--g-orange); line-height: 1.1; }
+  .pr-pin.is-active .pr-label small { color: #ffd59a; }
   .pr-card.is-hq .pr-region { color: rgba(255,255,255,.85); }
 
-  .pr-map { position: relative; aspect-ratio: 600 / 525; width: 100%; max-width: 520px; justify-self: center; }
+  .pr-map { position: relative; aspect-ratio: 760 / 463; width: 100%; max-width: 640px; justify-self: center; }
   .pr-dots { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .pr-map::after { content: ''; position: absolute; inset: -1px; background: radial-gradient(ellipse 58% 58% at 45% 55%, transparent 50%, #fff 100%); pointer-events: none; }
+  .pr-map::after { content: ''; position: absolute; inset: -1px; background: radial-gradient(ellipse 62% 60% at 45% 50%, transparent 58%, #fff 100%); pointer-events: none; }
   .pr-pin { position: absolute; z-index: 1; display: flex; align-items: center; gap: 6px; transform: translate(-6px, -50%); cursor: default; }
   .pr-pin--left { flex-direction: row-reverse; transform: translate(calc(-100% + 6px), -50%); }
   .pr-dot { width: 12px; height: 12px; flex: none; border-radius: 50%; background: var(--g-orange); border: 2px solid #fff; box-shadow: 0 0 0 4px rgba(235,158,46,.22); transition: transform .2s, box-shadow .2s; }

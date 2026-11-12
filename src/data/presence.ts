@@ -32,11 +32,11 @@ export const presence = {
   mapRatio: [760, 463],
   offices: [
     { id: 'pune', city: 'Pune', region: 'India', hq: true, x: 51.87, y: 55.29, side: 'right' },
-    { id: 'mumbai', city: 'Mumbai', region: 'India', x: 49.74, y: 53.29, side: 'left' },
-    { id: 'bengaluru', city: 'Bengaluru', region: 'India', x: 59.98, y: 75.11, side: 'right' },
-    { id: 'chandigarh', city: 'Chandigarh', region: 'India', x: 58.22, y: 11.68, side: 'right' },
-    { id: 'goa', city: 'Goa', region: 'India', x: 51.8, y: 66.11, side: 'left' },
-    { id: 'jaipur', city: 'Jaipur', region: 'India', x: 56.07, y: 25.32, side: 'left' },
+    { id: 'mumbai', city: 'Mumbai', region: 'Maharashtra', x: 49.74, y: 53.29, side: 'left' },
+    { id: 'bengaluru', city: 'Bengaluru', region: 'Karnataka', x: 59.98, y: 75.11, side: 'right' },
+    { id: 'chandigarh', city: 'Chandigarh', region: 'Punjab & Haryana', x: 58.22, y: 11.68, side: 'right' },
+    { id: 'goa', city: 'Goa', region: 'Goa', x: 51.8, y: 66.11, side: 'left' },
+    { id: 'jaipur', city: 'Jaipur', region: 'Rajasthan', x: 56.07, y: 25.32, side: 'left' },
     { id: 'uae', city: 'UAE', region: 'Dubai, United Arab Emirates', international: true, x: 11.46, y: 31.43, side: 'right' },
   ] as Office[],
 };

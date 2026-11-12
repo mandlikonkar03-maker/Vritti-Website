@@ -12,30 +12,29 @@ import { ceoProfile as p } from '../../data/management';
       <div class="profile-top">
         <div class="profile-photo">
           <img src={p.photo} alt={`${p.name}, ${p.title}`} width="786" height="817" />
+          <ul class="profile-socials" aria-label={`${p.name} on social media`}>
+            {p.socials.map((s) => (
+              <li>
+                <a href={s.href} target="_blank" rel="noopener" aria-label={s.label} title={s.label}>
+                  {s.icon === 'linkedin' ? (
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4V21H3zM9.5 9.75h3.8v1.6h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-4.9c0-1.17-.02-2.68-1.63-2.68-1.64 0-1.89 1.28-1.89 2.6V21h-4z" /></svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z" /></svg>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
         <div class="profile-copy">
           <h1 id="profile-name">{p.name}</h1>
           <p class="profile-title">{p.title}</p>
-          <blockquote>“{p.quote}”</blockquote>
+          <div class="profile-bio">
+            {p.bio.map((para) => <p>{para}</p>)}
+          </div>
         </div>
       </div>
 
-      <div class="profile-bio">
-        {p.bio.map((para) => <p>{para}</p>)}
-        <ul class="profile-socials" aria-label={`${p.name} on social media`}>
-          {p.socials.map((s) => (
-            <li>
-              <a href={s.href} target="_blank" rel="noopener" aria-label={s.label} title={s.label}>
-                {s.icon === 'linkedin' ? (
-                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4V21H3zM9.5 9.75h3.8v1.6h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-4.9c0-1.17-.02-2.68-1.63-2.68-1.64 0-1.89 1.28-1.89 2.6V21h-4z" /></svg>
-                ) : (
-                  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z" /></svg>
-                )}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
 
       <div class="headlines">
         <h2 class="headlines-title">Making Headlines.</h2>
@@ -98,25 +97,17 @@ import { ceoProfile as p } from '../../data/management';
     font-size: clamp(14px, 1.2vw, 18px);
     font-weight: 500;
   }
-  .profile-copy blockquote {
-    margin: clamp(20px, 2.6vw, 36px) 0 0;
-    color: var(--g-ink);
-    font-size: clamp(18px, 2vw, 28px);
-    font-weight: 500;
-    line-height: 1.2;
-  }
-
   .profile-bio {
-    margin-top: clamp(40px, 5vw, 72px);
-    max-width: 900px;
-    color: var(--g-text);
-    font-size: clamp(15px, 1.15vw, 18px);
-    line-height: 1.75;
+    margin-top: clamp(20px, 2.4vw, 32px);
+    color: #111;
+    font-size: clamp(16px, 1.2vw, 18px);
+    font-weight: 500;
+    line-height: 1.7;
   }
   .profile-bio p { margin: 0 0 1.1em; }
   .profile-socials {
     list-style: none;
-    margin: 24px 0 0;
+    margin: 16px 0 0;
     padding: 0;
     display: flex;
     gap: 12px;

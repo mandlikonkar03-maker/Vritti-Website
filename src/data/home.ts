@@ -94,39 +94,36 @@ export const legacy = {
   ] as Story[],
 };
 
-export const innovation = {
-  title: '20 Years of Innovation & Impact',
-  subtitle: 'Built over time. Growing with purpose.',
-  columns: [{ title: 'Innovation' }, { title: 'Impact' }],
+// "Built over time." band: 12 photo slots (placeholders until OM picks photos) + stats.
+export const builtOverTime = {
+  title: 'Built over time.',
+  photoCount: 12,
+  stats: [
+    { value: '30', plus: true, label: ['Years in', 'industry'], big: true },
+    { value: '12,999', plus: true, label: ['Clients'] },
+    { value: '112+', label: ['Awards &', 'recognition'] },
+  ],
 };
 
+// Repeating strip between the blue bands.
+export const vrittiWay = 'The Vritti Way';
+
+export const coreValues = {
+  title: 'How we think',
+  subtitle: 'Our core values.',
+  values: [
+    { title: 'We see differently', text: 'We look beyond the obvious.' },
+    { title: 'We build boldly', text: 'We turn ideas into action.' },
+    { title: 'We own the outcome', text: 'We take responsibility for what we create.' },
+    { title: 'We keep moving', text: 'We never stop improving.' },
+  ],
+};
+
+// 5 x 3 grid: 14 award slots (placeholders) + a final "99+" tile.
 export const awards = {
   title: 'Awards & Recognition',
-  subtitle: 'Excellence earned. Recognition celebrated.',
-  stories: [
-    {
-      title: 'Corporate Excellence Awards 2025 at Rural Conclave 2025 by RMAI',
-      image: '/images/home/rural-conclave.jpg',
-      alt: 'Vritti receiving the Corporate Excellence Award at Rural Conclave 2025',
-      upper: true,
-    },
-    {
-      title: '20+ years with expansion across enterprise tech and rural media-led marketing',
-      image: '/images/home/vritti-20-years.jpg',
-      alt: 'Vritti leadership at the 20 years celebration',
-    },
-    {
-      title: '20+ years with expansion across enterprise tech and rural media-led marketing',
-      image: '/images/home/vritti-20-years.jpg',
-      alt: 'Vritti leadership at the 20 years celebration',
-    },
-    {
-      title: 'Corporate Excellence Awards 2025 at Rural Conclave 2025 by RMAI',
-      image: '/images/home/rural-conclave.jpg',
-      alt: 'Vritti receiving the Corporate Excellence Award at Rural Conclave 2025',
-      upper: true,
-    },
-  ] as Story[],
+  slotCount: 14,
+  more: '99+',
 };
 
 export const presence = {

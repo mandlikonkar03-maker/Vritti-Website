@@ -8,13 +8,17 @@ import {
   whoWeAre,
   businesses,
   legacy,
-  innovation,
+  builtOverTime,
+  vrittiWay,
+  coreValues,
   awards,
   presence,
   foundation,
 } from '../data/home';
 
 const placeholders = Array.from({ length: whoWeAre.placeholderCount });
+// Enough copies of "The Vritti Way" to fill a wide screen twice (the strip scrolls by half its width).
+const wayItems = Array.from({ length: 16 }, () => vrittiWay);
 ---
 <GroupLayout
   title="Vritti Group – Building Businesses. Enabling Growth."
@@ -88,39 +92,77 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
     </div>
   </section>
 
-  <!-- 20 years of innovation & impact -->
-  <section class="g-section" id="innovation">
+  <!-- Built over time -->
+  <section class="bot" id="built-over-time">
     <div class="g-container">
-      <div class="g-head">
-        <h2 class="g-title">{innovation.title}</h2>
-        <p class="g-sub">{innovation.subtitle}</p>
-      </div>
-      <div class="forum-grid">
-        {innovation.columns.map((c) => (
-          <div class="forum-col">
-            <h3 class="forum-title">{c.title}</h3>
-            <div class="forum-box"><span>Content coming soon</span></div>
-          </div>
+      <h2 class="bot-title">
+        <span class="visually-hidden">{builtOverTime.title}</span>
+        <svg viewBox="0 0 1000 118" aria-hidden="true" focusable="false">
+          <!-- Outline drawn with a filter (fill minus an eroded copy) so the font's overlapping
+               glyph contours don't show as stray lines inside letters, as a text stroke would. -->
+          <filter id="bot-outline" x="-2%" y="-10%" width="104%" height="120%">
+            <feMorphology in="SourceAlpha" operator="erode" radius="1.4" result="thin" />
+            <feComposite in="SourceGraphic" in2="thin" operator="out" />
+          </filter>
+          <text x="0" y="104" filter="url(#bot-outline)" textLength="1000" lengthAdjust="spacing">{builtOverTime.title.toUpperCase()}</text>
+        </svg>
+      </h2>
+      <ul class="bot-grid">
+        {Array.from({ length: builtOverTime.photoCount }).map(() => <li class="bot-photo"></li>)}
+      </ul>
+      <ul class="bot-stats">
+        {builtOverTime.stats.map((st) => (
+          <li class:list={['stat', st.big && 'stat--big']}>
+            <span class="stat-value">{st.value}</span>
+            <span class="stat-label">
+              {st.plus && <span class="stat-plus">+</span>}
+              {st.label.map((l) => <span>{l}</span>)}
+            </span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
-  <!-- Awards & Recognition -->
-  <section class="g-section" id="awards">
+  <div class="way" aria-label={vrittiWay}>
+    <div class="way-track" aria-hidden="true">
+      {wayItems.map((t) => <span>{t}</span>)}
+    </div>
+  </div>
+
+  <!-- How we think / core values -->
+  <section class="values" id="core-values">
     <div class="g-container">
-      <div class="g-head">
-        <h2 class="g-title">{awards.title}</h2>
-        <p class="g-sub">{awards.subtitle}</p>
+      <div class="values-head">
+        <h2 class="values-title">{coreValues.title}</h2>
+        <p class="values-sub">{coreValues.subtitle}</p>
       </div>
-      <div class="story-stack">
-        <div class="story-row">
-          {awards.stories.slice(0, 2).map((s, i) => <StoryCard story={s} wide={i === 1} />)}
-        </div>
-        <div class="story-row">
-          {awards.stories.slice(2, 4).map((s, i) => <StoryCard story={s} wide={i === 0} />)}
-        </div>
-      </div>
+      <ul class="values-grid">
+        {coreValues.values.map((v) => (
+          <li class="value">
+            <span class="value-icon" aria-hidden="true"></span>
+            <h3>{v.title}</h3>
+            <p>{v.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <div class="way" aria-label={vrittiWay}>
+    <div class="way-track" aria-hidden="true">
+      {wayItems.map((t) => <span>{t}</span>)}
+    </div>
+  </div>
+
+  <!-- Awards & Recognition -->
+  <section class="g-section awards" id="awards">
+    <div class="g-container">
+      <h2 class="g-title awards-title">{awards.title}</h2>
+      <ul class="awards-grid">
+        {Array.from({ length: awards.slotCount }).map(() => <li class="award tile--empty"></li>)}
+        <li class="award award--more">{awards.more}</li>
+      </ul>
     </div>
   </section>
 
@@ -370,40 +412,143 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
     text-shadow: 0.65px 0 0 currentColor, -0.65px 0 0 currentColor;
   }
 
-  /* Story rows (legacy + awards) */
+  /* Story rows (legacy) */
   .story-row { display: flex; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); }
-  .story-stack { display: flex; flex-direction: column; }
 
-  /* Innovation */
-  .forum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 2.6vw, 42px); }
-  .forum-title {
-    color: var(--g-blue);
-    font-size: clamp(28px, 2.7vw, 46px);
+  /* Built over time (blue band) */
+  .bot, .values { --band: #2a5fa4; background: var(--band); color: #fff; }
+  .bot { padding: clamp(28px, 3.4vw, 48px) 0 clamp(36px, 4vw, 56px); }
+  .bot-title { margin: 0 0 clamp(16px, 2vw, 28px); line-height: 0; }
+  .bot-title svg { display: block; width: 100%; height: auto; overflow: visible; opacity: 0.8; }
+  .bot-title text {
+    font-family: var(--font, 'Montserrat', sans-serif);
+    font-weight: 600;
+    font-size: 112px;
+    fill: #fff;
+  }
+  .bot-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2px;
+  }
+  .bot-photo { aspect-ratio: 1; background: #d9d9d9; }
+  .bot-stats {
+    list-style: none;
+    margin: clamp(24px, 2.6vw, 40px) 0 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .stat { display: flex; align-items: center; gap: clamp(6px, 0.7vw, 10px); }
+  .stat-value { font-size: clamp(40px, 5.2vw, 74px); font-weight: 700; line-height: 1; letter-spacing: -0.01em; }
+  .stat--big .stat-value { font-size: clamp(56px, 7.6vw, 108px); }
+  .stat-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-transform: uppercase;
     font-weight: 700;
-    padding-top: 14px;
-    position: relative;
-    margin-bottom: 36px;
+    font-size: clamp(13px, 1.6vw, 23px);
+    line-height: 1.02;
+    align-self: stretch;
+    padding-bottom: 0.3em;
   }
-  .forum-title::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: clamp(96px, 7.5vw, 126px);
-    height: 9px;
-    background: var(--g-orange);
-  }
-  .forum-box {
-    aspect-ratio: 700 / 524;
+  .stat-plus { font-size: 1.05em; line-height: 0.8; margin-bottom: auto; padding-top: 0.15em; }
+  .stat:not(.stat--big) .stat-plus { margin-bottom: 0.1em; }
+
+  /* "The Vritti Way" strip: slow, endless scroll */
+  .way {
+    overflow: hidden;
     background: #fff;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    border-block: 2px solid var(--g-orange);
+    padding: clamp(14px, 1.4vw, 20px) 0;
+  }
+  .way-track {
+    display: flex;
+    width: max-content;
+    animation: way-scroll 40s linear infinite;
+  }
+  .way-track span {
+    flex: none;
+    padding: 0 clamp(24px, 3.4vw, 48px);
+    color: var(--g-ink);
+    font-size: clamp(11px, 0.95vw, 14px);
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  @keyframes way-scroll { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .way-track { animation: none; } }
+
+  /* How we think / core values */
+  .values { padding: clamp(40px, 4.4vw, 64px) 0 clamp(48px, 5.4vw, 80px); text-align: center; }
+  .values-head { margin-bottom: clamp(28px, 3vw, 44px); }
+  .values-title {
+    color: var(--g-orange);
+    font-size: clamp(24px, 2.6vw, 38px);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .values-sub {
+    margin: 6px 0 0;
+    font-size: clamp(11px, 0.95vw, 14px);
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+  .values-grid {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 960px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(20px, 3vw, 48px);
+  }
+  .value { display: flex; flex-direction: column; align-items: center; }
+  .value-icon {
+    width: clamp(88px, 9.4vw, 136px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #fff;
+    margin-bottom: clamp(14px, 1.4vw, 20px);
+  }
+  .value h3 {
+    max-width: 11ch;
+    font-size: clamp(14px, 1.3vw, 19px);
+    font-weight: 700;
+    line-height: 1.08;
+    text-transform: uppercase;
+  }
+  .value p { margin: 4px 0 0; max-width: 18ch; font-size: clamp(13px, 1.1vw, 16px); line-height: 1.15; }
+
+  /* Awards & Recognition */
+  .awards-title { text-align: center; margin-bottom: clamp(24px, 2.6vw, 40px); }
+  .awards-grid {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 1040px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(12px, 1.8vw, 26px);
+  }
+  .award { aspect-ratio: 1; }
+  .award--more {
     display: grid;
     place-items: center;
-    color: #9a9a9a;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 14px;
+    background: #fff;
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.1);
+    color: #2a5fa4;
+    font-size: clamp(20px, 2vw, 30px);
+    font-weight: 700;
   }
 
   /* Map */
@@ -473,7 +618,9 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
     .hero-img { position: static; width: 100%; }
     .biz-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
     .story-row { flex-direction: column; }
-    .forum-grid { grid-template-columns: 1fr; }
+    .bot-stats { flex-wrap: wrap; justify-content: center; gap: 20px 40px; }
+    .values-grid { grid-template-columns: repeat(2, 1fr); max-width: 520px; row-gap: 36px; }
+    .awards-grid { grid-template-columns: repeat(3, 1fr); }
     .foundation-inner { grid-template-columns: 1fr; }
     .foundation-text { margin-top: 28px; }
   }
@@ -483,5 +630,7 @@ const placeholders = Array.from({ length: whoWeAre.placeholderCount });
     .tile:nth-child(n + 13) { display: none; }
     .pin-label { font-size: 10px; padding: 2px 7px; }
     .pin-dot { width: 12px; height: 12px; border-width: 2px; }
+    .bot-grid { grid-template-columns: repeat(3, 1fr); }
+    .bot-stats { flex-direction: column; align-items: flex-start; width: max-content; margin-inline: auto; }
   }
 </style>

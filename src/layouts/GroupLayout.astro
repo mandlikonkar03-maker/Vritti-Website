@@ -45,11 +45,15 @@ const { title, description = 'Vritti Group' } = Astro.props;
     --g-text: #5b5b5b;
     --g-ink: #111;
   }
+  /* Same content width and side gutters as the Ekatm pages' .container (src/styles/global.css). */
   .g-container {
     width: 100%;
-    max-width: 1536px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
+  }
+  @media (max-width: 768px) {
+    .g-container { padding: 0 16px; }
   }
   .g-head { margin-bottom: 40px; }
   .g-title {

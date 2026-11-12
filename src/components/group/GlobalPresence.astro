@@ -1,0 +1,92 @@
+---
+// Home page Global Presence: office cards beside a dotted map of India.
+// Hovering (or focusing) a card lights up its pin, and hovering a pin lights up its card.
+// Content lives in src/data/presence.ts.
+import { presence as p } from '../../data/presence';
+---
+<section class="g-section pr" id="presence">
+  <div class="g-container">
+    <div class="g-head">
+      <h2 class="g-title">{p.title}</h2>
+      <p class="g-sub">{p.subtitle}</p>
+    </div>
+    <div class="pr-grid">
+      <div class="pr-side">
+        <p class="pr-intro">{p.intro}</p>
+        <ul class="pr-list">
+          {p.offices.map((o) => (
+            <li class:list={['pr-card', o.hq && 'is-hq']} data-loc={o.id} tabindex="0">
+              <div class="pr-card-top">
+                <span class="pr-city">{o.city}</span>
+                {o.hq && <span class="pr-badge">Headquarters</span>}
+              </div>
+              <span class="pr-region">{o.region}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="pr-map">
+        <img class="pr-dots" src={p.map} alt="" aria-hidden="true" width="600" height="525" loading="lazy" />
+        {p.offices.map((o) => (
+          <span class:list={['pr-pin', `pr-pin--${o.side ?? 'right'}`, o.hq && 'is-hq']} data-loc={o.id} style={`left:${o.x}%;top:${o.y}%`}>
+            <span class="pr-dot"></span>
+            <span class="pr-label">{o.city}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.pr').forEach((root) => {
+    const set = (id: string | null) =>
+      root.querySelectorAll<HTMLElement>('[data-loc]').forEach((n) => n.classList.toggle('is-active', n.dataset.loc === id));
+    root.querySelectorAll<HTMLElement>('[data-loc]').forEach((n) => {
+      n.addEventListener('mouseenter', () => set(n.dataset.loc!));
+      n.addEventListener('focus', () => set(n.dataset.loc!));
+      n.addEventListener('mouseleave', () => set(null));
+      n.addEventListener('blur', () => set(null));
+    });
+  });
+</script>
+
+<style>
+  .pr-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
+  .pr-intro { margin: 0 0 22px; color: var(--g-text); font-size: 16px; line-height: 1.6; max-width: 560px; }
+  .pr-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .pr-card {
+    border: 1px solid #dbe5ef; border-radius: 12px; padding: 14px 18px; background: #fff;
+    display: flex; flex-direction: column; gap: 2px; cursor: default; outline: none;
+    transition: border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .pr-card.is-hq, .pr-card:last-child:nth-child(even) { grid-column: 1 / -1; }
+  .pr-card.is-hq { background: linear-gradient(120deg, #0661a9, #2a5fa4); border-color: transparent; color: #fff; padding: 18px; }
+  .pr-card.is-active, .pr-card:focus-visible { border-color: var(--g-orange); box-shadow: 0 10px 24px rgba(6,97,169,.14); transform: translateY(-2px); }
+  .pr-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .pr-city { font-weight: 700; font-size: 17px; color: var(--g-blue); }
+  .pr-card.is-hq .pr-city { color: #fff; font-size: 20px; }
+  .pr-badge { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--g-orange); color: #fff; padding: 3px 8px; border-radius: 4px; }
+  .pr-region { font-size: 13px; color: var(--g-text); }
+  .pr-card.is-hq .pr-region { color: rgba(255,255,255,.85); }
+
+  .pr-map { position: relative; aspect-ratio: 600 / 525; width: 100%; max-width: 520px; justify-self: center; }
+  .pr-dots { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .pr-map::after { content: ''; position: absolute; inset: -1px; background: radial-gradient(ellipse 58% 58% at 45% 55%, transparent 50%, #fff 100%); pointer-events: none; }
+  .pr-pin { position: absolute; z-index: 1; display: flex; align-items: center; gap: 6px; transform: translate(-6px, -50%); cursor: default; }
+  .pr-pin--left { flex-direction: row-reverse; transform: translate(calc(-100% + 6px), -50%); }
+  .pr-dot { width: 12px; height: 12px; flex: none; border-radius: 50%; background: var(--g-orange); border: 2px solid #fff; box-shadow: 0 0 0 4px rgba(235,158,46,.22); transition: transform .2s, box-shadow .2s; }
+  .pr-pin.is-hq .pr-dot { background: var(--g-blue); box-shadow: 0 0 0 5px rgba(6,97,169,.2); }
+  .pr-label { font-size: 12px; font-weight: 600; color: var(--g-blue); background: #fff; padding: 2px 8px; border-radius: 999px; box-shadow: 0 2px 8px rgba(6,97,169,.12); white-space: nowrap; transition: background .2s, color .2s; }
+  .pr-pin.is-active { z-index: 3; }
+  .pr-pin.is-active .pr-dot { transform: scale(1.35); box-shadow: 0 0 0 8px rgba(235,158,46,.25); }
+  .pr-pin.is-active .pr-label { background: var(--g-blue); color: #fff; }
+  @media (max-width: 900px) {
+    .pr-grid { grid-template-columns: 1fr; }
+    .pr-map { order: -1; max-width: 440px; }
+  }
+  @media (max-width: 600px) {
+    .pr-label { font-size: 10px; padding: 1px 6px; }
+    .pr-dot { width: 9px; height: 9px; }
+  }
+</style>

@@ -26,7 +26,7 @@ import { presence as p } from '../../data/presence';
         </ul>
       </div>
       <div class="pr-map">
-        <img class="pr-dots" src={p.map} alt="" aria-hidden="true" width="600" height="533" loading="lazy" />
+        <img class="pr-dots" src={p.map} alt="" aria-hidden="true" width="600" height="525" loading="lazy" />
         {p.offices.map((o) => (
           <span class:list={['pr-pin', `pr-pin--${o.side ?? 'right'}`, o.hq && 'is-hq']} data-loc={o.id} style={`left:${o.x}%;top:${o.y}%`}>
             <span class="pr-dot"></span>
@@ -70,8 +70,9 @@ import { presence as p } from '../../data/presence';
   .pr-region { font-size: 13px; color: var(--g-text); }
   .pr-card.is-hq .pr-region { color: rgba(255,255,255,.85); }
 
-  .pr-map { position: relative; aspect-ratio: 600 / 533; width: 100%; max-width: 520px; justify-self: center; }
+  .pr-map { position: relative; aspect-ratio: 600 / 525; width: 100%; max-width: 520px; justify-self: center; }
   .pr-dots { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .pr-map::after { content: ''; position: absolute; inset: -1px; background: radial-gradient(ellipse 58% 58% at 45% 55%, transparent 50%, #fff 100%); pointer-events: none; }
   .pr-pin { position: absolute; z-index: 1; display: flex; align-items: center; gap: 6px; transform: translate(-6px, -50%); cursor: default; }
   .pr-pin--left { flex-direction: row-reverse; transform: translate(calc(-100% + 6px), -50%); }
   .pr-dot { width: 12px; height: 12px; flex: none; border-radius: 50%; background: var(--g-orange); border: 2px solid #fff; box-shadow: 0 0 0 4px rgba(235,158,46,.22); transition: transform .2s, box-shadow .2s; }

@@ -161,7 +161,10 @@ export const brandVideo = {
   title: 'The people of Vritti',
 };
 
-export type NavItem = { label: string; href?: string; children?: { label: string; href: string }[] };
+export type NavLink = { label: string; href: string };
+/** A dropdown entry; `items` are smaller grey sub-links listed under it (e.g. Technology › Ekatm). */
+export type NavChild = NavLink & { items?: NavLink[] };
+export type NavItem = { label: string; href?: string; children?: NavChild[] };
 
 export const groupNav: NavItem[] = [
   {
@@ -174,7 +177,17 @@ export const groupNav: NavItem[] = [
   {
     label: 'Business',
     children: [
-      { label: 'Technology', href: '/technology/ekatm-erp' },
+      {
+        label: 'Technology',
+        href: '/technology/ekatm-erp',
+        items: [
+          { label: 'Ekatm', href: '/technology/ekatm-erp' },
+          // Placeholders until these product pages exist.
+          { label: 'Simplify Practice', href: '/#businesses' },
+          { label: 'PetroSoft', href: '/#businesses' },
+          { label: 'AdatSoft', href: '/#businesses' },
+        ],
+      },
       // Placeholders until these business pages exist: they scroll to the home page's Businesses section.
       { label: 'Rural Marketing', href: '/#businesses' },
       { label: 'Media', href: '/#businesses' },

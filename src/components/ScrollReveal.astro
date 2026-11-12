@@ -1,0 +1,154 @@
+---
+// Reveal-on-scroll animations shared by every page (BaseLayout and GroupLayout).
+//
+// Pages need no extra markup: the script below finds sections by the class
+// names in BLOCKS and GROUPS and tags them. To animate something new, add its
+// selector to one of the lists, or put data-reveal (optionally ="left",
+// "right" or "zoom") on the element by hand.
+//
+// - Content stays visible if JavaScript is off, because the hidden start
+//   state only applies once the inline script has added .reveal-on to <html>.
+// - Visitors who ask for reduced motion get no animation at all.
+---
+<script is:inline>
+  // Runs in <head> before first paint so nothing flashes before hiding.
+  if (
+    'IntersectionObserver' in window &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    document.documentElement.classList.add('reveal-on');
+  }
+</script>
+
+<script>
+  // Elements that fade up as one block. "selector|variant" picks another motion.
+  const BLOCKS = [
+    // Ekatm pages
+    '.hero-card|zoom',
+    '.section-head',
+    '.explore-head',
+    '.faq-intro',
+    '.faq-grid > :last-child',
+    '.demo-intro',
+    '.demo-card',
+    '.levelup-img|left',
+    '.integrations-banner',
+    '.integrations-mobile .ekatm-logo',
+    '.t-track',
+    '.t-controls',
+    '.highlight|right',
+    '.cap:not(.cap--flip) .cap-copy|left',
+    '.cap:not(.cap--flip) .cap-media|right',
+    '.cap--flip .cap-copy|right',
+    '.cap--flip .cap-media|left',
+    // Vritti Group pages
+    '.hero-img|right',
+    '.g-head',
+    '.who-head',
+    '.map|zoom',
+    '.foundation-copy|left',
+    '.foundation-inner > :last-child|right',
+    '.ceo-photo|left',
+    '.ceo-copy|right',
+  ];
+
+  // Containers whose children come in one after another (staggered).
+  const GROUPS = [
+    '.hero-copy',
+    '.m-hero .g-container',
+    '.feature-grid',
+    '.levelup-list',
+    '.logo-grid',
+    '.cap-grid',
+    '.why-grid',
+    '.grid-3',
+    '.change-list',
+    '.flow',
+    '.tile-grid',
+    '.biz-grid',
+    '.story-row',
+    '.forum-grid',
+    '.leader-grid',
+  ];
+
+  const STAGGER_MS = 90;
+  const MAX_STAGGER_STEPS = 6;
+
+  const root = document.documentElement;
+
+  if (root.classList.contains('reveal-on')) {
+    const main = document.querySelector('main') ?? document.body;
+
+    const tag = (el: Element, variant = '') => {
+      if (!el.hasAttribute('data-reveal')) el.setAttribute('data-reveal', variant);
+    };
+
+    BLOCKS.forEach((entry) => {
+      const [selector, variant] = entry.split('|');
+      main.querySelectorAll(selector).forEach((el) => tag(el, variant));
+    });
+    GROUPS.forEach((selector) => {
+      main.querySelectorAll(selector).forEach((group) => {
+        [...group.children].forEach((child) => tag(child));
+      });
+    });
+
+    // Once shown, drop the reveal styles so hover effects and the like are untouched.
+    const finish = (el: HTMLElement) => {
+      el.removeAttribute('data-reveal');
+      el.classList.remove('is-revealed');
+      el.style.removeProperty('transition-delay');
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Items that enter together (a row of cards) get increasing delays.
+        const entering = entries
+          .filter((e) => e.isIntersecting)
+          .map((e) => e.target as HTMLElement)
+          .sort((a, b) => {
+            const ra = a.getBoundingClientRect();
+            const rb = b.getBoundingClientRect();
+            return ra.top - rb.top || ra.left - rb.left;
+          });
+        entering.forEach((el, i) => {
+          observer.unobserve(el);
+          el.style.transitionDelay = `${Math.min(i, MAX_STAGGER_STEPS) * STAGGER_MS}ms`;
+          el.classList.add('is-revealed');
+          el.addEventListener(
+            'transitionend',
+            (ev) => {
+              if (ev.target === el && ev.propertyName === 'opacity') finish(el);
+            },
+          );
+          // Fallback in case transitionend never fires (e.g. a hidden tab).
+          window.setTimeout(() => finish(el), 2000);
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0 },
+    );
+
+    document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+  }
+</script>
+
+<style is:global>
+  .reveal-on [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition:
+      opacity 0.7s ease,
+      transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-on [data-reveal='left'] { transform: translate3d(-40px, 0, 0); }
+  .reveal-on [data-reveal='right'] { transform: translate3d(40px, 0, 0); }
+  .reveal-on [data-reveal='zoom'] { transform: scale(0.95); }
+  .reveal-on [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-on [data-reveal] { opacity: 1; transform: none; transition: none; }
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -27,6 +28,7 @@ const { title, description = 'Vritti Solutions', footerLinks = [], footerTagline
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <ScrollReveal />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

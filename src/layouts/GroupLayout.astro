@@ -3,6 +3,7 @@
 // It has its own header and footer; the Ekatm product pages use BaseLayout.
 import GroupHeader from '../components/group/GroupHeader.astro';
 import GroupFooter from '../components/group/GroupFooter.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -26,6 +27,7 @@ const { title, description = 'Vritti Group' } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <ScrollReveal />
   </head>
   <body class="group-site">
     <a class="skip-link" href="#main">Skip to content</a>

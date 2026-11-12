@@ -23,7 +23,7 @@ export const ceo = {
 // Full profile page: /meet-our-management/veerendra-jamdade
 export const ceoProfile = {
   name: 'Veerendra Jamdade',
-  title: 'Co-founder, CEO',
+  title: 'Founder, CEO',
   photo: '/images/management/veerendra-jamdade.jpg',
   bio: [
     'Along with his team, he founded Vritti Solutions in the year 2005. Having an experience of 38 years, he has always focused on introducing breakthrough technology in the semi-rural and rural areas of India. Coming from an agricultural background and being qualified as a Mechanical Engineer, he sowed the seed of helping urban and rural people to grow their businesses through innovative IT solutions like AdatSoft and PetroSoft. Nonetheless, he wanted to cater to the SMEs through Ekatm ERP and Simplify Practice. His idea of creating a unique audio medium, the Audiowala Bus Stand has today emerged as an impactful and cost-effective platform for brands to mass promote their products and services.',

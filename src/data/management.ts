@@ -56,17 +56,17 @@ export const leaders: Leader[] = [
   },
   {
     name: 'Shivaji Bedre',
-    title: 'Vice-President Sales & Marketing',
+    title: 'Vice-President Sales & Marketing, Vritti Group',
     photo: '/images/management/shivaji-bedre.jpg',
   },
   {
     name: 'Jeevan Pawar',
-    title: 'VP-BD (India & Global Market)',
+    title: 'VP-BD (India & Global Market), Vritti Group',
     photo: '/images/management/jeevan-pawar.jpg',
   },
   {
     name: 'Sangeeta Jamdade',
-    title: 'Director: Human Resources',
+    title: 'Director: Human Resources, Vritti Group',
     photo: '/images/management/sangeeta-jamdade.jpg',
   },
 ];

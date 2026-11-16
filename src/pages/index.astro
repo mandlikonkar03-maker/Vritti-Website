@@ -24,16 +24,36 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
   title="Vritti Group – Building Businesses. Enabling Growth."
   description={hero.text}
 >
-  <!-- Hero -->
-  <section class="hero">
+  <!-- Hero: "Vritti Group | <word>", the word and its backdrop change every few seconds -->
+  <section class="hero" data-hero data-interval={hero.interval}>
+    <div class="hero-bgs" aria-hidden="true">
+      {hero.slides.map((s, i) => (
+        <img
+          class:list={['hero-bg', { 'is-active': i === 0 }]}
+          src={s.image}
+          alt=""
+          loading={i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={i === 0 ? 'high' : 'auto'}
+          decoding="async"
+        />
+      ))}
+    </div>
     <div class="g-container hero-inner">
-      <div class="hero-copy">
-        <p class="hero-eyebrow">{hero.eyebrow}</p>
-        <h1>{hero.title.map((line) => <span>{line}</span>)}</h1>
-        <p class="hero-text">{hero.text}</p>
+      <h1 class="hero-title">
+        <span class="sr-only">{hero.brand}: {hero.slides.map((s) => s.word).join(', ')}</span>
+        <span class="hero-brand" aria-hidden="true">{hero.brand}</span>
+        <span class="hero-sep" aria-hidden="true"></span>
+        <span class="hero-words" aria-hidden="true">
+          {hero.slides.map((s, i) => (
+            <span class:list={['hero-word', { 'is-active': i === 0 }]}>{s.word}</span>
+          ))}
+        </span>
+      </h1>
+      <p class="hero-text">{hero.text}</p>
+      <div class="hero-dots" aria-hidden="true">
+        {hero.slides.map((_, i) => <span class:list={['hero-dot', { 'is-active': i === 0 }]}></span>)}
       </div>
     </div>
-    <img class="hero-img" src={hero.image} alt={hero.imageAlt} width="938" height="795" fetchpriority="high" />
   </section>
 
   <!-- Who we are -->
@@ -192,6 +212,31 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
 </GroupLayout>
 
 <script>
+  // Hero: every `data-interval` ms, swap to the next word and crossfade its backdrop (loops).
+  const heroEl = document.querySelector<HTMLElement>('[data-hero]');
+  if (heroEl) {
+    const words = [...heroEl.querySelectorAll<HTMLElement>('.hero-word')];
+    const bgs = [...heroEl.querySelectorAll<HTMLImageElement>('.hero-bg')];
+    const dots = [...heroEl.querySelectorAll<HTMLElement>('.hero-dot')];
+    const delay = Number(heroEl.dataset.interval) || 5000;
+    let current = 0;
+    // Start loading the other backdrops once the page has loaded, so each is ready before its turn.
+    window.addEventListener('load', () => bgs.forEach((img) => (img.loading = 'eager')));
+    const show = (next: number) => {
+      words[current].classList.remove('is-active');
+      words[current].classList.add('is-leaving');
+      const leaving = words[current];
+      setTimeout(() => leaving.classList.remove('is-leaving'), 700);
+      bgs[current]?.classList.remove('is-active');
+      dots[current]?.classList.remove('is-active');
+      current = next;
+      words[current].classList.add('is-active');
+      bgs[current]?.classList.add('is-active');
+      dots[current]?.classList.add('is-active');
+    };
+    if (words.length > 1) setInterval(() => show((current + 1) % words.length), delay);
+  }
+
   // Photo grid "developing" animation (styles in the who-we-are section above).
   const grid = document.querySelector<HTMLElement>('#who-we-are .tile-grid');
   if (
@@ -220,46 +265,92 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
 </script>
 
 <style>
-  /* Hero */
+  /* Hero: full-bleed rotating backdrop with "Vritti Group | <word>" */
   .hero {
     position: relative;
-    background: linear-gradient(to right, var(--g-blue) 86.67%, var(--g-orange) 86.67%);
-    color: #fff;
+    isolation: isolate;
     overflow: hidden;
-    min-height: 47.3vw;
+    color: #fff;
+    background: #0a2540;
+    min-height: clamp(440px, 47.3vw, min(720px, calc(100vh - 84px)));
     display: flex;
     align-items: center;
   }
-  .hero-inner { position: relative; z-index: 1; }
-  /* Copy starts at the page margin and stops before the photo (photo's left edge = 100vw - 55.83vw). */
-  .hero-copy { max-width: calc(44.17vw - max(24px, 50vw - 576px) - 24px); padding: 48px 0; }
-  .hero-eyebrow {
-    margin: 0 0 14px;
-    color: var(--g-orange);
-    font-size: clamp(16px, 1.75vw, 30px);
-    font-weight: 500;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
+  .hero-bgs { position: absolute; inset: 0; z-index: -1; }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.08);
+    transition: opacity 1.2s ease, transform 6.5s ease-out;
   }
-  .hero h1 {
+  .hero-bg.is-active { opacity: 1; transform: scale(1); }
+  /* Darken the photos (more on the left, behind the text) so the white copy stays readable. */
+  .hero-bgs::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(4, 30, 58, 0.88) 0%, rgba(4, 30, 58, 0.62) 45%, rgba(4, 30, 58, 0.25) 100%),
+      linear-gradient(0deg, rgba(4, 30, 58, 0.45), transparent 40%);
+  }
+  .hero-inner { position: relative; width: 100%; padding-block: 56px; }
+  .hero-title {
+    margin: 0;
     font-size: clamp(30px, 3vw, 40px);
     font-weight: 700;
-    line-height: 1.08;
+    line-height: 1.15;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 0.45em;
+    row-gap: 4px;
   }
-  .hero h1 span { display: block; }
+  .hero-brand { white-space: nowrap; }
+  .hero-sep { width: 3px; height: 1.05em; background: var(--g-orange); border-radius: 2px; }
+  /* All words share one grid cell, so the line is as wide as the longest word and never jumps. */
+  .hero-words { display: inline-grid; white-space: nowrap; color: var(--g-orange); }
+  .hero-word {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: translateY(0.55em);
+    filter: blur(4px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
+  }
+  .hero-word.is-active { opacity: 1; transform: none; filter: none; transition-delay: 0.15s; }
+  .hero-word.is-leaving { opacity: 0; transform: translateY(-0.55em); filter: blur(4px); transition-delay: 0s; }
   .hero-text {
-    margin: clamp(18px, 2.4vw, 40px) 0 0;
-    font-size: clamp(16px, 1.65vw, 27px);
-    line-height: 1.12;
+    max-width: 560px;
+    margin: clamp(16px, 1.6vw, 24px) 0 0;
+    font-size: clamp(16px, 1.3vw, 20px);
+    line-height: 1.45;
     font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
   }
-  .hero-img {
+  .hero-dots { display: flex; gap: 8px; margin-top: clamp(24px, 2.6vw, 40px); }
+  .hero-dot {
+    width: 28px;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.35);
+    transition: background 0.4s ease, width 0.4s ease;
+  }
+  .hero-dot.is-active { width: 44px; background: var(--g-orange); }
+  .sr-only {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 55.83vw;
-    height: auto;
-    display: block;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg, .hero-bg.is-active { transform: none; transition: opacity 0.6s ease; }
+    .hero-word, .hero-word.is-leaving { transform: none; filter: none; }
   }
 
   /* Who we are */
@@ -580,14 +671,11 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
   }
 
   @media (max-width: 900px) {
-    .hero {
-      flex-direction: column;
-      align-items: stretch;
-      background: var(--g-blue);
-      min-height: 0;
+    .hero { min-height: clamp(420px, 68svh, 560px); }
+    .hero-bgs::after {
+      background: linear-gradient(0deg, rgba(4, 30, 58, 0.9) 0%, rgba(4, 30, 58, 0.6) 55%, rgba(4, 30, 58, 0.35) 100%);
     }
-    .hero-copy { max-width: 600px; padding: 48px 0 32px; }
-    .hero-img { position: static; width: 100%; }
+    .hero-inner { align-self: flex-end; padding-block: 40px; }
     .biz-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
     .story-row { flex-direction: column; }
     .bot-stats { flex-wrap: wrap; justify-content: center; gap: 20px 40px; }

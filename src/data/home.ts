@@ -2,11 +2,30 @@
 // Edit text, links and images here; the page layout reads everything from this file.
 
 export const hero = {
-  eyebrow: 'Vritti Group',
-  title: ['Building Businesses.', 'Enabling Growth.'],
+  // Rotating banner: "Vritti Group | <word>". Each word shows for `interval` ms with its own
+  // full-bleed backdrop, then the next one fades in; after the last it loops back to the first.
+  // To change a photo, replace the file in public/images/home/hero/ (landscape, ~1920px wide)
+  // or edit the path below. Add or remove entries to change the words.
+  brand: 'Vritti Group',
+  interval: 5000,
+  slides: [
+    {
+      word: 'Technology',
+      image: '/images/home/hero/technology.jpg',
+      alt: 'The Vritti Solutions team in the office',
+    },
+    {
+      word: 'Vritti iMedia',
+      image: '/images/home/hero/vritti-imedia.jpg',
+      alt: 'A rural Indian vegetable market',
+    },
+    {
+      word: 'Mindwave Media',
+      image: '/images/home/hero/mindwave-media.jpg',
+      alt: 'Mindwave Media on stage at a marketing awards night',
+    },
+  ] as { word: string; image: string; alt: string }[],
   text: 'Vritti Group is a diversified technology, media and marketing enterprise helping businesses grow through technology, innovation and market access.',
-  image: '/images/home/hero-leaders.jpg',
-  imageAlt: 'Vritti Group leadership team',
 };
 
 export const whoWeAre = {

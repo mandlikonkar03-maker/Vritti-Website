@@ -56,19 +56,17 @@ export const leaders: Leader[] = [
   },
   {
     name: 'Shivaji Bedre',
-    title: 'Chief Sales, Vritti Group',
+    title: 'Vice-President Sales & Marketing',
     photo: '/images/management/shivaji-bedre.jpg',
   },
   {
     name: 'Jeevan Pawar',
-    // TODO: confirm title. The design shows "CMO", which looks copied from the first card.
-    title: 'CMO, Vritti Group',
+    title: 'VP-BD (India & Global Market)',
     photo: '/images/management/jeevan-pawar.jpg',
   },
   {
     name: 'Sangeeta Jamdade',
-    // TODO: real title still to come (photo from OM, 2026-11-16).
-    title: 'Vritti Group',
+    title: 'Director: Human Resources',
     photo: '/images/management/sangeeta-jamdade.jpg',
   },
 ];

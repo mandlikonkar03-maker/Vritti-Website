@@ -98,14 +98,14 @@ const first = journey[0].year;
 <style>
   .journey {
     --j-line: #dfe4ea;
-    --j-top: 110px; /* height of the sticky group header */
+    --j-top: 84px; /* height of the sticky group header (JS keeps it in sync) */
     --j-yf: clamp(56px, 6.2vw, 104px); /* big year size */
     background: #fff;
     color: var(--g-ink);
     padding-bottom: 0;
   }
-  @media (max-width: 1100px) { .journey { --j-top: 88px; } }
-  @media (max-width: 900px) { .journey { --j-top: 68px; } }
+  @media (max-width: 1100px) { .journey { --j-top: 72px; } }
+  @media (max-width: 900px) { .journey { --j-top: 60px; } }
 
   .j-head { margin-bottom: 0; text-align: center; }
   .j-inner { padding-top: clamp(20px, 3vh, 36px); padding-bottom: clamp(20px, 3vh, 36px); }
@@ -300,6 +300,10 @@ const first = journey[0].year;
     let current = -1;
 
     root.classList.add('is-live');
+    // Pin just below the sticky site header, whatever its height.
+    const header = document.querySelector<HTMLElement>('.g-header');
+    const syncTop = () => { if (header) root.style.setProperty('--j-top', `${header.offsetHeight}px`); };
+    syncTop();
     const pinned = () => getComputedStyle(pin).position === 'sticky';
 
     function show(i: number) {
@@ -348,7 +352,7 @@ const first = journey[0].year;
       raf = requestAnimationFrame(() => { raf = 0; update(); });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    window.addEventListener('resize', () => { syncTop(); onScroll(); });
     update();
   }
 

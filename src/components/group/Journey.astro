@@ -1,7 +1,8 @@
 ---
-// "Our Journey": a scroll-driven timeline. While the visitor scrolls through the
-// section, the panel stays pinned, the year rolls forward like a counter and the
-// matching milestone slides in. Without JavaScript (or for print) every milestone
+// "Our Journey": a year-by-year timeline. Click a year on the rail, use the arrows
+// or swipe (phones) and the year rolls forward like a counter while the matching
+// milestone slides in. It also advances on its own while in view, until the visitor
+// takes over. The page scrolls normally past it. Without JavaScript (or for print) every milestone
 // is shown as a plain list instead. Content lives in src/data/about.ts.
 import { journey, journeyIntro } from '../../data/about';
 
@@ -43,13 +44,21 @@ const first = journey[0].year;
         </nav>
 
         <div class="j-stage">
-          <div class="j-year" aria-hidden="true" data-j-year>
+          <div class="j-year" data-j-year>
             {first.split('').map((d) => (
-              <span class="j-digit" style={`--d:${d}`}>
+              <span class="j-digit" aria-hidden="true" style={`--d:${d}`}>
                 <span class="j-digit-strip">{'0123456789'.split('').map((x) => <span>{x}</span>)}</span>
               </span>
             ))}
-            <span class="j-count"><span data-j-count>01</span> / {String(journey.length).padStart(2, '0')}</span>
+            <span class="j-count" aria-hidden="true"><span data-j-count>01</span> / {String(journey.length).padStart(2, '0')}</span>
+            <div class="j-nav">
+              <button type="button" class="j-arrow" data-j-prev aria-label="Previous year">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+              </button>
+              <button type="button" class="j-arrow" data-j-next aria-label="Next year">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
           </div>
 
           <ol class="j-steps" aria-live="polite">
@@ -98,7 +107,7 @@ const first = journey[0].year;
 <style>
   .journey {
     --j-line: #dfe4ea;
-    --j-top: 84px; /* height of the sticky group header (JS keeps it in sync) */
+    --j-top: 84px; /* height of the sticky group header (used to size photos) */
     --j-yf: clamp(56px, 6.2vw, 104px); /* big year size */
     background: #fff;
     color: var(--g-ink);
@@ -218,13 +227,18 @@ const first = journey[0].year;
   .journey:not(.is-live) .j-copy { padding-top: 0; }
   .journey:not(.is-live) .j-step-year { display: block; margin: 0 0 10px; font-size: 44px; font-weight: 800; color: var(--g-blue); line-height: 1; }
 
-  /* ---------- Scroll-pinned mode ---------- */
-  .journey.is-live .j-track { height: calc(var(--n) * var(--j-step-h, 70vh) + 100vh - var(--j-top)); }
-  .journey.is-live .j-pin {
-    position: sticky; top: var(--j-top);
-    height: calc(100vh - var(--j-top)); height: calc(100svh - var(--j-top));
-    overflow: hidden; display: flex; flex-direction: column; justify-content: safe center;
+  /* ---------- Interactive mode (JS on): one year at a time, page scrolls normally ---------- */
+  .j-nav { display: none; }
+  .journey.is-live .j-nav { display: flex; gap: 10px; margin-left: clamp(16px, 2vw, 28px); align-self: center; letter-spacing: 0; }
+  .j-arrow {
+    width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+    background: #fff; color: var(--g-blue); border: 1.5px solid #d5e0e9;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
   }
+  .j-arrow:hover:not(:disabled) { background: var(--g-blue); border-color: var(--g-blue); color: #fff; }
+  .j-arrow:disabled { opacity: 0.4; cursor: default; }
+  .j-arrow:focus-visible { outline: 2px solid var(--g-orange); outline-offset: 3px; }
+  .journey.is-live .j-stage { touch-action: pan-y; }
   .journey.is-live .j-step {
     opacity: 0; visibility: hidden; pointer-events: none;
     transform: translateY(var(--j-from, 36px));
@@ -245,7 +259,7 @@ const first = journey[0].year;
   @keyframes j-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
   @media (max-width: 768px) {
-    .journey { --j-step-h: 60vh; --j-yf: clamp(50px, 14vw, 72px); }
+    .journey { --j-yf: clamp(50px, 14vw, 72px); }
     .j-inner { padding-top: 18px; padding-bottom: 18px; }
     .j-rail { margin-bottom: 18px; }
     .j-rail-year { font-size: 11px; }
@@ -254,6 +268,8 @@ const first = journey[0].year;
     .j-rail-line { top: 7px; }
     .j-rail button { gap: 6px; }
     .j-count { margin-left: auto; align-self: center; }
+    .journey.is-live .j-nav { margin-left: 12px; gap: 8px; }
+    .j-arrow { width: 38px; height: 38px; }
     .j-year { right: 0; }
     .j-step { grid-template-columns: minmax(0, 1fr); gap: 14px; align-items: start; }
     .j-copy { padding-top: calc(var(--j-yf) + 12px); }
@@ -271,15 +287,6 @@ const first = journey[0].year;
     .j-people strong { font-size: 13px; }
     .journey:not(.is-live) .j-steps { gap: 36px; }
   }
-  /* Short landscape phones: not enough height to pin, so show the list. */
-  @media (max-height: 520px) {
-    .journey.is-live .j-track { height: auto; }
-    .journey.is-live .j-pin { position: static; height: auto; }
-    .journey.is-live .j-year { display: none; }
-    .journey.is-live .j-copy { padding-top: 0; }
-    .journey.is-live .j-step-year { display: block; margin: 0 0 10px; font-size: 40px; font-weight: 800; color: var(--g-blue); line-height: 1; }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .j-digit-strip, .j-rail-fill, .journey.is-live .j-step, .journey.is-live .j-step .j-photo { transition: none !important; }
     .journey.is-live .j-step.is-active .j-points li,
@@ -289,24 +296,21 @@ const first = journey[0].year;
 
 <script>
   function initJourney(root: HTMLElement) {
-    const track = root.querySelector<HTMLElement>('.j-track')!;
-    const pin = root.querySelector<HTMLElement>('.j-pin')!;
     const steps = Array.from(root.querySelectorAll<HTMLElement>('[data-j-step]'));
     const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-j-go]'));
     const digits = Array.from(root.querySelectorAll<HTMLElement>('.j-digit'));
     const fill = root.querySelector<HTMLElement>('[data-j-fill]')!;
     const count = root.querySelector<HTMLElement>('[data-j-count]')!;
+    const prev = root.querySelector<HTMLButtonElement>('[data-j-prev]')!;
+    const next = root.querySelector<HTMLButtonElement>('[data-j-next]')!;
+    const stage = root.querySelector<HTMLElement>('.j-stage')!;
     const n = steps.length;
     let current = -1;
 
     root.classList.add('is-live');
-    // Pin just below the sticky site header, whatever its height.
-    const header = document.querySelector<HTMLElement>('.g-header');
-    const syncTop = () => { if (header) root.style.setProperty('--j-top', `${header.offsetHeight}px`); };
-    syncTop();
-    const pinned = () => getComputedStyle(pin).position === 'sticky';
 
     function show(i: number) {
+      i = Math.min(n - 1, Math.max(0, i));
       if (i === current) return;
       root.classList.toggle('is-back', i < current);
       current = i;
@@ -320,40 +324,48 @@ const first = journey[0].year;
       year.split('').forEach((ch, k) => digits[k]?.style.setProperty('--d', ch));
       fill.style.setProperty('--p', String(n > 1 ? i / (n - 1) : 1));
       count.textContent = String(i + 1).padStart(2, '0');
+      prev.disabled = i === 0;
+      next.disabled = i === n - 1;
     }
 
-    // Scroll distance (px) that belongs to each year.
-    const span = () => (track.offsetHeight - pin.offsetHeight) / n;
-    const pinTop = () => parseFloat(getComputedStyle(pin).top) || 0;
+    // Plays through the years on its own while in view; stops for good once the visitor takes over.
+    let timer = 0;
+    let userTookOver = false;
+    const stopAuto = () => { window.clearInterval(timer); timer = 0; };
+    const takeOver = () => { userTookOver = true; stopAuto(); };
+    const startAuto = () => {
+      if (userTookOver || timer) return;
+      timer = window.setInterval(() => {
+        if (current >= n - 1) { stopAuto(); return; }
+        show(current + 1);
+      }, 4500);
+    };
 
-    function update() {
-      if (!pinned()) {
-        steps.forEach((s) => s.classList.add('is-active'));
-        current = -1;
-        return;
-      }
-      const scrolled = pinTop() - track.getBoundingClientRect().top;
-      const i = Math.min(n - 1, Math.max(0, Math.floor(scrolled / span())));
-      show(i);
-    }
-
-    dots.forEach((d) => {
-      d.addEventListener('click', () => {
-        const i = Number(d.dataset.jGo);
-        if (!pinned()) { steps[i].scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
-        const trackTop = track.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top: trackTop - pinTop() + span() * (i + 0.5), behavior: 'smooth' });
-      });
+    dots.forEach((d) => d.addEventListener('click', () => { takeOver(); show(Number(d.dataset.jGo)); }));
+    prev.addEventListener('click', () => { takeOver(); show(current - 1); });
+    next.addEventListener('click', () => { takeOver(); show(current + 1); });
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { takeOver(); show(current - 1); }
+      if (e.key === 'ArrowRight') { takeOver(); show(current + 1); }
     });
 
-    let raf = 0;
-    const onScroll = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => { raf = 0; update(); });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => { syncTop(); onScroll(); });
-    update();
+    // Swipe left/right on the milestone (phones).
+    let sx = 0, sy = 0;
+    stage.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    stage.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - sx;
+      const dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) { takeOver(); show(current + (dx < 0 ? 1 : -1)); }
+    }, { passive: true });
+
+    show(0);
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && 'IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        entries.forEach((e) => (e.isIntersecting ? startAuto() : stopAuto()));
+      }, { threshold: 0.5 }).observe(stage);
+    }
   }
 
   document.querySelectorAll<HTMLElement>('[data-journey]').forEach(initJourney);

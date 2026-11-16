@@ -7,9 +7,9 @@ import { heroSlides } from './ekatm-erp';
 export const pdmSlides = heroSlides;
 
 export const hero = {
-  title: 'Product Data Management for',
-  titleAccent: 'Manufacturing',
-  text: 'Connect product engineering with manufacturing. Ekatm brings product definition, BOMs, processes, routings, machines, production lines, quality parameters and costing together in one connected ERP environment.',
+  title: 'Product Data Management\u00A0–',
+  titleAccent: 'From Product Design to Manufacturing Execution',
+  text: 'Define your products, manage engineering structures, configure manufacturing processes and control engineering changes\u00A0– all within one integrated ERP platform. Ekatm connects engineering data directly with MRP, production, quality and costing.',
 };
 
 export const workflow = {

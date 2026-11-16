@@ -127,4 +127,6 @@ export const vrittiStandsFor = {
 export const leadingByExample = {
   title: 'Always Leading by Example',
   sub: 'The people behind Vritti Group',
+  moreLabel: 'Know More',
+  moreHref: '/meet-our-management',
 };

@@ -11,9 +11,15 @@ const people = [
 ---
 <section class="g-section lbe" aria-labelledby="lbe-title">
   <div class="g-container">
-    <div class="g-head">
-      <h2 class="g-title" id="lbe-title">{lbe.title}</h2>
-      <p class="g-sub">{lbe.sub}</p>
+    <div class="g-head lbe-head">
+      <div>
+        <h2 class="g-title" id="lbe-title">{lbe.title}</h2>
+        <p class="g-sub">{lbe.sub}</p>
+      </div>
+      <a class="lbe-more" href={lbe.moreHref}>
+        {lbe.moreLabel}
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
     </div>
     <ul class="lbe-grid">
       {people.map((p) => (
@@ -37,6 +43,19 @@ const people = [
 
 <style>
   .lbe { background: #fff; }
+  .lbe-head { display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; }
+  .lbe-more {
+    flex: none; display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 26px; border-radius: 999px;
+    background: var(--g-blue); color: #fff; border: 1.5px solid var(--g-blue);
+    font-size: 15px; font-weight: 600; line-height: 1; text-decoration: none;
+    box-shadow: 0 10px 22px rgba(6, 97, 169, 0.25);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+  }
+  .lbe-more svg { transition: transform 0.2s; }
+  .lbe-more:hover { background: #fff; color: var(--g-blue); transform: translateY(-1px); }
+  .lbe-more:hover svg { transform: translateX(3px); }
+  .lbe-more:focus-visible { outline: 2px solid var(--g-orange); outline-offset: 3px; }
   /* Same cards as /meet-our-management; a short last row stays centred. */
   .lbe-grid {
     list-style: none; margin: 0; padding: 0;
@@ -74,6 +93,8 @@ const people = [
     .lbe-card { flex-basis: calc((100% - 2 * var(--gap)) / 3); }
   }
   @media (max-width: 640px) {
+    .lbe-head { flex-direction: column; align-items: flex-start; }
+    .lbe-more { padding: 11px 22px; font-size: 14px; }
     .lbe-card { flex-basis: calc((100% - var(--gap)) / 2); }
     .lbe-info { padding: 18px 8px 20px; }
     .lbe-info h3::after { width: 40px; margin: 10px auto 12px; }

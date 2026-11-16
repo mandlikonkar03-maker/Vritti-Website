@@ -146,7 +146,7 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
       <ul class="bot-stats">
         {builtOverTime.stats.map((st) => (
           <li class:list={['stat', st.big && 'stat--big']}>
-            <span class="stat-value">{st.value}</span>
+            <span class="stat-value" data-count>{st.value}</span>
             <span class="stat-label">
               {st.plus && <span class="stat-plus">+</span>}
               {st.label.map((l) => <span>{l}</span>)}
@@ -223,6 +223,42 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
 </GroupLayout>
 
 <script>
+  // "Built over time." stats: count up from 0 to each number the first time they scroll into view.
+  // The real numbers are in the HTML, so they show as-is without JavaScript or with reduced motion.
+  const counters = [...document.querySelectorAll<HTMLElement>('[data-count]')];
+  if (counters.length && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const run = (el: HTMLElement) => {
+      const text = el.textContent ?? '';
+      const m = text.match(/^(\D*)([\d,]+)(.*)$/);
+      if (!m) return;
+      const [, pre, num, post] = m;
+      const target = Number(num.replace(/,/g, ''));
+      const comma = num.includes(',');
+      el.style.minWidth = `${el.getBoundingClientRect().width}px`; // keep the layout still while counting
+      const start = performance.now();
+      const dur = 1800;
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / dur);
+        const v = Math.round(target * (1 - Math.pow(1 - t, 3)));
+        el.textContent = pre + (comma ? v.toLocaleString('en-US') : String(v)) + post;
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      el.textContent = pre + '0' + post;
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          io.unobserve(e.target);
+          run(e.target as HTMLElement);
+        });
+      },
+      { threshold: 0.6 },
+    );
+    counters.forEach((el) => io.observe(el));
+  }
+
   // Hero: every `data-interval` ms, swap to the next word and crossfade its backdrop (loops).
   const heroEl = document.querySelector<HTMLElement>('[data-hero]');
   if (heroEl) {
@@ -563,7 +599,7 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
     gap: 16px;
   }
   .stat { display: flex; align-items: center; gap: clamp(6px, 0.7vw, 10px); }
-  .stat-value { font-size: clamp(34px, 4vw, 56px); font-weight: 600; line-height: 1; letter-spacing: -0.01em; }
+  .stat-value { font-size: clamp(34px, 4vw, 56px); font-weight: 600; line-height: 1; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
   .stat--big .stat-value { font-size: clamp(46px, 5.6vw, 80px); }
   .stat-label {
     display: flex;

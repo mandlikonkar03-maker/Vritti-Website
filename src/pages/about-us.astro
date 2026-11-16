@@ -1,0 +1,44 @@
+---
+import GroupLayout from '../layouts/GroupLayout.astro';
+import Journey from '../components/group/Journey.astro';
+import { aboutHero } from '../data/about';
+---
+<GroupLayout title="About Us – Vritti Group" description={aboutHero.text}>
+  <section class="a-hero">
+    <div class="g-container">
+      <h1>{aboutHero.title}</h1>
+      <p>{aboutHero.text}</p>
+    </div>
+  </section>
+
+  <Journey />
+</GroupLayout>
+
+<style>
+  .a-hero {
+    /* Journey-path graphic: a rising road with the milestone years (public/images/about/hero.svg). */
+    background: #0661a9 url('/images/about/hero.svg') center bottom / cover no-repeat;
+    color: #fff;
+    min-height: clamp(240px, 28vw, 480px);
+    display: flex;
+    align-items: flex-start;
+    text-align: center;
+    /* Text sits in the upper part so the journey line runs below it. */
+    padding: clamp(36px, 5.5vw, 96px) 0 clamp(90px, 10vw, 180px);
+  }
+  .a-hero h1 {
+    margin: 0;
+    font-size: clamp(30px, 3.4vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.3);
+  }
+  .a-hero p {
+    margin: 14px auto 0;
+    max-width: 720px;
+    text-wrap: balance;
+    font-size: clamp(15px, 1.3vw, 20px);
+    font-weight: 500;
+    opacity: 0.9;
+  }
+</style>

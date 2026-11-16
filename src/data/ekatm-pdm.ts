@@ -9,7 +9,7 @@ export const pdmSlides = heroSlides;
 export const hero = {
   title: 'Product Data Management\u00A0–',
   titleAccent: 'From Product Design to Manufacturing Execution',
-  text: 'Define your products, manage engineering structures, configure manufacturing processes and control engineering changes – all within one integrated ERP platform. Ekatm connects engineering data directly with MRP, production, quality and costing.',
+  text: 'Define your products, manage engineering structures, configure manufacturing processes and control engineering changes\u00A0– all within one integrated ERP platform. Ekatm connects engineering data directly with MRP, production, quality and costing.',
 };
 
 export const workflow = {

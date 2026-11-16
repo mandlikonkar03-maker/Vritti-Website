@@ -13,6 +13,9 @@ export const hero = {
       word: 'Technology',
       image: '/images/home/hero/technology.jpg',
       alt: 'The Vritti Solutions team in the office',
+      // While this word is showing, clicking the banner opens this page.
+      href: '/technology/ekatm-erp',
+      linkLabel: 'Technology: explore Ekatm ERP',
     },
     {
       word: 'Media',
@@ -24,7 +27,7 @@ export const hero = {
       image: '/images/home/hero/mindwave-media.jpg',
       alt: 'Mindwave Media on stage at a marketing awards night',
     },
-  ] as { word: string; image: string; alt: string }[],
+  ] as { word: string; image: string; alt: string; href?: string; linkLabel?: string }[],
   text: 'Vritti Group is a diversified technology, media and marketing enterprise helping businesses grow through technology, innovation and market access.',
 };
 

@@ -38,6 +38,17 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
         />
       ))}
     </div>
+    {hero.slides.map((s, i) =>
+      s.href ? (
+        <a
+          class:list={['hero-link', { 'is-active': i === 0 }]}
+          href={s.href}
+          aria-label={s.linkLabel ?? s.word}
+          data-slide={i}
+          tabindex={i === 0 ? undefined : -1}
+        ></a>
+      ) : null,
+    )}
     <div class="g-container hero-inner">
       <h1 class="hero-title">
         <span class="sr-only">{hero.brand}: {hero.slides.map((s) => s.word).join(', ')}</span>
@@ -218,6 +229,7 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
     const words = [...heroEl.querySelectorAll<HTMLElement>('.hero-word')];
     const bgs = [...heroEl.querySelectorAll<HTMLImageElement>('.hero-bg')];
     const dots = [...heroEl.querySelectorAll<HTMLElement>('.hero-dot')];
+    const links = [...heroEl.querySelectorAll<HTMLAnchorElement>('.hero-link')];
     const delay = Number(heroEl.dataset.interval) || 5000;
     let current = 0;
     // Start loading the other backdrops once the page has loaded, so each is ready before its turn.
@@ -233,6 +245,12 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
       words[current].classList.add('is-active');
       bgs[current]?.classList.add('is-active');
       dots[current]?.classList.add('is-active');
+      // Only the link of the word on screen is clickable (e.g. Technology → Ekatm ERP).
+      links.forEach((a) => {
+        const on = Number(a.dataset.slide) === current;
+        a.classList.toggle('is-active', on);
+        a.tabIndex = on ? 0 : -1;
+      });
     };
     if (words.length > 1) setInterval(() => show((current + 1) % words.length), delay);
   }
@@ -297,7 +315,12 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
       linear-gradient(90deg, rgba(4, 30, 58, 0.88) 0%, rgba(4, 30, 58, 0.62) 45%, rgba(4, 30, 58, 0.25) 100%),
       linear-gradient(0deg, rgba(4, 30, 58, 0.45), transparent 40%);
   }
-  .hero-inner { position: relative; width: 100%; padding-block: 56px; }
+  .hero-inner { position: relative; width: 100%; padding-block: 56px; pointer-events: none; }
+  /* Full-banner link, shown only while its word is on screen. */
+  .hero-link { position: absolute; inset: 0; z-index: 2; display: none; }
+  .hero-link.is-active { display: block; }
+  .hero-link:focus-visible { outline: 3px solid var(--g-orange); outline-offset: -6px; }
+  .hero:has(.hero-link.is-active:hover) .hero-word.is-active { text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 2px; }
   .hero-title {
     margin: 0;
     font-size: clamp(30px, 3vw, 40px);

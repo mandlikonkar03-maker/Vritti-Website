@@ -1,6 +1,8 @@
 ---
 import GroupLayout from '../layouts/GroupLayout.astro';
 import { hero, ceo, leaders } from '../data/management';
+// Split the quote so words wrapped in **...** render bold.
+const quoteParts = ceo.quote.split(/\*\*(.+?)\*\*/);
 ---
 <GroupLayout title="Meet our Management – Vritti Group" description={hero.text}>
   <!-- Hero (placeholder banner until the carousel image is ready) -->
@@ -18,13 +20,13 @@ import { hero, ceo, leaders } from '../data/management';
     </div>
     <div class="ceo-copy">
       <p class="ceo-eyebrow" id="ceo-heading">{ceo.eyebrow}</p>
-      <blockquote>“{ceo.quote}”</blockquote>
+      <blockquote><span class="q-mark q-open" aria-hidden="true">“</span>{quoteParts.map((part, i) => (i % 2 ? <strong>{part}</strong> : part))}<span class="q-mark q-close" aria-hidden="true">”</span></blockquote>
       <div class="ceo-foot">
         <div>
           <p class="ceo-name">{ceo.name}</p>
           <p class="ceo-title">{ceo.title}</p>
         </div>
-        {ceo.readMoreHref && <a class="ceo-more" href={ceo.readMoreHref}>Read more</a>}
+        {ceo.readMoreHref && <a class="ceo-more" href={ceo.readMoreHref}>Know him</a>}
       </div>
     </div>
   </section>
@@ -95,10 +97,19 @@ import { hero, ceo, leaders } from '../data/management';
   }
   .ceo blockquote {
     margin: 0;
-    font-size: clamp(20px, 2.5vw, 42px);
+    font-size: clamp(18px, 1.9vw, 32px);
     font-weight: 500;
-    line-height: 1.12;
+    line-height: 1.25;
   }
+  .ceo blockquote strong { font-weight: 800; }
+  .q-mark {
+    font-size: 2.6em;
+    font-weight: 700;
+    line-height: 0;
+    vertical-align: -0.38em;
+  }
+  .q-open { margin-right: 0.06em; }
+  .q-close { margin-left: 0.04em; }
   .ceo-foot {
     margin-top: clamp(28px, 3.2vw, 56px);
     display: flex;

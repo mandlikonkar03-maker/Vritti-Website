@@ -154,7 +154,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
 
 <style>
   /* HERO */
-  .hero { padding: 36px 0 84px; }
+  .hero { padding: 36px 0 var(--section-y); }
   .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
@@ -302,7 +302,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
     .faq-grid, .demo-grid { gap: 40px; }
   }
   @media (max-width: 640px) {
-    .hero { padding: 24px 0 64px; }
+    .hero { padding: 24px 0 var(--section-y); }
     .hero-eyebrow { margin-top: 24px; }
     .hero-text { font-size: 16px; }
     .hero-actions .btn { flex: 1 1 100%; }

@@ -206,7 +206,7 @@ const rows = [workflow.steps.slice(0, 5), workflow.steps.slice(5)];
 
 <style>
   /* HERO */
-  .hero { padding: 36px 0 84px; }
+  .hero { padding: 36px 0 var(--section-y); }
   .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
@@ -345,7 +345,7 @@ const rows = [workflow.steps.slice(0, 5), workflow.steps.slice(5)];
     .flow-chip { padding: 10px 12px; font-size: 14px; }
   }
   @media (max-width: 640px) {
-    .hero { padding: 24px 0 64px; }
+    .hero { padding: 24px 0 var(--section-y); }
     .hero-eyebrow { margin-top: 24px; }
     .hero-text { font-size: 16px; }
     .hero-actions .btn { flex: 1 1 100%; }

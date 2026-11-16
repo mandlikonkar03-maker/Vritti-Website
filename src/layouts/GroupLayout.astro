@@ -57,7 +57,7 @@ const { title, description = 'Vritti Group', footerStrip = true } = Astro.props;
   @media (max-width: 768px) {
     .g-container { padding: 0 16px; }
   }
-  .g-head { margin-bottom: 40px; }
+  .g-head { margin-bottom: var(--section-head-gap); }
   .g-title {
     color: var(--g-blue);
     font-weight: 700;
@@ -74,5 +74,5 @@ const { title, description = 'Vritti Group', footerStrip = true } = Astro.props;
     font-size: clamp(13px, 1.3vw, 22px);
     letter-spacing: 0.01em;
   }
-  .g-section { padding: clamp(56px, 6vw, 96px) 0; }
+  .g-section { padding: var(--section-y) 0; }
 </style>

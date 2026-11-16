@@ -215,7 +215,7 @@ const tagline = 'Ekatm ERP. Simple enough to start. Powerful enough to scale.';
 
 <style>
   /* HERO */
-  .hero { padding: 36px 0 84px; }
+  .hero { padding: 36px 0 var(--section-y); }
   .hero-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
@@ -282,8 +282,8 @@ const tagline = 'Ekatm ERP. Simple enough to start. Powerful enough to scale.';
   .levelup-list p { margin: 0; color: var(--text); font-size: 14.5px; line-height: 1.65; }
 
   /* INTEGRATIONS */
-  .levelup { padding-bottom: 40px; }
-  .integrations { padding-top: 48px; padding-bottom: 0; }
+  .levelup { padding-bottom: calc(var(--section-y) / 2); }
+  .integrations { padding-top: calc(var(--section-y) / 2); padding-bottom: 0; }
   .integrations .section-head { margin-bottom: 36px; }
   .integrations-banner { overflow: hidden; }
   .integrations-banner img { display: block; width: 100%; min-width: 900px; position: relative; left: 50%; transform: translateX(-50%); }
@@ -375,7 +375,7 @@ const tagline = 'Ekatm ERP. Simple enough to start. Powerful enough to scale.';
     .faq-grid, .demo-grid { gap: 40px; }
   }
   @media (max-width: 640px) {
-    .hero { padding: 24px 0 64px; }
+    .hero { padding: 24px 0 var(--section-y); }
     .hero-eyebrow { margin-top: 24px; }
     .hero-text { font-size: 16px; }
     .hero-actions .btn { flex: 1 1 100%; }

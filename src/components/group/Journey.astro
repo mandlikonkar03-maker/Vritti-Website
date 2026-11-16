@@ -17,18 +17,17 @@ const icons: Record<string, string> = {
 };
 const first = journey[0].year;
 ---
-<section class="journey" id="journey" aria-labelledby="journey-title" style={`--n:${journey.length}`} data-journey>
+<section class="journey g-section" id="journey" aria-labelledby="journey-title" style={`--n:${journey.length}`} data-journey>
+  <div class="g-container">
+    <div class="g-head j-head">
+      <h2 class="g-title" id="journey-title">{journeyIntro.title}</h2>
+      <p class="g-sub">{journeyIntro.sub}</p>
+    </div>
+  </div>
+
   <div class="j-track">
     <div class="j-pin">
       <div class="g-container j-inner">
-        <header class="j-head">
-          <div>
-            <h2 class="g-title j-title" id="journey-title">{journeyIntro.title}</h2>
-            <p class="g-sub j-sub">{journeyIntro.sub}</p>
-          </div>
-          <p class="j-count" aria-hidden="true"><span data-j-count>01</span> / {String(journey.length).padStart(2, '0')}</p>
-        </header>
-
         <nav class="j-rail" aria-label="Journey years">
           <span class="j-rail-line" aria-hidden="true"><span class="j-rail-fill" data-j-fill></span></span>
           <ol>
@@ -50,11 +49,12 @@ const first = journey[0].year;
                 <span class="j-digit-strip">{'0123456789'.split('').map((x) => <span>{x}</span>)}</span>
               </span>
             ))}
+            <span class="j-count"><span data-j-count>01</span> / {String(journey.length).padStart(2, '0')}</span>
           </div>
 
           <ol class="j-steps" aria-live="polite">
             {journey.map((m, i) => (
-              <li class:list={['j-step', { 'is-active': i === 0 }]} data-j-step={i} data-year={m.year}>
+              <li class:list={['j-step', { 'is-active': i === 0, 'no-photo': !m.image }]} data-j-step={i} data-year={m.year}>
                 <div class="j-copy">
                   <p class="j-step-year">{m.year}</p>
                   <h3>
@@ -70,24 +70,22 @@ const first = journey[0].year;
                       {m.points.map((p) => <li>{p}</li>)}
                     </ul>
                   )}
-                </div>
-                <div class="j-media">
-                  {m.image && (
-                    <figure class:list={['j-photo', { 'j-photo--contain': m.image.fit === 'contain' }]}>
-                      <img src={m.image.src} alt={m.image.alt} loading="lazy" decoding="async" />
-                    </figure>
-                  )}
                   {m.people && (
                     <ul class="j-people">
                       {m.people.map((p) => (
                         <li>
-                          <img src={p.photo} alt="" width="64" height="64" loading="lazy" decoding="async" />
+                          <img src={p.photo} alt="" width="72" height="72" loading="lazy" decoding="async" />
                           <span><strong>{p.name}</strong>{p.role}</span>
                         </li>
                       ))}
                     </ul>
                   )}
                 </div>
+                {m.image && (
+                  <figure class="j-photo" style={`--ar:${m.image.width}/${m.image.height}`}>
+                    <img src={m.image.src} alt={m.image.alt} width={m.image.width} height={m.image.height} loading="lazy" decoding="async" />
+                  </figure>
+                )}
               </li>
             ))}
           </ol>
@@ -99,24 +97,21 @@ const first = journey[0].year;
 
 <style>
   .journey {
-    --j-bg: #4b4748;
-    --j-line: rgba(255, 255, 255, 0.28);
+    --j-line: #dfe4ea;
     --j-top: 110px; /* height of the sticky group header */
-    background: var(--j-bg);
-    color: #fff;
+    --j-yf: clamp(56px, 6.2vw, 104px); /* big year size */
+    background: #fff;
+    color: var(--g-ink);
+    padding-bottom: 0;
   }
   @media (max-width: 1100px) { .journey { --j-top: 88px; } }
   @media (max-width: 900px) { .journey { --j-top: 68px; } }
 
-  .j-inner { padding-top: var(--section-y); padding-bottom: var(--section-y); }
-  .j-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: clamp(18px, 2vw, 28px); }
-  .j-title { margin: 0; color: #fff; }
-  .j-sub { color: rgba(255, 255, 255, 0.72); }
-  .j-count { margin: 0; font-weight: 600; font-size: 14px; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.6); font-variant-numeric: tabular-nums; }
-  .j-count span { color: var(--g-orange); font-size: 22px; }
+  .j-head { margin-bottom: 0; text-align: center; }
+  .j-inner { padding-top: clamp(20px, 3vh, 36px); padding-bottom: clamp(20px, 3vh, 36px); }
 
   /* ---------- Year rail ---------- */
-  .j-rail { position: relative; margin-bottom: clamp(20px, 3vw, 44px); }
+  .j-rail { position: relative; margin-bottom: clamp(20px, 4vh, 44px); }
   .j-rail-line { position: absolute; left: 0; right: 0; top: 9px; height: 2px; background: var(--j-line); }
   .j-rail-fill {
     display: block; height: 100%; width: 100%;
@@ -126,30 +121,31 @@ const first = journey[0].year;
   }
   .j-rail ol { list-style: none; margin: 0; padding: 0; display: flex; justify-content: space-between; position: relative; }
   .j-rail button {
-    background: none; border: 0; padding: 0; margin: 0; cursor: pointer; color: rgba(255, 255, 255, 0.55);
+    background: none; border: 0; padding: 0; margin: 0; cursor: pointer; color: #8a96a3;
     font: inherit; display: flex; flex-direction: column; align-items: center; gap: 8px;
   }
   .j-rail li:first-child button { align-items: flex-start; }
   .j-rail li:last-child button { align-items: flex-end; }
   .j-dot {
     width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center;
-    background: var(--j-bg); border: 2px solid var(--j-line);
+    background: #fff; border: 2px solid #c9d1da;
     transition: border-color 0.3s, background 0.3s, transform 0.3s;
   }
   .j-dot::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: transparent; transition: background 0.3s; }
   .j-rail-year { font-weight: 700; font-size: 14px; transition: color 0.3s; }
   .j-rail button.is-past .j-dot { border-color: var(--g-orange); }
-  .j-rail button[aria-current] { color: #fff; }
+  .j-rail button[aria-current] { color: var(--g-blue); }
   .j-rail button[aria-current] .j-dot { border-color: var(--g-orange); background: var(--g-orange); transform: scale(1.15); }
   .j-rail button[aria-current] .j-dot::after { background: #fff; }
-  .j-rail button:hover { color: #fff; }
+  .j-rail button:hover { color: var(--g-blue); }
   .j-rail button:focus-visible { outline: 2px solid var(--g-orange); outline-offset: 4px; border-radius: 4px; }
 
   /* ---------- Stage ---------- */
-  .j-stage { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .j-stage { position: relative; }
   .j-year {
-    display: flex; font-weight: 800; line-height: 1; letter-spacing: -0.02em;
-    font-size: clamp(64px, 9vw, 150px); color: #fff; margin-bottom: clamp(8px, 1.4vw, 20px);
+    position: absolute; top: 0; left: 0; z-index: 1;
+    display: flex; align-items: baseline; font-weight: 800; line-height: 1; letter-spacing: -0.02em;
+    font-size: var(--j-yf); color: var(--g-blue);
     font-variant-numeric: tabular-nums;
   }
   .j-digit { display: inline-block; height: 1em; overflow: hidden; }
@@ -159,17 +155,21 @@ const first = journey[0].year;
     transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .j-digit-strip span { height: 1em; display: block; text-align: center; }
-  .j-digit:last-child { color: var(--g-orange); }
+  .j-digit:nth-child(4) { color: var(--g-orange); }
+  .j-count { margin-left: 18px; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: #8a96a3; }
+  .j-count span { color: var(--g-orange); font-size: 18px; }
 
   .j-steps { list-style: none; margin: 0; padding: 0; display: grid; }
   .j-step {
     grid-area: 1 / 1;
-    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 64px); align-items: start; align-content: start;
+    display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(24px, 4vw, 64px); align-items: center; align-content: start;
   }
+  .j-copy { padding-top: calc(var(--j-yf) + clamp(14px, 2.4vh, 28px)); }
   .j-step-year { display: none; }
   .j-step h3 {
     margin: 0; display: flex; gap: 14px; align-items: flex-start;
-    font-size: clamp(20px, 2vw, 32px); font-weight: 700; line-height: 1.2;
+    font-size: clamp(20px, 1.9vw, 30px); font-weight: 700; line-height: 1.25; color: var(--g-ink);
   }
   .j-icon {
     flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
@@ -180,27 +180,43 @@ const first = journey[0].year;
   .j-icon--speaker { background: #e3141b; }
   .j-icon--erp, .j-icon--globe { background: #1288d0; }
   .j-icon--handshake { background: #6a3fb0; }
-  .j-points { margin: clamp(14px, 1.6vw, 22px) 0 0; padding: 0 0 0 58px; list-style: none; display: grid; gap: 8px; }
-  .j-points li { position: relative; font-size: clamp(14px, 1.1vw, 17px); line-height: 1.45; color: rgba(255, 255, 255, 0.86); }
-  .j-points li::before { content: ''; position: absolute; left: -20px; top: 0.6em; width: 8px; height: 2px; background: var(--g-orange); }
+  .j-points { margin: clamp(12px, 2vh, 22px) 0 0; padding: 0 0 0 58px; list-style: none; display: grid; gap: 8px; }
+  .j-points li { position: relative; font-size: clamp(14px, 1.1vw, 17px); line-height: 1.5; color: var(--g-text); }
+  .j-points li::before { content: ''; position: absolute; left: -20px; top: 0.7em; width: 8px; height: 2px; background: var(--g-orange); }
 
-  .j-media { display: grid; gap: 18px; justify-items: start; }
-  .j-photo { margin: 0; width: 100%; max-width: 420px; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; background: rgba(255, 255, 255, 0.08); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28); }
+  /* Photo frame takes the picture's own shape, as large as the screen allows. */
+  .j-photo {
+    --max-h: calc(100svh - var(--j-top) - 170px);
+    margin: 0; justify-self: center; align-self: center;
+    width: min(100%, calc(var(--max-h) * var(--ar)));
+    aspect-ratio: var(--ar);
+    border-radius: 16px; overflow: hidden; background: #eef2f6;
+    box-shadow: 0 20px 44px rgba(15, 42, 61, 0.16);
+  }
   .j-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .j-photo--contain img { object-fit: contain; }
-  .j-people { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 14px 26px; }
+  .j-people { list-style: none; margin: clamp(16px, 3vh, 28px) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 14px 28px; }
   .j-people li { display: flex; align-items: center; gap: 12px; }
-  .j-people img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; object-position: top; border: 3px solid rgba(255, 255, 255, 0.9); }
-  .j-people span { display: flex; flex-direction: column; font-size: 13px; color: rgba(255, 255, 255, 0.72); line-height: 1.35; }
-  .j-people strong { color: #fff; font-size: 15px; font-weight: 600; }
+  .j-people img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; object-position: top; border: 3px solid #fff; box-shadow: 0 4px 14px rgba(15, 42, 61, 0.18); flex: none; }
+  .j-people span { display: flex; flex-direction: column; font-size: 13px; color: var(--g-text); line-height: 1.35; }
+  .j-people strong { color: var(--g-ink); font-size: 15px; font-weight: 700; }
+  /* A year with people but no photo: show the people large on the right. */
+  .j-step.no-photo .j-copy { grid-column: 1 / -1; }
+  @media (min-width: 769px) {
+    .j-step.no-photo .j-people { gap: 28px 56px; margin-top: clamp(24px, 4vh, 44px); }
+    .j-step.no-photo .j-people li { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .j-step.no-photo .j-people img { width: clamp(120px, 11vw, 170px); height: auto; aspect-ratio: 1; border-width: 4px; }
+    .j-step.no-photo .j-people strong { font-size: 18px; }
+    .j-step.no-photo .j-people span { font-size: 14px; }
+  }
 
   /* ---------- Without JS: a plain list of milestones ---------- */
   .journey:not(.is-live) .j-rail,
-  .journey:not(.is-live) .j-year,
-  .journey:not(.is-live) .j-count { display: none; }
+  .journey:not(.is-live) .j-year { display: none; }
+  .journey:not(.is-live) .j-inner { padding-bottom: var(--section-y); }
   .journey:not(.is-live) .j-steps { gap: 48px; }
   .journey:not(.is-live) .j-step { grid-area: auto; }
-  .journey:not(.is-live) .j-step-year { display: block; margin: 0 0 10px; font-size: 44px; font-weight: 800; color: var(--g-orange); line-height: 1; }
+  .journey:not(.is-live) .j-copy { padding-top: 0; }
+  .journey:not(.is-live) .j-step-year { display: block; margin: 0 0 10px; font-size: 44px; font-weight: 800; color: var(--g-blue); line-height: 1; }
 
   /* ---------- Scroll-pinned mode ---------- */
   .journey.is-live .j-track { height: calc(var(--n) * var(--j-step-h, 70vh) + 100vh - var(--j-top)); }
@@ -229,30 +245,28 @@ const first = journey[0].year;
   @keyframes j-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
   @media (max-width: 768px) {
-    .journey { --j-step-h: 60vh; }
-    .j-inner { padding-top: 22px; padding-bottom: 22px; }
-    .j-head { margin-bottom: 16px; align-items: center; }
-    .j-sub { display: none; }
-    .j-count span { font-size: 18px; }
+    .journey { --j-step-h: 60vh; --j-yf: clamp(50px, 14vw, 72px); }
+    .j-inner { padding-top: 18px; padding-bottom: 18px; }
     .j-rail { margin-bottom: 18px; }
     .j-rail-year { font-size: 11px; }
     .j-dot { width: 16px; height: 16px; }
     .j-dot::after { width: 6px; height: 6px; }
     .j-rail-line { top: 7px; }
     .j-rail button { gap: 6px; }
-    .j-year { font-size: clamp(52px, 15vw, 76px); margin-bottom: 10px; }
-    .j-step { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+    .j-count { margin-left: auto; align-self: center; }
+    .j-year { right: 0; }
+    .j-step { grid-template-columns: minmax(0, 1fr); gap: 14px; align-items: start; }
+    .j-copy { padding-top: calc(var(--j-yf) + 12px); }
     .j-step h3 { font-size: 18px; gap: 12px; align-items: center; }
     .j-icon { width: 34px; height: 34px; margin-top: 0; }
     .j-icon svg { width: 18px; height: 18px; }
     .j-points { padding-left: 46px; margin-top: 8px; gap: 3px; }
     .j-points li { font-size: 13.5px; line-height: 1.4; }
     .j-points li::before { left: -18px; }
-    .j-media { gap: 12px; justify-items: stretch; }
-    .j-photo { max-width: none; aspect-ratio: auto; height: clamp(96px, 22svh, 210px); border-radius: 12px; }
-    .j-people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .j-photo { --max-h: 26svh; border-radius: 12px; }
+    .j-people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
     .j-people li { gap: 8px; }
-    .j-people img { width: 42px; height: 42px; border-width: 2px; flex: none; }
+    .j-people img { width: 44px; height: 44px; border-width: 2px; }
     .j-people span { font-size: 11.5px; }
     .j-people strong { font-size: 13px; }
     .journey:not(.is-live) .j-steps { gap: 36px; }
@@ -261,6 +275,9 @@ const first = journey[0].year;
   @media (max-height: 520px) {
     .journey.is-live .j-track { height: auto; }
     .journey.is-live .j-pin { position: static; height: auto; }
+    .journey.is-live .j-year { display: none; }
+    .journey.is-live .j-copy { padding-top: 0; }
+    .journey.is-live .j-step-year { display: block; margin: 0 0 10px; font-size: 40px; font-weight: 800; color: var(--g-blue); line-height: 1; }
   }
 
   @media (prefers-reduced-motion: reduce) {

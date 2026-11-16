@@ -13,8 +13,8 @@ export type JourneyMilestone = {
   title: string;
   points?: string[];
   // Photos from the journey PDF are small (about 300px wide); swap in larger ones when available.
-  // fit: 'contain' shows the whole picture (for logos/posters) instead of filling the frame.
-  image?: { src: string; alt: string; fit?: 'cover' | 'contain' };
+  // width/height: the picture's real pixel size, so the frame keeps its shape and nothing is cropped.
+  image?: { src: string; width: number; height: number; alt: string };
   people?: JourneyPerson[];
   // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, handshake, globe.
   icon?: string;
@@ -22,7 +22,7 @@ export type JourneyMilestone = {
 
 export const journeyIntro = {
   title: 'Our Journey',
-  sub: 'Three decades of building, one milestone at a time',
+  sub: 'Every Milestone tells a Story',
 };
 
 export const journey: JourneyMilestone[] = [
@@ -31,7 +31,7 @@ export const journey: JourneyMilestone[] = [
     icon: 'rocket',
     title: 'J&C company was founded by Veerendra & Sangeeta Jamdade',
     points: ['Total employees: 2', 'Office location: Home', 'First project: Adat Software'],
-    image: { src: '/images/about/journey/first-computer.jpg', alt: 'The first office computer' },
+    image: { src: '/images/about/journey/first-computer.jpg', width: 295, height: 182, alt: 'The first office computer' },
     people: [
       { name: 'Veerendra Jamdade', role: 'Founder & CEO', photo: '/images/about/journey/veerendra-jamdade.jpg' },
       { name: 'Sangeeta Jamdade', role: 'Founder', photo: '/images/about/journey/sangeeta-jamdade.jpg' },
@@ -51,7 +51,7 @@ export const journey: JourneyMilestone[] = [
     icon: 'office',
     title: 'Vritti Solutions Limited was founded',
     points: ['IT, Media and Rural Marketing under one roof'],
-    image: { src: '/images/about/journey/vritti-solutions-office.jpg', alt: 'Vritti Solutions Limited office signboard' },
+    image: { src: '/images/about/journey/vritti-solutions-office.jpg', width: 353, height: 158, alt: 'Vritti Solutions Limited office signboard' },
     people: [
       { name: 'Rajesh Radhakrishnan', role: 'Partner', photo: '/images/about/journey/rajesh-radhakrishnan.jpg' },
     ],
@@ -61,19 +61,19 @@ export const journey: JourneyMilestone[] = [
     icon: 'speaker',
     title: 'Audiowala Bus Stand is born',
     points: ['First bus stand at Swargate, Pune', 'Microsoft Award 2007'],
-    image: { src: '/images/about/journey/swargate-bus-stand.jpg', alt: 'Swargate bus stand, the first Audiowala Bus Stand' },
+    image: { src: '/images/about/journey/swargate-bus-stand.jpg', width: 300, height: 135, alt: 'Swargate bus stand, the first Audiowala Bus Stand' },
   },
   {
     year: '2008',
     icon: 'speaker',
     title: 'Activation business starts at Pandharpur',
-    image: { src: '/images/about/journey/pandharpur-activation.jpg', alt: 'Brand activation event at Pandharpur' },
+    image: { src: '/images/about/journey/pandharpur-activation.jpg', width: 353, height: 195, alt: 'Brand activation event at Pandharpur' },
   },
   {
     year: '2014',
     icon: 'erp',
     title: 'Ekatm ERP launched',
-    image: { src: '/images/about/journey/ekatm-erp.jpg', alt: 'Ekatm ERP' },
+    image: { src: '/images/about/journey/ekatm-erp.jpg', width: 295, height: 171, alt: 'Ekatm ERP' },
   },
   {
     year: '2018',
@@ -83,7 +83,7 @@ export const journey: JourneyMilestone[] = [
       'Audiowala Bus Stand in 8 states with 550+ bus stands',
       'Maharashtra, Karnataka, Rajasthan, Punjab, Himachal Pradesh, Haryana, Goa, Gujarat',
     ],
-    image: { src: '/images/about/journey/icai-mou.jpg', alt: 'The Institute of Chartered Accountants of India', fit: 'contain' },
+    image: { src: '/images/about/journey/icai-mou.jpg', width: 287, height: 145, alt: 'The Institute of Chartered Accountants of India' },
   },
   {
     year: '2023',
@@ -93,7 +93,7 @@ export const journey: JourneyMilestone[] = [
       'Top 200 Companies having Global Growth Potential (Forbes India DGEMS 2023)',
       'Best Rural Marketing of the Year at the 12th ACEF Awards 2023',
     ],
-    image: { src: '/images/about/journey/forbes-dgems-2023.jpg', alt: 'Forbes India DGEMS 2023 Top 200', fit: 'contain' },
+    image: { src: '/images/about/journey/forbes-dgems-2023.jpg', width: 304, height: 197, alt: 'Forbes India DGEMS 2023 Top 200' },
   },
   {
     year: '2024',
@@ -103,6 +103,6 @@ export const journey: JourneyMilestone[] = [
       'Honored by Brand Equity as Best IT/ITeS/IoT Enterprise',
       'Most Admired BTL Agency of the Year for Customer Engagement by ACEF',
     ],
-    image: { src: '/images/about/journey/middle-east.jpg', alt: 'Dubai skyline' },
+    image: { src: '/images/about/journey/middle-east.jpg', width: 354, height: 213, alt: 'Dubai skyline' },
   },
 ];

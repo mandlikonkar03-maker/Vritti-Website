@@ -414,7 +414,7 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
 
   /* Built over time (blue band) */
   .bot, .values { --band: #2a5fa4; background: var(--band); color: #fff; }
-  .bot { padding: clamp(28px, 3.4vw, 48px) 0 clamp(36px, 4vw, 56px); }
+  .bot { padding: var(--section-y) 0; }
   .bot-title { margin: 0 0 clamp(16px, 2vw, 28px); line-height: 0; }
   .bot-title svg { display: block; width: 100%; height: auto; overflow: visible; opacity: 0.8; }
   .bot-title text {
@@ -491,7 +491,7 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
   @media (prefers-reduced-motion: reduce) { .way-track { animation: none; } }
 
   /* How we think / core values */
-  .values { padding: clamp(40px, 4.4vw, 64px) 0 clamp(48px, 5.4vw, 80px); text-align: center; }
+  .values { padding: var(--section-y) 0; text-align: center; }
   .values-head { margin-bottom: clamp(28px, 3vw, 44px); }
   .values-title {
     color: var(--g-orange);
@@ -557,7 +557,7 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
 
   /* Map */
   /* Foundation */
-  .foundation { padding-top: clamp(40px, 4vw, 64px); }
+  .foundation { padding-top: var(--section-y); }
   .foundation-head { margin-bottom: 32px; }
   .foundation-band { background: var(--g-blue); color: #fff; padding: 38px 0 52px; }
   .foundation-inner {

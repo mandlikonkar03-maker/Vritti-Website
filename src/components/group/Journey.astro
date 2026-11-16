@@ -108,7 +108,7 @@ const first = journey[0].year;
   .journey {
     --j-line: #dfe4ea;
     --j-top: 84px; /* height of the sticky group header (used to size photos) */
-    --j-yf: clamp(56px, 6.2vw, 104px); /* big year size */
+    --j-yf: clamp(48px, 5vw, 84px); /* big year size */
     background: #fff;
     color: var(--g-ink);
     padding-bottom: 0;
@@ -141,7 +141,7 @@ const first = journey[0].year;
     transition: border-color 0.3s, background 0.3s, transform 0.3s;
   }
   .j-dot::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: transparent; transition: background 0.3s; }
-  .j-rail-year { font-weight: 700; font-size: 14px; transition: color 0.3s; }
+  .j-rail-year { font-weight: 600; font-size: 14px; transition: color 0.3s; }
   .j-rail button.is-past .j-dot { border-color: var(--g-orange); }
   .j-rail button[aria-current] { color: var(--g-blue); }
   .j-rail button[aria-current] .j-dot { border-color: var(--g-orange); background: var(--g-orange); transform: scale(1.15); }
@@ -153,7 +153,7 @@ const first = journey[0].year;
   .j-stage { position: relative; }
   .j-year {
     position: absolute; top: 0; left: 0; z-index: 1;
-    display: flex; align-items: baseline; font-weight: 800; line-height: 1; letter-spacing: -0.02em;
+    display: flex; align-items: baseline; font-weight: 700; line-height: 1; letter-spacing: -0.02em;
     font-size: var(--j-yf); color: var(--g-blue);
     font-variant-numeric: tabular-nums;
   }
@@ -178,7 +178,7 @@ const first = journey[0].year;
   .j-step-year { display: none; }
   .j-step h3 {
     margin: 0; display: flex; gap: 14px; align-items: flex-start;
-    font-size: clamp(20px, 1.9vw, 30px); font-weight: 700; line-height: 1.25; color: var(--g-ink);
+    font-size: clamp(18px, 1.5vw, 24px); font-weight: 600; line-height: 1.3; color: var(--g-ink);
   }
   .j-icon {
     flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
@@ -190,7 +190,7 @@ const first = journey[0].year;
   .j-icon--erp, .j-icon--globe { background: #1288d0; }
   .j-icon--handshake { background: #6a3fb0; }
   .j-points { margin: clamp(12px, 2vh, 22px) 0 0; padding: 0 0 0 58px; list-style: none; display: grid; gap: 8px; }
-  .j-points li { position: relative; font-size: clamp(14px, 1.1vw, 17px); line-height: 1.5; color: var(--g-text); }
+  .j-points li { position: relative; font-size: clamp(13.5px, 1vw, 15.5px); line-height: 1.5; color: var(--g-text); }
   .j-points li::before { content: ''; position: absolute; left: -20px; top: 0.7em; width: 8px; height: 2px; background: var(--g-orange); }
 
   /* Photo frame takes the picture's own shape, as large as the screen allows. */
@@ -207,14 +207,14 @@ const first = journey[0].year;
   .j-people li { display: flex; align-items: center; gap: 12px; }
   .j-people img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; object-position: top; border: 3px solid #fff; box-shadow: 0 4px 14px rgba(15, 42, 61, 0.18); flex: none; }
   .j-people span { display: flex; flex-direction: column; font-size: 13px; color: var(--g-text); line-height: 1.35; }
-  .j-people strong { color: var(--g-ink); font-size: 15px; font-weight: 700; }
+  .j-people strong { color: var(--g-ink); font-size: 14px; font-weight: 600; }
   /* A year with people but no photo: show the people large on the right. */
   .j-step.no-photo .j-copy { grid-column: 1 / -1; }
   @media (min-width: 769px) {
     .j-step.no-photo .j-people { gap: 28px 56px; margin-top: clamp(24px, 4vh, 44px); }
     .j-step.no-photo .j-people li { flex-direction: column; align-items: flex-start; gap: 14px; }
     .j-step.no-photo .j-people img { width: clamp(120px, 11vw, 170px); height: auto; aspect-ratio: 1; border-width: 4px; }
-    .j-step.no-photo .j-people strong { font-size: 18px; }
+    .j-step.no-photo .j-people strong { font-size: 16px; }
     .j-step.no-photo .j-people span { font-size: 14px; }
   }
 
@@ -225,7 +225,7 @@ const first = journey[0].year;
   .journey:not(.is-live) .j-steps { gap: 48px; }
   .journey:not(.is-live) .j-step { grid-area: auto; }
   .journey:not(.is-live) .j-copy { padding-top: 0; }
-  .journey:not(.is-live) .j-step-year { display: block; margin: 0 0 10px; font-size: 44px; font-weight: 800; color: var(--g-blue); line-height: 1; }
+  .journey:not(.is-live) .j-step-year { display: block; margin: 0 0 10px; font-size: 38px; font-weight: 700; color: var(--g-blue); line-height: 1; }
 
   /* ---------- Interactive mode (JS on): one year at a time, page scrolls normally ---------- */
   .j-nav { display: none; }
@@ -259,7 +259,7 @@ const first = journey[0].year;
   @keyframes j-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
   @media (max-width: 768px) {
-    .journey { --j-yf: clamp(50px, 14vw, 72px); }
+    .journey { --j-yf: clamp(44px, 12vw, 60px); }
     .j-inner { padding-top: 18px; padding-bottom: 18px; }
     .j-rail { margin-bottom: 18px; }
     .j-rail-year { font-size: 11px; }
@@ -273,7 +273,7 @@ const first = journey[0].year;
     .j-year { right: 0; }
     .j-step { grid-template-columns: minmax(0, 1fr); gap: 14px; align-items: start; }
     .j-copy { padding-top: calc(var(--j-yf) + 12px); }
-    .j-step h3 { font-size: 18px; gap: 12px; align-items: center; }
+    .j-step h3 { font-size: 17px; gap: 12px; align-items: center; }
     .j-icon { width: 34px; height: 34px; margin-top: 0; }
     .j-icon svg { width: 18px; height: 18px; }
     .j-points { padding-left: 46px; margin-top: 8px; gap: 3px; }

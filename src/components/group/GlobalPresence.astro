@@ -71,9 +71,9 @@ const routes = p.offices.filter((o) => o.international).map((o) => {
   .pr-stats { list-style: none; margin: 0 0 24px; padding: 0; display: flex; gap: 0; }
   .pr-stats li { display: flex; flex-direction: column; padding: 0 28px; border-left: 1px solid #dbe5ef; }
   .pr-stats li:first-child { padding-left: 0; border-left: 0; }
-  .pr-stats strong { font-size: clamp(32px, 3vw, 44px); font-weight: 800; color: var(--g-blue); line-height: 1.05; }
+  .pr-stats strong { font-size: clamp(28px, 2.4vw, 36px); font-weight: 700; color: var(--g-blue); line-height: 1.05; }
   .pr-stats span { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--g-text); }
-  .pr-intro { margin: 0 0 18px; color: var(--g-text); font-size: 16px; line-height: 1.6; max-width: 560px; }
+  .pr-intro { margin: 0 0 18px; color: var(--g-text); font-size: 15px; line-height: 1.6; max-width: 560px; }
   .pr-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .pr-card {
     border: 1px solid #dbe5ef; border-radius: 12px; padding: 14px 18px; background: #fff;
@@ -84,8 +84,8 @@ const routes = p.offices.filter((o) => o.international).map((o) => {
   .pr-card.is-hq { background: linear-gradient(120deg, #0661a9, #2a5fa4); border-color: transparent; color: #fff; padding: 18px; }
   .pr-card.is-active, .pr-card:focus-visible { border-color: var(--g-orange); box-shadow: 0 10px 24px rgba(6,97,169,.14); transform: translateY(-2px); }
   .pr-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-  .pr-city { font-weight: 700; font-size: 17px; color: var(--g-blue); }
-  .pr-card.is-hq .pr-city { color: #fff; font-size: 20px; }
+  .pr-city { font-weight: 600; font-size: 15px; color: var(--g-blue); }
+  .pr-card.is-hq .pr-city { color: #fff; font-size: 17px; }
   .pr-badge { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; background: var(--g-orange); color: #fff; padding: 3px 8px; border-radius: 4px; }
   .pr-region { font-size: 13px; color: var(--g-text); }
   .pr-badge--intl { background: #e8f1fa; color: var(--g-blue); border: 1px solid #b9d2ea; }

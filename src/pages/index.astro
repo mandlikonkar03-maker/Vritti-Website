@@ -266,7 +266,7 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
   .who-head { text-align: center; max-width: 1140px; margin: 0 auto 48px; }
   .who-eyebrow {
     margin: 0 0 14px;
-    font-size: clamp(12px, 1.1vw, 18px);
+    font-size: clamp(11px, 0.85vw, 14px);
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: #444;
@@ -274,9 +274,9 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
   .who-text {
     margin: 10px 0 0;
     color: var(--g-text);
-    font-size: clamp(16px, 1.6vw, 26px);
-    font-weight: 600;
-    line-height: 1.15;
+    font-size: clamp(15px, 1.2vw, 19px);
+    font-weight: 500;
+    line-height: 1.4;
   }
   .tile-grid {
     list-style: none;
@@ -379,21 +379,21 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
   .biz-logo img { max-width: 100%; height: auto; }
   .biz-label {
     color: var(--g-blue);
-    font-size: clamp(20px, 1.75vw, 29px);
-    font-weight: 700;
+    font-size: clamp(16px, 1.35vw, 21px);
+    font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
   }
   .biz-text {
     margin: 12px 0 28px;
-    font-size: clamp(16px, 1.35vw, 22px);
-    line-height: 1.12;
+    font-size: clamp(14px, 1.05vw, 16px);
+    line-height: 1.4;
     flex: 1;
   }
   .biz-explore {
     color: var(--g-blue);
-    font-weight: 700;
-    font-size: clamp(17px, 1.4vw, 23px);
+    font-weight: 600;
+    font-size: clamp(14px, 1.1vw, 16px);
   }
   .biz-explore span { color: var(--g-orange); margin-left: 4px; }
   /* Light blue until the card is hovered, then full dark blue. */
@@ -449,15 +449,15 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
     gap: 16px;
   }
   .stat { display: flex; align-items: center; gap: clamp(6px, 0.7vw, 10px); }
-  .stat-value { font-size: clamp(40px, 5.2vw, 74px); font-weight: 700; line-height: 1; letter-spacing: -0.01em; }
-  .stat--big .stat-value { font-size: clamp(56px, 7.6vw, 108px); }
+  .stat-value { font-size: clamp(34px, 4vw, 56px); font-weight: 600; line-height: 1; letter-spacing: -0.01em; }
+  .stat--big .stat-value { font-size: clamp(46px, 5.6vw, 80px); }
   .stat-label {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     text-transform: uppercase;
-    font-weight: 700;
-    font-size: clamp(13px, 1.6vw, 23px);
+    font-weight: 600;
+    font-size: clamp(12px, 1.2vw, 17px);
     line-height: 1.02;
     align-self: stretch;
     padding-bottom: 0.3em;
@@ -481,8 +481,8 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
     flex: none;
     padding: 0 clamp(24px, 3.4vw, 48px);
     color: var(--g-ink);
-    font-size: clamp(11px, 0.95vw, 14px);
-    font-weight: 700;
+    font-size: clamp(11px, 0.85vw, 13px);
+    font-weight: 600;
     letter-spacing: 0.26em;
     text-transform: uppercase;
     white-space: nowrap;
@@ -495,8 +495,8 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
   .values-head { margin-bottom: clamp(28px, 3vw, 44px); }
   .values-title {
     color: var(--g-orange);
-    font-size: clamp(24px, 2.6vw, 38px);
-    font-weight: 700;
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-heading);
     text-transform: uppercase;
     line-height: 1.1;
   }
@@ -526,12 +526,12 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
   }
   .value h3 {
     max-width: 11ch;
-    font-size: clamp(14px, 1.3vw, 19px);
-    font-weight: 700;
-    line-height: 1.08;
+    font-size: clamp(13px, 1.1vw, 16px);
+    font-weight: 600;
+    line-height: 1.15;
     text-transform: uppercase;
   }
-  .value p { margin: 4px 0 0; max-width: 18ch; font-size: clamp(13px, 1.1vw, 16px); line-height: 1.15; }
+  .value p { margin: 6px 0 0; max-width: 18ch; font-size: clamp(12px, 0.95vw, 14px); line-height: 1.35; }
 
   /* Awards & Recognition */
   .awards-title { text-align: center; margin-bottom: clamp(24px, 2.6vw, 40px); }
@@ -551,8 +551,8 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
     background: #fff;
     box-shadow: 0 10px 34px rgba(0, 0, 0, 0.1);
     color: #2a5fa4;
-    font-size: clamp(20px, 2vw, 30px);
-    font-weight: 700;
+    font-size: clamp(18px, 1.6vw, 24px);
+    font-weight: 600;
   }
 
   /* Map */
@@ -568,10 +568,10 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
   }
   .foundation-copy { padding: 26px 0 0 50px; }
   .foundation-copy img { width: 180px; height: auto; display: block; }
-  .foundation-copy h3 { margin-top: 14px; font-size: clamp(26px, 2.3vw, 38px); font-weight: 700; }
-  .foundation-tagline { margin: 6px 0 0; font-size: clamp(16px, 1.45vw, 24px); line-height: 1.05; }
+  .foundation-copy h3 { margin-top: 14px; font-size: clamp(22px, 1.9vw, 28px); font-weight: var(--fw-heading); }
+  .foundation-tagline { margin: 6px 0 0; font-size: clamp(14px, 1.1vw, 17px); line-height: 1.4; }
   .foundation-tagline span { display: block; }
-  .foundation-text { margin: 60px 0 0; font-size: clamp(16px, 1.45vw, 24px); line-height: 1.04; max-width: 600px; }
+  .foundation-text { margin: 36px 0 0; font-size: clamp(14px, 1.05vw, 16px); line-height: 1.6; max-width: 560px; }
 
   @media (max-width: 1100px) {
     .tile-grid { grid-template-columns: repeat(5, 1fr); }

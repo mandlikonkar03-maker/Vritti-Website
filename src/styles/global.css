@@ -18,6 +18,17 @@
      Kept tight so the next section peeks in while scrolling. */
   --section-y: clamp(36px, 4vw, 56px);      /* top/bottom padding of a section */
   --section-head-gap: clamp(24px, 2.5vw, 36px); /* space under a section heading */
+
+  /* Type scale, shared by every page and both layouts. Tune text size site-wide here.
+     Kept modest and medium-weight on purpose (OM, 2026-11-16: "too big and too bold"). */
+  --fs-page-title: clamp(26px, 2.5vw, 36px); /* page banner titles (About Us, Meet our Management) */
+  --fs-h2: clamp(22px, 2vw, 30px);           /* section headings */
+  --fs-h3: clamp(16px, 1.2vw, 19px);         /* card and block headings */
+  --fs-lead: clamp(14px, 1.05vw, 16px);      /* subtitles and intro lines under headings */
+  --fs-body: 15px;                           /* running text */
+  --fs-small: 13px;                          /* captions, labels, footnotes */
+  --fw-heading: 600;                         /* headings (was 700 on most pages) */
+  --fw-text: 400;                            /* running text */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -29,7 +40,7 @@ body {
   font-family: var(--font);
   color: var(--navy);
   background: #fff;
-  font-size: 16px;
+  font-size: var(--fs-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -37,7 +48,7 @@ body {
 
 img { max-width: 100%; height: auto; }
 
-h1, h2, h3 { margin: 0; line-height: 1.15; font-weight: 600; letter-spacing: -0.01em; }
+h1, h2, h3 { margin: 0; line-height: 1.2; font-weight: var(--fw-heading); letter-spacing: -0.01em; }
 
 .container {
   width: 100%;
@@ -52,9 +63,9 @@ h1, h2, h3 { margin: 0; line-height: 1.15; font-weight: 600; letter-spacing: -0.
 /* Small uppercase label above headings */
 .eyebrow {
   display: inline-block;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--blue);
 }
@@ -69,13 +80,13 @@ h1, h2, h3 { margin: 0; line-height: 1.15; font-weight: 600; letter-spacing: -0.
   margin-right: 12px;
 }
 
-.section-title { font-size: clamp(28px, 3vw, 36px); }
-.section-title--lg { font-size: clamp(30px, 3.4vw, 41px); }
+.section-title { font-size: var(--fs-h2); }
+.section-title--lg { font-size: clamp(24px, 2.3vw, 32px); }
 .section-head { margin-bottom: var(--section-head-gap); }
 .section-head .eyebrow { margin-top: 12px; }
 .section-head--center { text-align: center; }
 .section-head--center .eyebrow { margin: 0 0 14px; }
-.section-head p.lead { color: var(--text); font-size: 17px; font-weight: 500; margin: 18px 0 0; }
+.section-head p.lead { color: var(--text); font-size: var(--fs-lead); font-weight: var(--fw-text); margin: 18px 0 0; }
 
 /* Buttons */
 .btn {
@@ -83,7 +94,7 @@ h1, h2, h3 { margin: 0; line-height: 1.15; font-weight: 600; letter-spacing: -0.
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font: 600 15px/1 var(--font);
+  font: 600 14px/1 var(--font);
   padding: 15px 24px;
   border-radius: 999px;
   border: 1.5px solid var(--blue);

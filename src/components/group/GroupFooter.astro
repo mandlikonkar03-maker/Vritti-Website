@@ -136,21 +136,21 @@ const { showStrip = true } = Astro.props;
   .g-fhead {
     display: block;
     margin: 0 0 8px;
-    font-size: 22px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     text-transform: uppercase;
   }
   .g-fhead--quick { text-transform: none; }
-  .g-fcol li { font-size: 17px; line-height: 1.6; }
+  .g-fcol li { font-size: 14px; line-height: 1.75; }
   .g-fcol ul + ul { margin-top: 14px; }
   .g-fmain {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    margin-top: 128px !important;
+    margin-top: 104px !important;
   }
-  .g-fgroup--right .g-fmain { margin-top: 116px !important; }
-  .g-fmain a { font-size: 22px; font-weight: 700; text-transform: uppercase; }
+  .g-fgroup--right .g-fmain { margin-top: 96px !important; }
+  .g-fmain a { font-size: 16px; font-weight: 600; text-transform: uppercase; }
 
   .g-fbottom {
     display: flex;
@@ -161,14 +161,14 @@ const { showStrip = true } = Astro.props;
     margin-top: 80px;
     padding: 56px 0 48px;
     border-top: 1px solid #333;
-    font-size: 17px;
+    font-size: 14px;
   }
   .g-fbottom p { margin: 0; }
   .g-fbottom ul { display: flex; flex-wrap: wrap; gap: 8px 44px; }
 
   @media (max-width: 1200px) {
-    .g-fhead, .g-fmain a { font-size: 18px; }
-    .g-fcol li, .g-fbottom { font-size: 15px; }
+    .g-fhead, .g-fmain a { font-size: 15px; }
+    .g-fcol li, .g-fbottom { font-size: 13.5px; }
   }
   @media (max-width: 900px) {
     .g-footer { padding-top: max(56px, 12vw); }

@@ -67,7 +67,7 @@ export const leaders: Leader[] = [
   },
   {
     name: 'Sangeeta Jamdade',
-    // TODO: real title and photo still to come (placeholder silhouette for now).
+    // TODO: real title still to come (photo from OM, 2026-11-16).
     title: 'Vritti Group',
     photo: '/images/management/sangeeta-jamdade.jpg',
   },

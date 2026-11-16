@@ -95,6 +95,11 @@ export const sangeetaProfile: LeaderProfile = {
   photo: '/images/management/sangeeta-jamdade-profile.jpg',
   photoWidth: 733,
   photoHeight: 719,
+  // TODO: replace '#' with her real profile URLs (OM to send).
+  socials: [
+    { label: 'LinkedIn', href: '#', icon: 'linkedin' },
+    { label: 'X', href: '#', icon: 'twitter' },
+  ],
   bio: [
     "Mrs. Sangeeta Jamdade is the Director – Human Resources at Vritti Solutions, bringing over 33 years of professional experience and playing a pivotal role in the company’s journey from its early years to becoming a diversified technology and media enterprise. Her leadership philosophy is built on empathy, resilience, discipline, and a deep commitment to empowering people.",
     "A graduate in B.Sc. (Zoology) with additional training in Computer Hardware & Assembly, Mrs. Jamdade entered the technology industry at a time when software adoption in India was still in its infancy. She was instrumental in introducing AdatSoft to Agricultural Produce Market Committees (APMCs) and market yards, where the software—developed in the local language—revolutionized the way agricultural markets managed their operations. Her relentless efforts also led to securing the first-ever order for PetroSoft, marking another significant milestone in Vritti’s growth journey.",

@@ -10,9 +10,9 @@ export const hero = {
 
 export const ceo = {
   eyebrow: 'CEO Words',
-  // TODO: placeholder text from the design. Replace with the CEO's real message.
+  // CEO's message. Wrap a word in **double asterisks** to show it in bold.
   quote:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
+    'Celebrating 21 years of Vritti — a journey built on Values, Relationships, Innovation, Teamwork, Trust and Integrity. As we step into the next chapter, our theme is **OWN**. It is time for each of us to take ownership, grow together and build Vritti as an enduring institution that thrives across generations.',
   name: 'Veerendra Jamdade',
   title: 'CEO, Vritti Group',
   photo: '/images/management/veerendra-jamdade.jpg',

@@ -15,7 +15,7 @@ const icons: Record<string, string> = {
 ---
 <section class="vsf g-section" id="vritti-stands-for" aria-labelledby="vsf-title" data-vsf>
   <div class="g-container">
-    <div class="g-head vsf-head">
+    <div class="g-head">
       <h2 class="g-title" id="vsf-title">{vs.title}</h2>
       <p class="g-sub">{vs.sub}</p>
     </div>
@@ -48,7 +48,6 @@ const icons: Record<string, string> = {
 
 <style>
   .vsf { background: #fff; color: var(--g-ink); }
-  .vsf-head { text-align: center; }
 
   .vsf-grid {
     list-style: none; margin: 0; padding: 0;
@@ -133,7 +132,7 @@ const icons: Record<string, string> = {
   .vsf-card:focus-visible { transform: rotateY(180deg); }
 
   .vsf-tip {
-    margin: clamp(16px, 2vw, 24px) 0 0; text-align: center;
+    margin: clamp(16px, 2vw, 24px) 0 0;
     font-size: 13px; color: #8a96a3;
   }
   .vsf-tip-tap { display: none; }
@@ -152,7 +151,7 @@ const icons: Record<string, string> = {
 
   /* Tablet and phone: two rows of three (VRI / TTI). */
   @media (max-width: 900px) {
-    .vsf-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 560px; margin: 0 auto; }
+    .vsf-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 560px; }
     .vsf-letter { font-size: clamp(54px, 15vw, 96px); }
     .vsf-word { font-size: clamp(10px, 2.6vw, 14px); }
     .vsf-back-word { font-size: clamp(13px, 3.4vw, 18px); }

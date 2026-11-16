@@ -121,3 +121,10 @@ export const vrittiStandsFor = {
     { letter: 'I', word: 'Innovation', icon: 'innovation', line: 'We keep finding better ways to solve real problems.' },
   ],
 };
+
+// "Always Leading by Example": leadership cards below "We Stand For".
+// The people come from src/data/management.ts (CEO first, then the management team).
+export const leadingByExample = {
+  title: 'Always Leading by Example',
+  sub: 'The people behind Vritti Group',
+};

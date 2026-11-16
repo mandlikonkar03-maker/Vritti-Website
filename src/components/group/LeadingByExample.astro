@@ -6,7 +6,7 @@ import { leadingByExample as lbe } from '../../data/about';
 
 const people = [
   { name: ceo.name, title: ceo.title, photo: ceo.photo, href: ceo.readMoreHref },
-  ...leaders.map((l) => ({ ...l, href: '' })),
+  ...leaders.map((l) => ({ ...l, href: l.href ?? '' })),
 ];
 ---
 <section class="g-section lbe" aria-labelledby="lbe-title">

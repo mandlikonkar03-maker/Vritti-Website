@@ -15,12 +15,12 @@ export const hero = {
       alt: 'The Vritti Solutions team in the office',
     },
     {
-      word: 'Vritti iMedia',
+      word: 'Media',
       image: '/images/home/hero/vritti-imedia.jpg',
       alt: 'A rural Indian vegetable market',
     },
     {
-      word: 'Mindwave Media',
+      word: 'Marketing',
       image: '/images/home/hero/mindwave-media.jpg',
       alt: 'Mindwave Media on stage at a marketing awards night',
     },

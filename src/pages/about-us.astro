@@ -1,0 +1,40 @@
+---
+import GroupLayout from '../layouts/GroupLayout.astro';
+import Journey from '../components/group/Journey.astro';
+import { aboutHero } from '../data/about';
+---
+<GroupLayout title="About Us – Vritti Group" description={aboutHero.text}>
+  <section class="a-hero">
+    <div class="g-container">
+      <h1>{aboutHero.title}</h1>
+      <p>{aboutHero.text}</p>
+    </div>
+  </section>
+
+  <Journey />
+</GroupLayout>
+
+<style>
+  .a-hero {
+    background: linear-gradient(120deg, #054d87 0%, var(--g-blue) 60%, #1288d0 100%);
+    color: #fff;
+    min-height: clamp(200px, 22vw, 360px);
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+  .a-hero h1 {
+    margin: 0;
+    font-size: clamp(30px, 3.4vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .a-hero p {
+    margin: 14px auto 0;
+    max-width: 720px;
+    text-wrap: balance;
+    font-size: clamp(15px, 1.3vw, 20px);
+    font-weight: 500;
+    opacity: 0.9;
+  }
+</style>

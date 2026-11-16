@@ -1,0 +1,102 @@
+---
+// "Always Leading by Example": the leadership cards from Meet our Management,
+// with the CEO first. Names, titles and photos come from src/data/management.ts.
+import { ceo, leaders } from '../../data/management';
+import { leadingByExample as lbe } from '../../data/about';
+
+const people = [
+  { name: ceo.name, title: ceo.title, photo: ceo.photo, href: ceo.readMoreHref },
+  ...leaders.map((l) => ({ ...l, href: l.href ?? '' })),
+];
+---
+<section class="g-section lbe" aria-labelledby="lbe-title">
+  <div class="g-container">
+    <div class="g-head lbe-head">
+      <div>
+        <h2 class="g-title" id="lbe-title">{lbe.title}</h2>
+        <p class="g-sub">{lbe.sub}</p>
+      </div>
+      <a class="lbe-more" href={lbe.moreHref}>
+        {lbe.moreLabel}
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <ul class="lbe-grid">
+      {people.map((p) => (
+        <li class="lbe-card">
+          {p.href ? (
+            <a href={p.href} class="lbe-link">
+              <img src={p.photo} alt={p.name} width="420" height="460" loading="lazy" decoding="async" />
+              <div class="lbe-info"><h3>{p.name}</h3><p>{p.title}</p></div>
+            </a>
+          ) : (
+            <>
+              <img src={p.photo} alt={p.name} width="420" height="460" loading="lazy" decoding="async" />
+              <div class="lbe-info"><h3>{p.name}</h3><p>{p.title}</p></div>
+            </>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .lbe { background: #fff; }
+  .lbe-head { display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; }
+  .lbe-more {
+    flex: none; display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 26px; border-radius: 999px;
+    background: var(--g-blue); color: #fff; border: 1.5px solid var(--g-blue);
+    font-size: 15px; font-weight: 600; line-height: 1; text-decoration: none;
+    box-shadow: 0 10px 22px rgba(6, 97, 169, 0.25);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+  }
+  .lbe-more svg { transition: transform 0.2s; }
+  .lbe-more:hover { background: #fff; color: var(--g-blue); transform: translateY(-1px); }
+  .lbe-more:hover svg { transform: translateX(3px); }
+  .lbe-more:focus-visible { outline: 2px solid var(--g-orange); outline-offset: 3px; }
+  /* Same cards as /meet-our-management; a short last row stays centred. */
+  .lbe-grid {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-wrap: wrap; justify-content: center;
+    --gap: clamp(16px, 2vw, 28px);
+    gap: var(--gap);
+  }
+  .lbe-card {
+    flex: 0 0 calc((100% - 4 * var(--gap)) / 5);
+    background: var(--g-blue);
+    box-shadow: 0 18px 40px rgba(6, 97, 169, 0.12);
+    display: flex; flex-direction: column;
+  }
+  .lbe-link { display: flex; flex-direction: column; flex: 1; color: inherit; text-decoration: none; }
+  .lbe-card img {
+    display: block; width: 100%;
+    aspect-ratio: 420 / 460; object-fit: cover; object-position: top;
+  }
+  .lbe-info { flex: 1; color: #fff; text-align: center; padding: 24px 12px 28px; }
+  .lbe-info h3 {
+    margin: 0;
+    font-size: clamp(13px, 1vw, 17px); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.01em;
+  }
+  .lbe-info h3::after {
+    content: ''; display: block;
+    width: 54px; height: 2px; margin: 12px auto 16px;
+    background: #e8747c;
+  }
+  .lbe-info p { margin: 0; font-size: clamp(12px, 0.9vw, 15px); }
+  .lbe-link:hover .lbe-info h3 { text-decoration: underline; text-underline-offset: 4px; }
+  .lbe-link:focus-visible { outline: 2px solid var(--g-orange); outline-offset: 3px; }
+
+  @media (max-width: 1100px) {
+    .lbe-card { flex-basis: calc((100% - 2 * var(--gap)) / 3); }
+  }
+  @media (max-width: 640px) {
+    .lbe-head { flex-direction: column; align-items: flex-start; }
+    .lbe-more { padding: 11px 22px; font-size: 14px; }
+    .lbe-card { flex-basis: calc((100% - var(--gap)) / 2); }
+    .lbe-info { padding: 18px 8px 20px; }
+    .lbe-info h3::after { width: 40px; margin: 10px auto 12px; }
+  }
+</style>

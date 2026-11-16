@@ -1,0 +1,197 @@
+---
+// "Vritti Stands For": VRITTI spelled out as six letter cards. Hover (desktop) or
+// tap (touch) flips a card to show the value, an icon and one line about it.
+// Content lives in src/data/about.ts (vrittiStandsFor).
+import { vrittiStandsFor as vs } from '../../data/about';
+
+const icons: Record<string, string> = {
+  values: '<path d="M12 20.5s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.9c0 5.4-7.5 10-7.5 10z"/>',
+  relationship: '<circle cx="8.5" cy="12" r="5"/><circle cx="15.5" cy="12" r="5"/>',
+  integrity: '<path d="M12 3.5 19.5 6v5.5c0 4.5-3.2 7.8-7.5 9-4.3-1.2-7.5-4.5-7.5-9V6z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/>',
+  teamwork: '<circle cx="12" cy="7.5" r="2.6"/><circle cx="5.5" cy="10" r="2.1"/><circle cx="18.5" cy="10" r="2.1"/><path d="M7.5 19c.4-3 2.2-5 4.5-5s4.1 2 4.5 5M2.5 18c.3-2 1.4-3.4 3-3.7M21.5 18c-.3-2-1.4-3.4-3-3.7"/>',
+  trust: '<path d="m3 11 4-4 3 1 2-1.5 3 .5 6 4.5"/><path d="M3 11l5.5 6c.8.8 2 .8 2.7 0M10 16l1.5 1.5c.8.8 2 .8 2.7 0M12.5 14.5l1.5 1.5c.8.8 2 .8 2.7 0l2.3-2.5"/><path d="M12 7.5 9 10.5c-.6.6-.6 1.5 0 2s1.5.6 2 0l2-2"/>',
+  innovation: '<path d="M9 17.5h6M10 20.5h4M12 3.5a6 6 0 0 0-3.6 10.8c.5.4.8 1 .8 1.6v1.6h5.6v-1.6c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3.5z"/>',
+};
+---
+<section class="vsf g-section" id="vritti-stands-for" aria-labelledby="vsf-title" data-vsf>
+  <div class="g-container">
+    <div class="g-head">
+      <h2 class="g-title" id="vsf-title">{vs.title}</h2>
+      <p class="g-sub">{vs.sub}</p>
+    </div>
+
+    <ul class="vsf-grid">
+      {vs.values.map((v, i) => (
+        <li class="vsf-item" style={`--i:${i}`}>
+          <button type="button" class="vsf-card" aria-pressed="false" aria-label={`${v.letter} for ${v.word}: ${v.line}`}>
+            <span class="vsf-face vsf-front" aria-hidden="true">
+              <span class="vsf-letter">{v.letter}</span>
+              <span class="vsf-word">{v.word}</span>
+              <span class="vsf-hint">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4"/></svg>
+              </span>
+            </span>
+            <span class="vsf-face vsf-back" aria-hidden="true">
+              <span class="vsf-icon">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[v.icon]} />
+              </span>
+              <span class="vsf-back-word"><b>{v.letter}</b>{v.word.slice(1)}</span>
+              <span class="vsf-line">{v.line}</span>
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
+    <p class="vsf-tip" aria-hidden="true"><span class="vsf-tip-hover">Hover over</span><span class="vsf-tip-tap">Tap</span> a letter to see what it stands for</p>
+  </div>
+</section>
+
+<style>
+  /* Same light blue as the Ekatm "One Ekatm. Multiple features." modules band (--bg-soft). */
+  .vsf { background: var(--bg-soft, #eef5fb); color: var(--g-ink); }
+
+  .vsf-grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(10px, 1.6vw, 22px);
+  }
+  .vsf-item { perspective: 1000px; }
+
+  .vsf-card {
+    position: relative; display: block; width: 100%;
+    aspect-ratio: 3 / 4;
+    padding: 0; margin: 0; border: 0; background: none; cursor: pointer;
+    font: inherit; color: inherit; text-align: center;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.3, 0.7, 0.25, 1);
+  }
+  .vsf-card:focus-visible { outline: 2px solid var(--g-orange); outline-offset: 4px; border-radius: 16px; }
+
+  .vsf-face {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border-radius: 16px;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  }
+
+  /* Front: the big blue letter */
+  .vsf-front {
+    background: #fff;
+    border: 1px solid #e3e9ef;
+    box-shadow: 0 6px 22px rgba(6, 97, 169, 0.08);
+    overflow: hidden;
+  }
+  .vsf-front::after {
+    /* orange accent bar along the bottom, like the journey line */
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 5px;
+    background: var(--g-orange);
+  }
+  .vsf-letter {
+    font-size: clamp(56px, 7.4vw, 120px); font-weight: 800; line-height: 1;
+    color: var(--g-blue);
+  }
+  .vsf-word {
+    margin-top: clamp(6px, 0.8vw, 12px);
+    font-size: clamp(11px, 1.05vw, 15px); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--g-orange);
+  }
+  .vsf-hint {
+    position: absolute; top: 10px; right: 10px;
+    display: grid; place-items: center;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #f1f5f9; color: #8a96a3;
+  }
+
+  /* Back: blue card with icon, word and one line */
+  .vsf-back {
+    transform: rotateY(180deg);
+    background: var(--g-blue); color: #fff;
+    padding: clamp(10px, 1.4vw, 20px);
+    gap: clamp(6px, 0.8vw, 10px);
+    box-shadow: 0 10px 28px rgba(6, 97, 169, 0.28);
+  }
+  .vsf-icon {
+    display: grid; place-items: center;
+    width: clamp(38px, 3.6vw, 52px); height: clamp(38px, 3.6vw, 52px); border-radius: 50%;
+    background: var(--g-orange); color: #fff;
+  }
+  .vsf-back-word {
+    font-size: clamp(13px, 1.3vw, 20px); font-weight: 700; line-height: 1.15;
+  }
+  .vsf-back-word b { color: var(--g-orange); font-weight: 800; }
+  .vsf-line {
+    font-size: clamp(11px, 0.95vw, 14px); line-height: 1.4; font-weight: 500;
+    opacity: 0.92; text-wrap: balance;
+  }
+
+  /* Flip: hover on devices that can hover, tap (aria-pressed) everywhere, and keyboard focus. */
+  @media (hover: hover) and (pointer: fine) {
+    .vsf-item:hover .vsf-card { transform: rotateY(180deg); }
+  }
+  .vsf-card[aria-pressed='true'],
+  .vsf-card:focus-visible { transform: rotateY(180deg); }
+
+  .vsf-tip {
+    margin: clamp(16px, 2vw, 24px) 0 0;
+    font-size: 13px; color: #8a96a3;
+  }
+  .vsf-tip-tap { display: none; }
+  @media (hover: none), (pointer: coarse) {
+    .vsf-tip-hover { display: none; }
+    .vsf-tip-tap { display: inline; }
+  }
+
+  /* Letters rise in one after another when the section scrolls into view (JS adds .is-armed first). */
+  .vsf.is-armed .vsf-item { opacity: 0; transform: translateY(28px); }
+  .vsf.is-armed.is-in .vsf-item {
+    opacity: 1; transform: none;
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.3, 0.7, 0.25, 1);
+    transition-delay: calc(var(--i) * 90ms);
+  }
+
+  /* Tablet and phone: two rows of three (VRI / TTI). */
+  @media (max-width: 900px) {
+    .vsf-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 560px; }
+    .vsf-letter { font-size: clamp(54px, 15vw, 96px); }
+    .vsf-word { font-size: clamp(10px, 2.6vw, 14px); }
+    .vsf-back-word { font-size: clamp(13px, 3.4vw, 18px); }
+    .vsf-line { font-size: clamp(11px, 2.9vw, 14px); }
+    .vsf-icon { width: clamp(34px, 9vw, 46px); height: clamp(34px, 9vw, 46px); }
+  }
+  @media (max-width: 480px) {
+    .vsf-card { aspect-ratio: 5 / 8; }
+    .vsf-word { letter-spacing: 0.02em; }
+    .vsf-hint { top: 6px; right: 6px; width: 20px; height: 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vsf-card { transition: none; }
+    .vsf.is-armed .vsf-item { opacity: 1; transform: none; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-vsf]').forEach((root) => {
+    const cards = root.querySelectorAll<HTMLButtonElement>('.vsf-card');
+    cards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const open = card.getAttribute('aria-pressed') === 'true';
+        cards.forEach((c) => c.setAttribute('aria-pressed', 'false'));
+        card.setAttribute('aria-pressed', String(!open));
+      });
+    });
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    const rect = root.getBoundingClientRect();
+    if (rect.top < window.innerHeight) return; // already on screen: no entrance animation
+    root.classList.add('is-armed');
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        root.classList.add('is-in');
+        io.disconnect();
+      }
+    }, { threshold: 0.25 });
+    io.observe(root);
+  });
+</script>

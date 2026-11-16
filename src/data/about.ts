@@ -106,3 +106,27 @@ export const journey: JourneyMilestone[] = [
     image: { src: '/images/about/journey/middle-east.jpg', width: 354, height: 213, alt: 'Dubai skyline' },
   },
 ];
+
+// "Vritti Stands For": one card per letter of VRITTI, shown below Our Journey.
+// Icons: values, relationship, integrity, teamwork, trust, innovation (drawn in VrittiValues.astro).
+export const vrittiStandsFor = {
+  title: 'We Stand For',
+  sub: 'The values behind every letter',
+  values: [
+    { letter: 'V', word: 'Values', icon: 'values', line: 'Our principles guide every decision, big or small.' },
+    { letter: 'R', word: 'Relationship', icon: 'relationship', line: 'We build partnerships that last for decades, not just deals.' },
+    { letter: 'I', word: 'Integrity', icon: 'integrity', line: 'We do what we say, honestly and openly.' },
+    { letter: 'T', word: 'Team Work', icon: 'teamwork', line: 'We win together, sharing knowledge and credit.' },
+    { letter: 'T', word: 'Trust', icon: 'trust', line: 'Clients, partners and colleagues can count on us.' },
+    { letter: 'I', word: 'Innovation', icon: 'innovation', line: 'We keep finding better ways to solve real problems.' },
+  ],
+};
+
+// "Always Leading by Example": leadership cards below "We Stand For".
+// The people come from src/data/management.ts (CEO first, then the management team).
+export const leadingByExample = {
+  title: 'Always Leading by Example',
+  sub: 'The people behind Vritti Group',
+  moreLabel: 'Know More',
+  moreHref: '/meet-our-management',
+};

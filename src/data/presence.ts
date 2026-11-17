@@ -1,6 +1,6 @@
 // Global Presence section on the home page (/).
 // OM's list so far (2026-11-12): Pune (HQ), Mumbai, Bengaluru, Chandigarh, Goa, Jaipur, plus Dubai
-// (international). More cities to come.
+// (international). 2026-11-17: Shimla (Himachal Pradesh) added. More cities to come.
 // x / y are % positions on public/images/home/presence/dots-map.svg, which covers
 // longitude 50–96°E and latitude 6–34°N: x = (lon - 50) / 46 * 100, y = (34 - lat) / 28 * 100.
 // The map is plain land dots with no borders drawn, faded at the edges.
@@ -34,7 +34,9 @@ export const presence = {
     { id: 'pune', city: 'Pune', region: 'India', hq: true, x: 51.87, y: 55.29, side: 'right' },
     { id: 'mumbai', city: 'Mumbai', region: 'Maharashtra', x: 49.74, y: 53.29, side: 'left' },
     { id: 'bengaluru', city: 'Bengaluru', region: 'Karnataka', x: 59.98, y: 75.11, side: 'right' },
-    { id: 'chandigarh', city: 'Chandigarh', region: 'Punjab & Haryana', x: 58.22, y: 11.68, side: 'right' },
+    { id: 'chandigarh', city: 'Chandigarh', region: 'Punjab & Haryana', x: 58.22, y: 11.68, side: 'left' },
+    // Shimla is only ~50 km from Chandigarh, so its pin is nudged up/right a little to keep the dots apart.
+    { id: 'shimla', city: 'Shimla', region: 'Himachal Pradesh', x: 59.6, y: 8.4, side: 'right' },
     { id: 'goa', city: 'Goa', region: 'Goa', x: 51.8, y: 66.11, side: 'left' },
     { id: 'jaipur', city: 'Jaipur', region: 'Rajasthan', x: 56.07, y: 25.32, side: 'left' },
     { id: 'uae', city: 'UAE', region: 'Dubai, United Arab Emirates', international: true, x: 11.46, y: 31.43, side: 'right' },

@@ -49,10 +49,16 @@ export const journey: JourneyMilestone[] = [
     people: [leader('Sangeeta Jamdade'), leader('Veerendra Jamdade')],
   },
   {
+    year: '2000',
+    icon: 'team',
+    title: 'Mr. Jeevan Pawar joined',
+    people: [leader('Jeevan Pawar')],
+  },
+  {
     year: '2002',
     icon: 'team',
-    title: 'Mr. Jeevan Pawar & Mr. Shivaji Bedre joined',
-    people: [leader('Jeevan Pawar'), leader('Shivaji Bedre')],
+    title: 'Mr. Shivaji Bedre joined',
+    people: [leader('Shivaji Bedre')],
   },
   {
     year: '2005',
@@ -65,7 +71,7 @@ export const journey: JourneyMilestone[] = [
   {
     year: '2007',
     icon: 'speaker',
-    title: 'Audiowala Bus Stand is born',
+    title: '[[Audiowala Bus Stand]] is born',
     points: ['First bus stand at Swargate, Pune', 'Microsoft Award 2007'],
     image: { src: '/images/about/journey/swargate-bus-stand.jpg', width: 300, height: 135, alt: 'Swargate bus stand, the first Audiowala Bus Stand' },
   },
@@ -95,7 +101,7 @@ export const journey: JourneyMilestone[] = [
   {
     year: '2023',
     icon: 'award',
-    title: 'Recognised by Forbes India',
+    title: 'Recognised by **FORBES INDIA**',
     points: [
       'Top 200 Companies having Global Growth Potential (Forbes India DGEMS 2023)',
       'Best Rural Marketing of the Year at the 12th ACEF Awards 2023',
@@ -105,7 +111,7 @@ export const journey: JourneyMilestone[] = [
   {
     year: '2024',
     icon: 'globe',
-    title: 'Business launch in the Middle East',
+    title: 'Business launch in the **Middle East**',
     points: [
       'Honored by Brand Equity as Best IT/ITeS/IoT Enterprise',
       'Most Admired BTL Agency of the Year for Customer Engagement by ACEF',

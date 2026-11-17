@@ -1,6 +1,7 @@
 // Content for the About Us page (src/pages/about-us.astro).
 // "Our Journey" comes from OM's journey PDF. Each entry is one year on the
 // scroll timeline: add, remove or reorder entries here and the timeline follows.
+import { ceo, leaders } from './management';
 
 export const aboutHero = {
   title: 'About Us',
@@ -20,6 +21,15 @@ export type JourneyMilestone = {
   icon?: string;
 };
 
+// People on the timeline show their current photo and designation from
+// Meet our Management (src/data/management.ts), so a title change there shows here too.
+const leader = (name: string): JourneyPerson => {
+  if (name === ceo.name) return { name, role: `Founder & ${ceo.title}`, photo: ceo.photo };
+  const l = leaders.find((x) => x.name === name);
+  if (!l) throw new Error(`Journey: no leader named ${name} in management.ts`);
+  return { name: l.name, role: l.title, photo: l.photo };
+};
+
 export const journeyIntro = {
   title: 'Our Journey',
   sub: 'Every Milestone tells a Story',
@@ -29,32 +39,24 @@ export const journey: JourneyMilestone[] = [
   {
     year: '1993',
     icon: 'rocket',
-    title: 'J&C company was founded by Veerendra & Sangeeta Jamdade',
+    title: 'J&C company was founded by Sangeeta & Veerendra Jamdade',
     points: ['Total employees: 2', 'Office location: Home', 'First project: Adat Software'],
     image: { src: '/images/about/journey/first-computer.jpg', width: 295, height: 182, alt: 'The first office computer' },
-    people: [
-      { name: 'Veerendra Jamdade', role: 'Founder & CEO', photo: '/images/about/journey/veerendra-jamdade.jpg' },
-      { name: 'Sangeeta Jamdade', role: 'Founder', photo: '/images/about/journey/sangeeta-jamdade.jpg' },
-    ],
+    people: [leader('Sangeeta Jamdade'), leader('Veerendra Jamdade')],
   },
   {
     year: '2002',
     icon: 'team',
-    title: 'Partners join the journey',
-    people: [
-      { name: 'Jeevan Pawar', role: 'Partner', photo: '/images/about/journey/jeevan-pawar.jpg' },
-      { name: 'Shivaji Bedre', role: 'Partner', photo: '/images/about/journey/shivaji-bedre.jpg' },
-    ],
+    title: 'Mr. Jeevan Pawar & Mr. Shivaji Bedre joined',
+    people: [leader('Jeevan Pawar'), leader('Shivaji Bedre')],
   },
   {
     year: '2005',
     icon: 'office',
     title: 'Vritti Solutions Limited was founded',
-    points: ['IT, Media and Rural Marketing under one roof'],
+    points: ['IT, Media and Rural Marketing under one roof', 'Mr. Rajesh Radhakrishnan joined'],
     image: { src: '/images/about/journey/vritti-solutions-office.jpg', width: 353, height: 158, alt: 'Vritti Solutions Limited office signboard' },
-    people: [
-      { name: 'Rajesh Radhakrishnan', role: 'Partner', photo: '/images/about/journey/rajesh-radhakrishnan.jpg' },
-    ],
+    people: [leader('Rajesh Radhakrishnan')],
   },
   {
     year: '2007',

@@ -204,15 +204,15 @@ const first = journey[0].year;
   }
   .j-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .j-people { list-style: none; margin: clamp(16px, 3vh, 28px) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 14px 28px; }
-  .j-people li { display: flex; align-items: center; gap: 12px; }
-  .j-people img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; object-position: top; border: 3px solid #fff; box-shadow: 0 4px 14px rgba(15, 42, 61, 0.18); flex: none; }
-  .j-people span { display: flex; flex-direction: column; font-size: 13px; color: var(--g-text); line-height: 1.35; }
+  .j-people li { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 170px; text-align: center; }
+  .j-people img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; object-position: top; border: 3px solid #fff; box-shadow: 0 4px 14px rgba(15, 42, 61, 0.18); flex: none; }
+  .j-people span { display: flex; flex-direction: column; gap: 2px; font-size: 13px; color: var(--g-text); line-height: 1.35; }
   .j-people strong { color: var(--g-ink); font-size: 14px; font-weight: 600; }
   /* A year with people but no photo: show the people large on the right. */
   .j-step.no-photo .j-copy { grid-column: 1 / -1; }
   @media (min-width: 769px) {
     .j-step.no-photo .j-people { gap: 28px 56px; margin-top: clamp(24px, 4vh, 44px); }
-    .j-step.no-photo .j-people li { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .j-step.no-photo .j-people li { width: clamp(170px, 14vw, 210px); gap: 14px; }
     .j-step.no-photo .j-people img { width: clamp(120px, 11vw, 170px); height: auto; aspect-ratio: 1; border-width: 4px; }
     .j-step.no-photo .j-people strong { font-size: 16px; }
     .j-step.no-photo .j-people span { font-size: 14px; }
@@ -281,8 +281,8 @@ const first = journey[0].year;
     .j-points li::before { left: -18px; }
     .j-photo { --max-h: 26svh; border-radius: 12px; }
     .j-people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
-    .j-people li { gap: 8px; }
-    .j-people img { width: 44px; height: 44px; border-width: 2px; }
+    .j-people li { width: auto; gap: 8px; }
+    .j-people img { width: 64px; height: 64px; border-width: 2px; }
     .j-people span { font-size: 11.5px; }
     .j-people strong { font-size: 13px; }
     .journey:not(.is-live) .j-steps { gap: 36px; }

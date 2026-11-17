@@ -78,7 +78,7 @@ export const journey: JourneyMilestone[] = [
   {
     year: '2014',
     icon: 'erp',
-    title: 'A New Era of Business Transformation with [[Ekatm ERP]]',
+    title: 'A New Era of Business Transformation with [[EKATM ERP]]',
     image: { src: '/images/about/journey/ekatm-erp.jpg', width: 295, height: 171, alt: 'Ekatm ERP' },
   },
   {

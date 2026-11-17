@@ -198,6 +198,8 @@ const rich = (t: string) =>
   .j-icon--erp, .j-icon--globe { background: #1288d0; }
   .j-icon--handshake { background: #6a3fb0; }
   .j-step h3 :global(strong) { font-weight: 800; }
+  /* A heading with a typed word: only that word is bold, the rest normal weight. */
+  .j-step h3:has(.j-type) { font-weight: 400; }
   .j-text { margin: clamp(10px, 1.6vh, 16px) 0 0; padding-left: 58px; font-size: clamp(13.5px, 1vw, 15.5px); line-height: 1.55; color: var(--g-text); }
   .j-text :global(strong), .j-points :global(strong) { color: var(--g-ink); font-weight: 700; }
   /* Typing effect: the full word sits invisible after the typed part, so the line never reflows. */

@@ -1,0 +1,117 @@
+---
+// One management card (photo, name, designation). Used on /meet-our-management
+// and in "Always Leading by Example" on About Us.
+// On hover the card lifts, the photo zooms in slightly and the name/designation
+// give way to "Know him" / "Know her". The card links to the profile page when
+// `href` is set; touch devices just show the name and open the profile on tap.
+interface Props {
+  name: string;
+  title: string;
+  photo: string;
+  href?: string;
+  know?: string;
+  heading?: 'h2' | 'h3';
+  size?: 'lg' | 'sm';
+}
+const { name, title, photo, href, know = 'Know him', heading = 'h3', size = 'lg' } = Astro.props;
+const Tag = href ? 'a' : 'div';
+const H = heading;
+---
+<Tag class:list={['lc', `lc--${size}`, { 'lc--link': !!href }]} href={href || undefined}>
+  <div class="lc-photo">
+    <img src={photo} alt={name} width="420" height="460" loading="lazy" decoding="async" />
+  </div>
+  <div class="lc-info">
+    <div class="lc-text">
+      <H class="lc-name">{name}</H>
+      <p class="lc-title">{title}</p>
+    </div>
+    <span class="lc-know" aria-hidden="true">
+      {know}
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </span>
+  </div>
+</Tag>
+
+<style>
+  .lc {
+    position: relative;
+    display: flex; flex-direction: column; flex: 1;
+    background: var(--g-blue);
+    color: #fff; text-decoration: none;
+    box-shadow: 0 18px 40px rgba(6, 97, 169, 0.12);
+    transition: transform 0.35s cubic-bezier(.2,.7,.2,1), box-shadow 0.35s;
+  }
+  .lc-photo { overflow: hidden; }
+  .lc-photo img {
+    display: block; width: 100%;
+    aspect-ratio: 420 / 460; object-fit: cover; object-position: top;
+    transition: transform 0.6s cubic-bezier(.2,.7,.2,1);
+  }
+  .lc-info {
+    position: relative; flex: 1;
+    display: grid; place-items: center;
+    text-align: center;
+  }
+  /* Name/designation and "Know him" share the same cell so the card never changes height. */
+  .lc-text, .lc-know { grid-area: 1 / 1; }
+  .lc-text { width: 100%; transition: opacity 0.3s, transform 0.35s cubic-bezier(.2,.7,.2,1); }
+  .lc-name {
+    margin: 0; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.01em;
+  }
+  .lc-name::after {
+    content: ''; display: block;
+    width: 54px; height: 2px;
+    background: #e8747c;
+  }
+  .lc-title { margin: 0; }
+  .lc-know {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 24px; border-radius: 999px;
+    border: 1.5px solid #fff;
+    font-size: 14px; font-weight: 600; line-height: 1; letter-spacing: 0.02em;
+    opacity: 0; transform: translateY(14px);
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.35s cubic-bezier(.2,.7,.2,1), background 0.2s, color 0.2s;
+  }
+  .lc-know svg { transition: transform 0.3s; }
+
+  /* Sizes: lg = Meet our Management (4 across), sm = About Us (5 across). */
+  .lc--lg .lc-info { padding: 28px 16px 34px; }
+  .lc--lg .lc-name { font-size: clamp(13px, 0.95vw, 16px); }
+  .lc--lg .lc-name::after { margin: 12px auto 18px; }
+  .lc--lg .lc-title { font-size: clamp(12px, 0.85vw, 14px); }
+  .lc--sm .lc-info { padding: 24px 12px 28px; }
+  .lc--sm .lc-name { font-size: clamp(12px, 0.9vw, 15px); }
+  .lc--sm .lc-name::after { margin: 12px auto 16px; }
+  .lc--sm .lc-title { font-size: clamp(11.5px, 0.8vw, 13px); }
+  .lc--sm .lc-know { padding: 10px 18px; font-size: 13px; }
+
+  @media (hover: hover) {
+    .lc:hover { transform: translateY(-8px); box-shadow: 0 28px 50px rgba(6, 97, 169, 0.28); }
+    .lc:hover .lc-photo img { transform: scale(1.07); }
+    .lc:hover .lc-text { opacity: 0; transform: translateY(-14px); }
+    .lc:hover .lc-know { opacity: 1; transform: none; }
+    .lc--link:hover .lc-know { background: #fff; color: var(--g-blue); }
+    .lc--link:hover .lc-know svg { transform: translateX(3px); }
+  }
+  /* Keyboard users get the same reveal. */
+  .lc--link:focus-visible { outline: 2px solid var(--g-orange); outline-offset: 3px; transform: translateY(-8px); }
+  .lc--link:focus-visible .lc-photo img { transform: scale(1.07); }
+  .lc--link:focus-visible .lc-text { opacity: 0; transform: translateY(-14px); }
+  .lc--link:focus-visible .lc-know { opacity: 1; transform: none; background: #fff; color: var(--g-blue); }
+  /* Touch: a quick press effect on tap. */
+  .lc--link:active { transform: scale(0.98); }
+
+  @media (max-width: 640px) {
+    .lc--sm .lc-info { padding: 18px 8px 20px; }
+    .lc--sm .lc-name::after { width: 40px; margin: 10px auto 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lc, .lc-photo img, .lc-text, .lc-know { transition: opacity 0.2s; }
+    .lc:hover, .lc--link:focus-visible { transform: none; }
+    .lc:hover .lc-photo img, .lc--link:focus-visible .lc-photo img { transform: none; }
+    .lc:hover .lc-text, .lc:hover .lc-know, .lc--link:focus-visible .lc-text, .lc--link:focus-visible .lc-know { transform: none; }
+  }
+</style>

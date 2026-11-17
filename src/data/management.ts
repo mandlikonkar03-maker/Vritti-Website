@@ -62,7 +62,8 @@ export const ceoProfile: LeaderProfile = {
 };
 
 // href: optional profile page; the card links to it on Meet our Management and About Us.
-export type Leader = { name: string; title: string; photo: string; href?: string };
+// know: the text shown on hover (defaults to "Know him").
+export type Leader = { name: string; title: string; photo: string; href?: string; know?: string };
 
 export const leaders: Leader[] = [
   {
@@ -85,6 +86,7 @@ export const leaders: Leader[] = [
     title: 'Director: Human Resources, Vritti Group',
     photo: '/images/management/sangeeta-jamdade.jpg',
     href: '/meet-our-management/sangeeta-jamdade',
+    know: 'Know her',
   },
 ];
 

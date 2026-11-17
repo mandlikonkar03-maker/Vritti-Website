@@ -11,7 +11,11 @@ export const aboutHero = {
 export type JourneyPerson = { name: string; role: string; photo: string };
 export type JourneyMilestone = {
   year: string;
+  // title, text and points: wrap words in **double asterisks** for bold, or in
+  // [[double brackets]] for bold text that types itself in when the year is shown.
   title: string;
+  // Optional sentence under the title.
+  text?: string;
   points?: string[];
   // Photos from the journey PDF are small (about 300px wide); swap in larger ones when available.
   // width/height: the picture's real pixel size, so the frame keeps its shape and nothing is cropped.
@@ -74,13 +78,14 @@ export const journey: JourneyMilestone[] = [
   {
     year: '2014',
     icon: 'erp',
-    title: 'Ekatm ERP launched',
+    title: 'A New Era of Business Transformation with [[Ekatm ERP]]',
     image: { src: '/images/about/journey/ekatm-erp.jpg', width: 295, height: 171, alt: 'Ekatm ERP' },
   },
   {
     year: '2018',
     icon: 'handshake',
-    title: 'MOU with ICAI for Simplify Practice',
+    title: '**Landmark MOU for Progress**',
+    text: 'A strategic MOU with **ICAI** and **Simplify Practice** to drive innovation and transform professional practice.',
     points: [
       'Audiowala Bus Stand in 8 states with 550+ bus stands',
       'Maharashtra, Karnataka, Rajasthan, Punjab, Himachal Pradesh, Haryana, Goa, Gujarat',

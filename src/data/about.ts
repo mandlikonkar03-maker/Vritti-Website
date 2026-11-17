@@ -49,10 +49,16 @@ export const journey: JourneyMilestone[] = [
     people: [leader('Sangeeta Jamdade'), leader('Veerendra Jamdade')],
   },
   {
+    year: '2000',
+    icon: 'team',
+    title: 'Mr. Jeevan Pawar joined',
+    people: [leader('Jeevan Pawar')],
+  },
+  {
     year: '2002',
     icon: 'team',
-    title: 'Mr. Jeevan Pawar & Mr. Shivaji Bedre joined',
-    people: [leader('Jeevan Pawar'), leader('Shivaji Bedre')],
+    title: 'Mr. Shivaji Bedre joined',
+    people: [leader('Shivaji Bedre')],
   },
   {
     year: '2005',

@@ -17,6 +17,13 @@ const icons: Record<string, string> = {
   globe: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.5 5.4 3.5 8.5s-1 5.9-3.5 8.5c-2.5-2.6-3.5-5.4-3.5-8.5s1-5.9 3.5-8.5z"/>',
 };
 const first = journey[0].year;
+
+// **bold** and [[typed bold]] markup from about.ts, with everything else escaped.
+const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const rich = (t: string) =>
+  esc(t)
+    .replace(/\[\[(.+?)\]\]/g, (_, w) => `<strong class="j-type" data-type="${w}" aria-label="${w}"><span class="j-typed" aria-hidden="true"></span><span class="j-rest" aria-hidden="true">${w}</span></strong>`)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 ---
 <section class="journey g-section" id="journey" aria-labelledby="journey-title" style={`--n:${journey.length}`} data-journey>
   <div class="g-container">
@@ -72,11 +79,12 @@ const first = journey[0].year;
                         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[m.icon]} />
                       </span>
                     )}
-                    <span>{m.title}</span>
+                    <span set:html={rich(m.title)} />
                   </h3>
+                  {m.text && <p class="j-text" set:html={rich(m.text)} />}
                   {m.points && (
                     <ul class="j-points">
-                      {m.points.map((p) => <li>{p}</li>)}
+                      {m.points.map((p) => <li set:html={rich(p)} />)}
                     </ul>
                   )}
                   {m.people && (
@@ -189,6 +197,16 @@ const first = journey[0].year;
   .j-icon--speaker { background: #e3141b; }
   .j-icon--erp, .j-icon--globe { background: #1288d0; }
   .j-icon--handshake { background: #6a3fb0; }
+  .j-step h3 :global(strong) { font-weight: 800; }
+  .j-text { margin: clamp(10px, 1.6vh, 16px) 0 0; padding-left: 58px; font-size: clamp(13.5px, 1vw, 15.5px); line-height: 1.55; color: var(--g-text); }
+  .j-text :global(strong), .j-points :global(strong) { color: var(--g-ink); font-weight: 700; }
+  /* Typing effect: the full word sits invisible after the typed part, so the line never reflows. */
+  :global(.j-type) { position: relative; white-space: nowrap; }
+  :global(.j-typed) { display: none; }
+  .journey.is-live :global(.j-type.is-typing .j-rest) { visibility: hidden; }
+  .journey.is-live :global(.j-type.is-typing .j-typed) { display: inline; position: absolute; left: 0; top: 0; }
+  .journey.is-live :global(.j-type.is-typing .j-typed::after) { content: ''; display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -0.12em; background: var(--g-orange); animation: j-caret 0.7s steps(1) infinite; }
+  @keyframes j-caret { 50% { opacity: 0; } }
   .j-points { margin: clamp(12px, 2vh, 22px) 0 0; padding: 0 0 0 58px; list-style: none; display: grid; gap: 8px; }
   .j-points li { position: relative; font-size: clamp(13.5px, 1vw, 15.5px); line-height: 1.5; color: var(--g-text); }
   .j-points li::before { content: ''; position: absolute; left: -20px; top: 0.7em; width: 8px; height: 2px; background: var(--g-orange); }
@@ -204,15 +222,15 @@ const first = journey[0].year;
   }
   .j-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .j-people { list-style: none; margin: clamp(16px, 3vh, 28px) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 14px 28px; }
-  .j-people li { display: flex; align-items: center; gap: 12px; }
-  .j-people img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; object-position: top; border: 3px solid #fff; box-shadow: 0 4px 14px rgba(15, 42, 61, 0.18); flex: none; }
-  .j-people span { display: flex; flex-direction: column; font-size: 13px; color: var(--g-text); line-height: 1.35; }
+  .j-people li { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 170px; text-align: center; }
+  .j-people img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; object-position: top; border: 3px solid #fff; box-shadow: 0 4px 14px rgba(15, 42, 61, 0.18); flex: none; }
+  .j-people span { display: flex; flex-direction: column; gap: 2px; font-size: 13px; color: var(--g-text); line-height: 1.35; }
   .j-people strong { color: var(--g-ink); font-size: 14px; font-weight: 600; }
   /* A year with people but no photo: show the people large on the right. */
   .j-step.no-photo .j-copy { grid-column: 1 / -1; }
   @media (min-width: 769px) {
     .j-step.no-photo .j-people { gap: 28px 56px; margin-top: clamp(24px, 4vh, 44px); }
-    .j-step.no-photo .j-people li { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .j-step.no-photo .j-people li { width: clamp(170px, 14vw, 210px); gap: 14px; }
     .j-step.no-photo .j-people img { width: clamp(120px, 11vw, 170px); height: auto; aspect-ratio: 1; border-width: 4px; }
     .j-step.no-photo .j-people strong { font-size: 16px; }
     .j-step.no-photo .j-people span { font-size: 14px; }
@@ -277,12 +295,13 @@ const first = journey[0].year;
     .j-icon { width: 34px; height: 34px; margin-top: 0; }
     .j-icon svg { width: 18px; height: 18px; }
     .j-points { padding-left: 46px; margin-top: 8px; gap: 3px; }
+    .j-text { padding-left: 46px; margin-top: 8px; font-size: 13.5px; line-height: 1.45; }
     .j-points li { font-size: 13.5px; line-height: 1.4; }
     .j-points li::before { left: -18px; }
     .j-photo { --max-h: 26svh; border-radius: 12px; }
     .j-people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
-    .j-people li { gap: 8px; }
-    .j-people img { width: 44px; height: 44px; border-width: 2px; }
+    .j-people li { width: auto; gap: 8px; }
+    .j-people img { width: 64px; height: 64px; border-width: 2px; }
     .j-people span { font-size: 11.5px; }
     .j-people strong { font-size: 13px; }
     .journey:not(.is-live) .j-steps { gap: 36px; }
@@ -309,6 +328,31 @@ const first = journey[0].year;
 
     root.classList.add('is-live');
 
+    // Words marked [[like this]] in about.ts type themselves in each time their year is shown.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let typeTimer = 0;
+    function typeIn(step: HTMLElement) {
+      window.clearInterval(typeTimer);
+      root.querySelectorAll('.j-type.is-typing').forEach((el) => el.classList.remove('is-typing'));
+      const el = step.querySelector<HTMLElement>('.j-type');
+      if (!el || reduceMotion) return;
+      const word = el.dataset.type || '';
+      const typed = el.querySelector<HTMLElement>('.j-typed')!;
+      let k = 0;
+      typed.textContent = '';
+      el.classList.add('is-typing');
+      window.setTimeout(() => {
+        typeTimer = window.setInterval(() => {
+          k += 1;
+          typed.textContent = word.slice(0, k);
+          if (k >= word.length) {
+            window.clearInterval(typeTimer);
+            window.setTimeout(() => el.classList.remove('is-typing'), 900);
+          }
+        }, 110);
+      }, 450);
+    }
+
     function show(i: number) {
       i = Math.min(n - 1, Math.max(0, i));
       if (i === current) return;
@@ -324,6 +368,7 @@ const first = journey[0].year;
       year.split('').forEach((ch, k) => digits[k]?.style.setProperty('--d', ch));
       fill.style.setProperty('--p', String(n > 1 ? i / (n - 1) : 1));
       count.textContent = String(i + 1).padStart(2, '0');
+      typeIn(steps[i]);
       prev.disabled = i === 0;
       next.disabled = i === n - 1;
     }

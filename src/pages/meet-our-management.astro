@@ -1,6 +1,7 @@
 ---
 import GroupLayout from '../layouts/GroupLayout.astro';
 import { hero, ceo, leaders } from '../data/management';
+import LeaderCard from '../components/group/LeaderCard.astro';
 // Split the quote so words wrapped in **...** render bold.
 const quoteParts = ceo.quote.split(/\*\*(.+?)\*\*/);
 ---
@@ -37,23 +38,7 @@ const quoteParts = ceo.quote.split(/\*\*(.+?)\*\*/);
       <ul class="leader-grid">
         {leaders.map((l) => (
           <li class="leader">
-            {l.href ? (
-              <a class="leader-link" href={l.href}>
-                <img src={l.photo} alt={l.name} width="420" height="460" loading="lazy" />
-                <div class="leader-info">
-                  <h2>{l.name}</h2>
-                  <p>{l.title}</p>
-                </div>
-              </a>
-            ) : (
-              <>
-                <img src={l.photo} alt={l.name} width="420" height="460" loading="lazy" />
-                <div class="leader-info">
-                  <h2>{l.name}</h2>
-                  <p>{l.title}</p>
-                </div>
-              </>
-            )}
+            <LeaderCard {...l} heading="h2" size="lg" />
           </li>
         ))}
       </ul>
@@ -163,44 +148,7 @@ const quoteParts = ceo.quote.split(/\*\*(.+?)\*\*/);
     grid-template-columns: repeat(4, 1fr);
     gap: clamp(20px, 3vw, 56px);
   }
-  .leader {
-    background: var(--g-blue);
-    box-shadow: 0 18px 40px rgba(6, 97, 169, 0.12);
-    display: flex;
-    flex-direction: column;
-  }
-  .leader-link { display: flex; flex-direction: column; flex: 1; color: inherit; text-decoration: none; }
-  .leader-link:hover h2 { text-decoration: underline; text-underline-offset: 4px; }
-  .leader-link:focus-visible { outline: 2px solid var(--g-orange); outline-offset: 3px; }
-  .leader img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 420 / 460;
-    object-fit: cover;
-    object-position: top;
-  }
-  .leader-info {
-    flex: 1;
-    color: #fff;
-    text-align: center;
-    padding: 28px 16px 34px;
-  }
-  .leader h2 {
-    margin: 0;
-    font-size: clamp(13px, 0.95vw, 16px);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.01em;
-  }
-  .leader h2::after {
-    content: '';
-    display: block;
-    width: 54px;
-    height: 2px;
-    margin: 12px auto 18px;
-    background: #e8747c;
-  }
-  .leader p { margin: 0; font-size: clamp(12px, 0.85vw, 14px); }
+  .leader { display: flex; }
 
   @media (max-width: 1100px) {
     .leader-grid { grid-template-columns: repeat(2, 1fr); max-width: 760px; margin: 0 auto; }

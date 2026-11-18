@@ -39,7 +39,7 @@ export const features: { label: string; icon: string; href?: string }[] = [
   { label: 'Inventory', icon: 'inventory' },
   { label: 'WMS', icon: 'wms' },
   { label: 'CRM', icon: 'crm' },
-  { label: 'Sales', icon: 'sales' },
+  { label: 'Sales', icon: 'sales', href: '/technology/ekatm-erp/sales' },
   { label: 'Advertisement', icon: 'advertisement' },
   { label: 'Finance', icon: 'finance' },
   { label: 'Admin', icon: 'admin' },

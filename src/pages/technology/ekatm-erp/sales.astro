@@ -7,7 +7,7 @@ import ScreenCarousel from '../../../components/ScreenCarousel.astro';
 import Icon from '../../../components/Icon.astro';
 import {
   salesSlides, hero, intro, capabilities, journey, customerControl, quotation,
-  orderControl, fulfilment, continuity, beyond, konnect, faqGroups, faqVisible,
+  orderControl, continuity, beyond, konnect, faqGroups, faqVisible,
 } from '../../../data/ekatm-sales';
 
 const num = (i: number) => String(i + 1).padStart(2, '0');
@@ -147,29 +147,8 @@ const moreCount = faqGroups.length - faqVisible;
     </div>
   </section>
 
-  <!-- FULFILMENT & BILLING -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <h2 class="section-title section-title--lg">{fulfilment.title}</h2>
-      </div>
-      <ol class="flow" aria-label="From Sales Order Schedule to E-Invoice">
-        {fulfilment.steps.map((s) => (
-          <li class="flow-step">
-            <span class="flow-box"><span class="icon-tile icon-tile--lg"><Icon name={s.icon} /></span></span>
-            <span class="flow-label">{s.label}</span>
-          </li>
-        ))}
-      </ol>
-      <div class="enables">
-        <p class="enables-title">What this enables</p>
-        <ul>{fulfilment.enables.map((p) => <li>{p}</li>)}</ul>
-      </div>
-    </div>
-  </section>
-
   <!-- CONTRACTS & RETURNS -->
-  <section class="section section--soft">
+  <section class="section">
     <div class="container">
       <div class="section-head">
         <h2 class="section-title section-title--lg">{continuity.title}</h2>
@@ -189,7 +168,7 @@ const moreCount = faqGroups.length - faqVisible;
   </section>
 
   <!-- BEYOND THE SALES ORDER -->
-  <section class="section">
+  <section class="section section--soft">
     <div class="container">
       <div class="section-head">
         <h2 class="section-title section-title--lg">{beyond.title}</h2>
@@ -203,9 +182,13 @@ const moreCount = faqGroups.length - faqVisible;
           </li>
         ))}
       </ul>
+    </div>
+  </section>
 
-      <!-- EKATMKONNECT -->
-      <div class="section-head section-head--center konnect-head">
+  <!-- EKATMKONNECT -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center">
         <h2 class="section-title section-title--lg">{konnect.title}</h2>
         <p class="lead konnect-lead">{konnect.text}</p>
       </div>
@@ -403,38 +386,15 @@ const moreCount = faqGroups.length - faqVisible;
   .quote-card h3 { font-size: 15px; font-weight: 600; margin: 0 0 8px; }
   .quote-card p { margin: 0; color: var(--text); font-size: 13.5px; line-height: 1.6; }
 
-  /* FULFILMENT FLOW */
-  .flow {
-    list-style: none; padding: 0; margin: 0 0 36px;
-    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0;
-  }
-  .flow-step { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .flow-step + .flow-step::before {
-    content: '→'; position: absolute; left: -12px; top: 30px;
-    color: var(--blue); font-size: 22px; line-height: 1;
-  }
-  .flow-box {
-    width: 88px; height: 88px; border-radius: 10px;
-    background: #fff; border: 1px solid var(--line);
-    display: grid; place-items: center;
-  }
-  .flow-label { margin-top: 14px; font-size: 14px; font-weight: 600; color: var(--navy); line-height: 1.45; max-width: 120px; }
-  .enables {
-    background: #f2f8fd;
-    border: 1px solid #e1edf6;
-    border-radius: 10px;
-    padding: 18px 18px 20px;
-  }
-  .enables-title { margin: 0 0 14px; font-size: 13.5px; font-weight: 600; }
-  .enables ul, .dots { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-  .enables li, .dots li { position: relative; padding-left: 22px; font-size: 13.5px; color: var(--text); line-height: 1.5; }
-  .enables li::before, .dots li::before {
+  /* DOT LIST */
+  .dots { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .dots li { position: relative; padding-left: 22px; font-size: 13.5px; color: var(--text); line-height: 1.5; }
+  .dots li::before {
     content: ''; position: absolute; left: 6px; top: 0.55em;
     width: 6px; height: 6px; border-radius: 50%; background: var(--blue);
   }
 
   /* EKATMKONNECT */
-  .konnect-head { margin-top: calc(var(--section-y) * 1.6); }
   .konnect-lead { max-width: 980px !important; margin-left: auto !important; margin-right: auto !important; }
   .konnect-box { padding: 24px 20px 26px; }
   .konnect-box h3 { font-size: clamp(17px, 1.5vw, 20px); margin: 0 0 22px; }
@@ -502,13 +462,9 @@ const moreCount = faqGroups.length - faqVisible;
     .demo-intro { padding-left: 0; }
     .faq-text { max-width: 520px; }
     .faq-grid, .demo-grid { gap: 40px; }
-    .flow-box { width: 72px; height: 72px; }
-    .flow-label { font-size: 13px; }
   }
   @media (max-width: 760px) {
     .grid-2 { grid-template-columns: 1fr; gap: 14px; }
-    .flow { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 24px; }
-    .flow-step:nth-child(4)::before { display: none; }
   }
   @media (max-width: 640px) {
     .hero { padding: 24px 0 var(--section-y); }
@@ -525,9 +481,6 @@ const moreCount = faqGroups.length - faqVisible;
     .journey-step img { max-width: 92px; }
     .journey-step h3 { font-size: 14px; }
     .journey-step p { font-size: 12.5px; }
-    .flow-step + .flow-step::before { display: none; }
-    .flow-box { width: 64px; height: 64px; }
-    .flow-label { font-size: 12.5px; margin-top: 10px; }
     .demo-card { padding: 24px 16px; }
     .section-title--lg br { display: none; }
     .faq-more-btn { width: 100%; justify-content: center; }

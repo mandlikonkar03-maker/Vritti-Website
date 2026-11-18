@@ -99,25 +99,6 @@ export const orderControl = {
   ],
 };
 
-export const fulfilment = {
-  title: 'Schedule-led Fulfilment & Billing',
-  steps: [
-    { icon: 'calendar-clock', label: 'Sales Order Schedule' },
-    { icon: 'list-check', label: 'Pick List' },
-    { icon: 'box', label: 'Packing / Picking' },
-    { icon: 'truck', label: 'Shipment' },
-    { icon: 'document', label: 'Invoice' },
-    { icon: 'file-check', label: 'E\u2011Invoice / E\u2011Way Bill' },
-  ],
-  enables: [
-    'One schedule can be fulfilled through multiple shipments.',
-    'A shipment can contain multiple Sales Orders and schedules where configured.',
-    'Shipment execution updates remaining schedule quantities and completion status.',
-    'Multiple shipments can be consolidated into one Invoice where the validated billing conditions are met.',
-    'E-Invoice/E-Way Bill processing can control invoice printability until statutory processing succeeds.',
-  ],
-};
-
 export const continuity = {
   title: 'Contracts, Returns & Commercial Continuity',
   items: [

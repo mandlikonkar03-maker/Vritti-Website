@@ -3,7 +3,10 @@ import GroupLayout from '../layouts/GroupLayout.astro';
 import { hero, ceo, leaders } from '../data/management';
 import LeaderCard from '../components/group/LeaderCard.astro';
 // Split the quote so words wrapped in **...** render bold.
-const quoteParts = ceo.quote.split(/\*\*(.+?)\*\*/);
+// The first sentence ("Celebrating 21 years ...") types itself in when the section scrolls into view.
+const firstStop = ceo.quote.indexOf('. ') + 1;
+const typeLine = ceo.quote.slice(0, firstStop);
+const quoteParts = ceo.quote.slice(firstStop).split(/\*\*(.+?)\*\*/);
 ---
 <GroupLayout title="Meet our Management – Vritti Group" description={hero.text}>
   <!-- Hero (placeholder banner until the carousel image is ready) -->
@@ -21,7 +24,7 @@ const quoteParts = ceo.quote.split(/\*\*(.+?)\*\*/);
     </div>
     <div class="ceo-copy">
       <p class="ceo-eyebrow" id="ceo-heading">{ceo.eyebrow}</p>
-      <blockquote><span class="q-mark q-open" aria-hidden="true">“</span>{quoteParts.map((part, i) => (i % 2 ? <strong>{part}</strong> : part))}<span class="q-mark q-close" aria-hidden="true">”</span></blockquote>
+      <blockquote><span class="q-mark q-open" aria-hidden="true">“</span><span class="ceo-type" data-type={typeLine}><span class="ceo-typed">{typeLine}</span><span class="ceo-ghost" aria-hidden="true"></span></span><span class="ceo-rest">{quoteParts.map((part, i) => (i % 2 ? <strong>{part}</strong> : part))}</span><span class="q-mark q-close" aria-hidden="true">”</span></blockquote>
       <div class="ceo-foot">
         <div>
           <p class="ceo-name">{ceo.name}</p>
@@ -99,6 +102,13 @@ const quoteParts = ceo.quote.split(/\*\*(.+?)\*\*/);
     line-height: 1.35;
   }
   .ceo blockquote strong { font-weight: 600; }
+  /* Typing effect on the first line. The untyped part stays in place (invisible) so nothing jumps. */
+  .ceo-ghost { visibility: hidden; }
+  .ceo.is-typing .ceo-typed::after { content: ''; display: inline-block; width: 2px; height: 1em; margin: 0 -2px 0 0; vertical-align: -0.12em; background: var(--g-orange); animation: ceo-caret 0.7s steps(1) infinite; }
+  .ceo-rest { transition: opacity 0.6s ease; }
+  .ceo.is-armed .ceo-rest, .ceo.is-armed .q-close { opacity: 0; }
+  .ceo.is-done .ceo-rest, .ceo.is-done .q-close { opacity: 1; }
+  @keyframes ceo-caret { 50% { opacity: 0; } }
   .q-mark {
     font-size: 2.6em;
     font-weight: 600;
@@ -168,3 +178,33 @@ const quoteParts = ceo.quote.split(/\*\*(.+?)\*\*/);
     .leader-grid { grid-template-columns: 1fr; max-width: 360px; }
   }
 </style>
+
+<script>
+  const section = document.querySelector<HTMLElement>('.ceo');
+  const wrap = section?.querySelector<HTMLElement>('.ceo-type');
+  if (section && wrap && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const line = wrap.dataset.type || '';
+    const typed = wrap.querySelector<HTMLElement>('.ceo-typed')!;
+    const ghost = wrap.querySelector<HTMLElement>('.ceo-ghost')!;
+    typed.textContent = '';
+    ghost.textContent = line;
+    section.classList.add('is-armed');
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      section.classList.add('is-typing');
+      let k = 0;
+      const t = window.setInterval(() => {
+        k += 1;
+        typed.textContent = line.slice(0, k);
+        ghost.textContent = line.slice(k);
+        if (k >= line.length) {
+          window.clearInterval(t);
+          section.classList.add('is-done');
+          window.setTimeout(() => section.classList.remove('is-typing'), 1200);
+        }
+      }, 40);
+    }, { threshold: 0.4 });
+    io.observe(section);
+  }
+</script>

@@ -48,7 +48,7 @@ export const ceoProfile: LeaderProfile = {
   // TODO: replace '#' with his real profile URLs.
   socials: [
     { label: 'LinkedIn', href: '#', icon: 'linkedin' },
-    { label: 'Twitter', href: '#', icon: 'twitter' },
+    { label: 'X', href: '#', icon: 'twitter' },
   ],
   headlines: [
     {
@@ -70,16 +70,19 @@ export const leaders: Leader[] = [
     name: 'Rajesh Radhakrishnan',
     title: 'CMO, Vritti Group',
     photo: '/images/management/rajesh-radhakrishnan.jpg',
+    href: '/meet-our-management/rajesh-radhakrishnan',
   },
   {
     name: 'Shivaji Bedre',
     title: 'VP Sales & Marketing, Vritti Group',
     photo: '/images/management/shivaji-bedre.jpg',
+    href: '/meet-our-management/shivaji-bedre',
   },
   {
     name: 'Jeevan Pawar',
     title: 'VP-BD (India & Global Market), Vritti Group',
     photo: '/images/management/jeevan-pawar.jpg',
+    href: '/meet-our-management/jeevan-pawar',
   },
   {
     name: 'Sangeeta Jamdade',
@@ -114,5 +117,61 @@ export const sangeetaProfile: LeaderProfile = {
     "Continuing her commitment to social transformation, Mrs. Jamdade also conducts Prison SMART programmes at Yerwada Central Jail for women inmates and at juvenile correctional facilities for inmates below the age of 18. Through these initiatives, she works towards rehabilitation, emotional healing, stress management, and helping individuals rebuild their confidence and outlook towards life.",
     "Beyond her professional accomplishments, Mrs. Jamdade exemplifies discipline, teamwork, and perseverance. During her college years, she captained her hockey team and won several medals, experiences that continue to influence her collaborative leadership style and commitment to excellence.",
     "As Director – Human Resources, Mrs. Sangeeta Jamdade continues to champion employee development, leadership excellence, organizational culture, and people empowerment. Her unique blend of entrepreneurial experience, grassroots community leadership, and unwavering commitment to human potential has played a defining role in shaping Vritti’s culture. She firmly believes that an organization’s greatest strength lies in its people, and that lasting success is built by nurturing individuals, inspiring leaders, and creating opportunities for everyone to thrive.",
+  ],
+};
+
+// Full profile page: /meet-our-management/jeevan-pawar (intro text from OM, 2026-11-19).
+export const jeevanProfile: LeaderProfile = {
+  name: 'Jeevan Pawar',
+  title: 'Vice President – Business Development (India and Global Market)',
+  photo: '/images/management/jeevan-pawar.jpg',
+  photoWidth: 419,
+  photoHeight: 450,
+  // TODO: replace '#' with his real profile URLs (OM to send).
+  socials: [
+    { label: 'LinkedIn', href: '#', icon: 'linkedin' },
+    { label: 'X', href: '#', icon: 'twitter' },
+  ],
+  bio: [
+    "Mr. Jeevan Pawar is the Vice President – Business Development (India and Global Market) of Vritti Group of Companies. Having 22+ years of experience in IT and Media industry and being qualified in Computers, he is a person with strong technical knowledge, an entrepreneurial streak and a go-getter as he helped to establish a concept ‘Audio Nildhana’ for promoting films in Karnataka. He joined Vritti in 2007 and till today he is flourishing Vritti’s name in the IT and Media space. His specialty lies in Business Development of Audio Ads and Software Sales in South India. His love for technology and passion for business has contributed largely to our Group.",
+  ],
+};
+
+// Full profile page: /meet-our-management/rajesh-radhakrishnan (intro text from OM, 2026-11-19).
+export const rajeshProfile: LeaderProfile = {
+  name: 'Rajesh Radhakrishnan',
+  title: 'Co-founder & CMO',
+  photo: '/images/management/rajesh-radhakrishnan.jpg',
+  photoWidth: 448,
+  photoHeight: 462,
+  // TODO: replace '#' with his real profile URLs (OM to send).
+  socials: [
+    { label: 'LinkedIn', href: '#', icon: 'linkedin' },
+    { label: 'X', href: '#', icon: 'twitter' },
+  ],
+  bio: [
+    "Mr. Rajesh Radhakrishnan, Co-founder & CMO of Vritti Group of Companies is an expert with having a unique combination of immense technical knowledge and a deep passion for the media business. Having done his Master’s in Marketing and specialization in Digital Marketing services from IIM-Lucknow, he has brought an innovative fusion of media and technology on Vritti’s menu of offerings. Rajesh has worked with big names like Wipro, Satyam and Patni Computers for their sales, marketing and brand management. Mindwave Media, the 360 Degree Digital Arm of Vritti Group is his baby. Nobody knows the importance of rural marketing in India like he does! He has always promoted Rural Marketing, Outdoor Advertising, BTL Activation, Audio Advertisements through Audiowala Bus Stand, Brand Management and Digital Marketing services. With his 27+ years of experience, he is still playing strong in the Media & IT business and assures to take the business at a global level.",
+    "Under his able leadership, Vritti has been recognized as “The Champions of Rural Market” by Economic Times, “The Most admirable Rural Marketing” at the Asian Consumer Engagement Forum (ACEF) Awards and has won the National Media owner at the Outdoor Asia Awards.",
+  ],
+};
+
+// Full profile page: /meet-our-management/shivaji-bedre (intro text from OM, 2026-11-19).
+export const shivajiProfile: LeaderProfile = {
+  name: 'Shivaji Bedre',
+  title: 'Vice President – Sales & Marketing',
+  photo: '/images/management/shivaji-bedre.jpg',
+  photoWidth: 416,
+  photoHeight: 450,
+  // TODO: replace '#' with his real profile URLs (OM to send).
+  socials: [
+    { label: 'LinkedIn', href: '#', icon: 'linkedin' },
+    { label: 'X', href: '#', icon: 'twitter' },
+  ],
+  bio: [
+    "Mr. Shivaji Bedre, a PGDM graduate in Marketing, serves as the Vice President of Vritti Group of Companies, bringing over two decades of experience in sales, media and technology-led business transformation.",
+    "He plays a key role in establishing Vritti as a strong force in mass advertising by driving innovative, scalable solutions. He is instrumental in building and expanding the Audiowala Bus Stand platform, enabling impactful audio and audio-visual communication for retail, corporate and government clients.",
+    "Known for his strategic mindset and ability to scale businesses efficiently, Mr. Bedre has successfully transitioned operations from micro-level initiatives to large-scale deployments. He is also pivotal in acquiring and managing high-value government and enterprise accounts, strengthening the company’s market presence.",
+    "With a strong focus on customer-centricity, structured processes and KPI-driven performance, he consistently delivers sustainable growth and operational excellence.",
+    "Beyond his corporate role, Mr. Bedre leads the Vritti Foundation, actively contributing to social initiatives and reinforcing the organization’s commitment to community impact.",
   ],
 };

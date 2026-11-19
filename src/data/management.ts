@@ -1,5 +1,6 @@
 // Content for the "Meet our Management" page (src/pages/meet-our-management.astro).
 // Edit names, titles, photos and the CEO message here.
+import { sugermintInterview } from './press';
 
 export const hero = {
   title: 'Meet our Leaders',
@@ -29,7 +30,8 @@ export type LeaderProfile = {
   photoHeight: number;
   bio: string[];
   socials?: { label: string; href: string; icon: 'linkedin' | 'twitter' }[];
-  headlines?: { href: string; thumbnail: string; caption: string }[];
+  // kind 'article' = press article (opens in a new tab, shows the source); default 'video'.
+  headlines?: { href: string; thumbnail: string; caption: string; kind?: 'video' | 'article'; source?: string; alt?: string }[];
   thumbRole?: string;
 };
 
@@ -51,6 +53,14 @@ export const ceoProfile: LeaderProfile = {
     { label: 'X', href: '#', icon: 'twitter' },
   ],
   headlines: [
+    {
+      kind: 'article',
+      href: sugermintInterview.href,
+      thumbnail: sugermintInterview.image,
+      alt: sugermintInterview.alt,
+      source: sugermintInterview.source,
+      caption: sugermintInterview.title,
+    },
     {
       // TODO: link to the real video/article, and add a thumbnail image (leave empty to show the drawn placeholder).
       href: '#',

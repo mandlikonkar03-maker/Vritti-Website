@@ -19,11 +19,19 @@ export type JourneyMilestone = {
   points?: string[];
   // Photos from the journey PDF are small (about 300px wide); swap in larger ones when available.
   // width/height: the picture's real pixel size, so the frame keeps its shape and nothing is cropped.
-  image?: { src: string; width: number; height: number; alt: string };
+  // plain: no frame or shadow (for a map or logo drawn on white).
+  image?: { src: string; width: number; height: number; alt: string; plain?: boolean };
   people?: JourneyPerson[];
+  // An animated map instead of a photo (src/components/group/AudiowalaMap.astro).
+  map?: 'audiowala';
   // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, handshake, globe.
   icon?: string;
+  // A year with two separate events: list them here and they are shown one under
+  // the other, split by a line, each with its own title, text, people and photo.
+  // (The year's own title is then not shown; keep it as a one-line summary.)
+  parts?: JourneyPart[];
 };
+export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map'>;
 
 // People on the timeline show their current photo and designation from
 // Meet our Management (src/data/management.ts), so a title change there shows here too.
@@ -62,18 +70,36 @@ export const journey: JourneyMilestone[] = [
   },
   {
     year: '2005',
-    icon: 'office',
-    title: 'Vritti Solutions Limited was founded',
-    points: ['IT, Media and Rural Marketing under one roof', 'Mr. Rajesh Radhakrishnan joined'],
-    image: { src: '/images/about/journey/vritti-solutions-office.jpg', width: 353, height: 158, alt: 'Vritti Solutions Limited office signboard' },
-    people: [leader('Rajesh Radhakrishnan')],
+    title: 'Mr. Rajesh Radhakrishnan joined, and Vritti Solutions Limited was founded',
+    parts: [
+      {
+        icon: 'team',
+        title: '**Mr. Rajesh Radhakrishnan** joined',
+        people: [leader('Rajesh Radhakrishnan')],
+      },
+      {
+        icon: 'office',
+        title: '[[Vritti Solutions Limited]] was founded',
+        points: ['IT, Media and Rural Marketing under one roof'],
+        image: { src: '/images/about/journey/vritti-solutions-office.jpg', width: 353, height: 158, alt: 'Vritti Solutions Limited office signboard' },
+      },
+    ],
   },
   {
     year: '2007',
-    icon: 'speaker',
-    title: '[[Audiowala Bus Stand]] is born',
-    points: ['First bus stand at Swargate, Pune', 'Microsoft Award 2007'],
-    image: { src: '/images/about/journey/swargate-bus-stand.jpg', width: 300, height: 135, alt: 'Swargate bus stand, the first Audiowala Bus Stand' },
+    title: 'Audiowala Bus Stand is born, and Vritti Solutions Limited won the Microsoft Award',
+    parts: [
+      {
+        icon: 'speaker',
+        title: '[[Audiowala Bus Stand]] is born',
+        points: ['First bus stand at Swargate, Pune'],
+        image: { src: '/images/about/journey/swargate-bus-stand.jpg', width: 300, height: 135, alt: 'Swargate bus stand, the first Audiowala Bus Stand' },
+      },
+      {
+        icon: 'award',
+        title: '[[Vritti Solutions Limited]] won the **Microsoft Award**',
+      },
+    ],
   },
   {
     year: '2008',
@@ -89,14 +115,21 @@ export const journey: JourneyMilestone[] = [
   },
   {
     year: '2018',
-    icon: 'handshake',
-    title: '**Landmark MOU for Progress**',
-    text: 'A strategic MOU with **ICAI** and **Simplify Practice** to drive innovation and transform professional practice.',
-    points: [
-      'Audiowala Bus Stand in 8 states with 550+ bus stands',
-      'Maharashtra, Karnataka, Rajasthan, Punjab, Himachal Pradesh, Haryana, Goa, Gujarat',
+    title: 'Audiowala Bus Stand in 8 states, and a landmark MOU with ICAI and Simplify Practice',
+    parts: [
+      {
+        icon: 'speaker',
+        title: '**Audiowala** Bus Stand in **8** states with **550+** bus stands',
+        points: ['Maharashtra, Karnataka, Punjab, Rajasthan, Himachal Pradesh, Haryana, Goa, Gujarat'],
+        map: 'audiowala',
+      },
+      {
+        icon: 'handshake',
+        title: '**Landmark MOU for Progress**',
+        text: 'A strategic MOU with **ICAI** and **Simplify Practice** to drive innovation and transform professional practice.',
+        image: { src: '/images/about/journey/icai-mou.jpg', width: 287, height: 145, alt: 'The Institute of Chartered Accountants of India' },
+      },
     ],
-    image: { src: '/images/about/journey/icai-mou.jpg', width: 287, height: 145, alt: 'The Institute of Chartered Accountants of India' },
   },
   {
     year: '2023',

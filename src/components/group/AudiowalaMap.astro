@@ -1,0 +1,131 @@
+---
+// Animated India map for the 2018 "Audiowala Bus Stand in 8 states" event on the
+// Our Journey timeline. A road is drawn from Bengaluru up to Shimla, a small bus
+// drives along it, and each state turns orange as the bus reaches it. It plays each
+// time its year is shown (Journey.astro sends a "j-show" event to the step).
+// Without JavaScript, or with reduced motion, the finished map is shown.
+// Dots come from src/data/audiowala-map.json; the light-blue base is
+// public/images/about/journey/india-dots-base.svg (same grid, same viewBox).
+import map from '../../data/audiowala-map.json';
+
+const { w, h, r, stops } = map as {
+  w: number; h: number; r: number;
+  stops: { state: string; city: string; xy: [number, number]; dots: [number, number][] }[];
+};
+
+// Gentle S-curves between stops, so it reads as a road and not a straight line.
+let road = `M${stops[0].xy[0]},${stops[0].xy[1]}`;
+for (let i = 1; i < stops.length; i++) {
+  const [x0, y0] = stops[i - 1].xy;
+  const [x1, y1] = stops[i].xy;
+  road += ` Q${((x0 + x1) / 2 + (i % 2 ? 14 : -14)).toFixed(1)},${((y0 + y1) / 2).toFixed(1)} ${x1},${y1}`;
+}
+
+// Where each state's name sits next to its stop: [dx, dy, anchor].
+const side: Record<string, [number, number, string]> = {
+  Karnataka: [10, 4, 'start'],
+  Goa: [-10, 4, 'end'],
+  Maharashtra: [10, -6, 'start'],
+  Gujarat: [-10, -8, 'end'],
+  Rajasthan: [-10, 4, 'end'],
+  Haryana: [10, 5, 'start'],
+  Punjab: [-10, -2, 'end'],
+  'Himachal Pradesh': [10, -8, 'start'],
+};
+const label = 'Map of India: Audiowala Bus Stands in ' + stops.map((s) => s.state).join(', ');
+---
+<figure class="aw-map" data-aw role="img" aria-label={label} style={`--ar:${w}/${h}`}>
+  <img src="/images/about/journey/india-dots-base.svg" alt="" width={w} height={h} loading="lazy" decoding="async" />
+  <svg viewBox={`0 0 ${w} ${h}`} aria-hidden="true">
+    {stops.map((s, i) => (
+      <g class="aw-state is-on" data-aw-state={i}>
+        {s.dots.map(([x, y]) => <circle cx={x} cy={y} r={r} />)}
+      </g>
+    ))}
+    <path class="aw-road" d={road} data-aw-road />
+    <path class="aw-lane" d={road} />
+    {stops.map((s, i) => (
+      <g class="aw-stop is-on" data-aw-stop={i}>
+        <circle cx={s.xy[0]} cy={s.xy[1]} r="3.5" />
+        <text x={s.xy[0] + side[s.state][0]} y={s.xy[1] + side[s.state][1]} text-anchor={side[s.state][2]}>{s.state}</text>
+      </g>
+    ))}
+    <g class="aw-bus" data-aw-bus transform={`translate(${stops.at(-1)!.xy[0]},${stops.at(-1)!.xy[1] - 2})`}>
+      <rect x="-9" y="-6" width="18" height="11" rx="3" class="aw-bus-body" />
+      <rect x="-6" y="-4" width="5" height="4" rx="1" class="aw-bus-win" />
+      <rect x="1" y="-4" width="5" height="4" rx="1" class="aw-bus-win" />
+      <circle cx="-5" cy="5.5" r="2" class="aw-bus-wheel" />
+      <circle cx="5" cy="5.5" r="2" class="aw-bus-wheel" />
+    </g>
+  </svg>
+</figure>
+
+<style>
+  .aw-map { position: relative; margin: 0; aspect-ratio: var(--ar); }
+  .aw-map img, .aw-map svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+  .aw-state circle { fill: #c9d8e8; transition: fill 0.35s ease; }
+  .aw-state.is-on circle { fill: var(--g-orange, #eb9e2e); }
+  .aw-road { fill: none; stroke: #6b7c8c; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.85; }
+  .aw-lane { fill: none; stroke: #fff; stroke-width: 1.2; stroke-dasharray: 5 5; }
+  .aw-stop { opacity: 0; transition: opacity 0.3s ease; }
+  .aw-stop.is-on { opacity: 1; }
+  .aw-stop circle { fill: #fff; stroke: var(--g-blue, #0661a9); stroke-width: 2; }
+  .aw-stop text { font: 600 13px Montserrat, sans-serif; fill: var(--g-ink, #14212b); paint-order: stroke; stroke: #fff; stroke-width: 3.5px; }
+  .aw-bus-body { fill: var(--g-blue, #0661a9); }
+  .aw-bus-win { fill: #fff; }
+  .aw-bus-wheel { fill: #14212b; }
+</style>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLElement>('[data-aw]').forEach((fig) => {
+    const step = fig.closest('.j-step');
+    const road = fig.querySelector<SVGPathElement>('[data-aw-road]');
+    const bus = fig.querySelector<SVGGElement>('[data-aw-bus]');
+    const states = Array.from(fig.querySelectorAll<SVGGElement>('[data-aw-state]'));
+    const stops = Array.from(fig.querySelectorAll<SVGGElement>('[data-aw-stop]'));
+    if (!step || !road || !bus || reduce) return;
+
+    const L = road.getTotalLength();
+    const pts = stops.map((s) => {
+      const c = s.querySelector('circle')!;
+      return [Number(c.getAttribute('cx')), Number(c.getAttribute('cy'))];
+    });
+    // How far along the road each stop is.
+    const at: number[] = [0];
+    for (let l = 0, k = 1; l <= L && k < pts.length; l += 0.5) {
+      const p = road.getPointAtLength(l);
+      if (Math.hypot(p.x - pts[k][0], p.y - pts[k][1]) < 1) { at.push(l); k++; }
+    }
+    while (at.length < pts.length) at.push(L);
+
+    let run = 0;
+    const light = (i: number) => { states[i].classList.add('is-on'); stops[i].classList.add('is-on'); };
+    function play() {
+      const id = ++run;
+      states.forEach((s) => s.classList.remove('is-on'));
+      stops.forEach((s) => s.classList.remove('is-on'));
+      road!.style.strokeDasharray = String(L);
+      road!.style.strokeDashoffset = String(L);
+      light(0);
+      const T = 3600;
+      let t0 = 0;
+      let next = 1;
+      const frame = (now: number) => {
+        if (id !== run) return;
+        if (!t0) t0 = now;
+        const p = Math.min(1, (now - t0) / T);
+        const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+        const l = L * e;
+        road!.style.strokeDashoffset = String(L - l);
+        const q = road!.getPointAtLength(l);
+        bus!.setAttribute('transform', `translate(${q.x.toFixed(1)},${(q.y - 2).toFixed(1)})`);
+        while (next < pts.length && l >= at[next] - 0.5) light(next++);
+        if (p < 1) requestAnimationFrame(frame);
+      };
+      // Start once the step has slid in.
+      window.setTimeout(() => requestAnimationFrame(frame), 350);
+    }
+    step.addEventListener('j-show', play);
+  });
+</script>

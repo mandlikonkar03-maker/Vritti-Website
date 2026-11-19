@@ -1,6 +1,6 @@
 // Content for the "Meet our Management" page (src/pages/meet-our-management.astro).
 // Edit names, titles, photos and the CEO message here.
-import { sugermintInterview, founderMediaArticle } from './press';
+import { ceoHeadlines } from './press';
 
 export const hero = {
   title: 'Meet our Leaders',
@@ -52,24 +52,14 @@ export const ceoProfile: LeaderProfile = {
     { label: 'LinkedIn', href: '#', icon: 'linkedin' },
     { label: 'X', href: '#', icon: 'twitter' },
   ],
-  headlines: [
-    {
-      kind: 'article',
-      href: sugermintInterview.href,
-      thumbnail: sugermintInterview.image,
-      alt: sugermintInterview.alt,
-      source: sugermintInterview.source,
-      caption: sugermintInterview.title,
-    },
-    {
-      kind: 'article',
-      href: founderMediaArticle.href,
-      thumbnail: founderMediaArticle.image,
-      alt: founderMediaArticle.alt,
-      source: founderMediaArticle.source,
-      caption: founderMediaArticle.title,
-    },
-  ],
+  headlines: ceoHeadlines.map((a) => ({
+    kind: 'article' as const,
+    href: a.href,
+    thumbnail: a.image,
+    alt: a.alt,
+    source: a.source,
+    caption: a.title,
+  })),
 };
 
 // href: optional profile page; the card links to it on Meet our Management and About Us.

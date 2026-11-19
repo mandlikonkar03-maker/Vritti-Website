@@ -38,6 +38,8 @@ export const presence = {
     // Shimla is only ~50 km from Chandigarh, so its pin is nudged up/right a little to keep the dots apart.
     { id: 'shimla', city: 'Shimla', region: 'Himachal Pradesh', x: 59.6, y: 8.4, side: 'right' },
     { id: 'goa', city: 'Goa', region: 'Goa', x: 51.8, y: 66.11, side: 'left' },
+    // Gujarat (OM, 2026-11-19): state only, no city given yet. Pin sits at Ahmedabad (72.57E, 23.02N); label on the right so it clears the UAE tag on mobile.
+    { id: 'gujarat', city: 'Gujarat', region: 'India', x: 49.07, y: 39.21, side: 'right' },
     { id: 'jaipur', city: 'Jaipur', region: 'Rajasthan', x: 56.07, y: 25.32, side: 'left' },
     { id: 'uae', city: 'UAE', region: 'Dubai, United Arab Emirates', international: true, x: 11.46, y: 31.43, side: 'right' },
   ] as Office[],

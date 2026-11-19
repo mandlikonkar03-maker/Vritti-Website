@@ -111,7 +111,7 @@ export const journey: JourneyMilestone[] = [
     year: '2014',
     icon: 'erp',
     title: 'A New Era of Business Transformation with [[EKATM ERP]]',
-    image: { src: '/images/about/journey/ekatm-erp.jpg', width: 295, height: 171, alt: 'Ekatm ERP' },
+    image: { src: '/images/about/journey/ekatm-erp-launch.jpg', width: 1200, height: 675, alt: 'Ekatm ERP launch: one system for finance, sales, inventory, purchase, production and HR' },
   },
   {
     year: '2018',
@@ -127,7 +127,7 @@ export const journey: JourneyMilestone[] = [
         icon: 'handshake',
         title: '**Landmark MOU for Progress**',
         text: 'A strategic MOU with **ICAI** and **Simplify Practice** to drive innovation and transform professional practice.',
-        image: { src: '/images/about/journey/icai-mou.jpg', width: 287, height: 145, alt: 'The Institute of Chartered Accountants of India' },
+        image: { src: '/images/about/journey/icai-simplify-practice-mou.jpg', width: 1200, height: 675, alt: 'MOU with ICAI for Simplify Practice' },
       },
     ],
   },

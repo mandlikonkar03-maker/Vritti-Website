@@ -24,6 +24,8 @@ export type JourneyMilestone = {
   people?: JourneyPerson[];
   // Several photos shown as an auto-rotating slideshow instead of one photo (all the same shape).
   slides?: { src: string; width: number; height: number; alt: string }[];
+  /** Show the slides two at a time, side by side, instead of one by one. */
+  pair?: boolean;
   // An animated map instead of a photo (src/components/group/AudiowalaMap.astro).
   map?: 'audiowala';
   // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, handshake, globe.
@@ -33,7 +35,7 @@ export type JourneyMilestone = {
   // (The year's own title is then not shown; keep it as a one-line summary.)
   parts?: JourneyPart[];
 };
-export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'slides'>;
+export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'slides' | 'pair'>;
 
 // People on the timeline show their current photo and designation from
 // Meet our Management (src/data/management.ts), so a title change there shows here too.
@@ -151,7 +153,8 @@ export const journey: JourneyMilestone[] = [
       'Honored by Brand Equity as Best IT/ITeS/IoT Enterprise',
       'Most Admired BTL Agency of the Year for Customer Engagement by ACEF',
     ],
-    // Several photos: shown as a slideshow that changes on its own.
+    // Several photos: two shown side by side, swapping one at a time.
+    pair: true,
     slides: [
       { src: '/images/about/journey/middle-east-office-1.jpg', width: 960, height: 1280, alt: 'Vritti leadership at the Middle East office' },
       { src: '/images/about/journey/middle-east-office-2.jpg', width: 960, height: 1280, alt: 'Vritti leadership at the Middle East office' },

@@ -73,7 +73,7 @@ export const leaders: Leader[] = [
   },
   {
     name: 'Shivaji Bedre',
-    title: 'Vice-President Sales & Marketing, Vritti Group',
+    title: 'VP Sales & Marketing, Vritti Group',
     photo: '/images/management/shivaji-bedre.jpg',
   },
   {

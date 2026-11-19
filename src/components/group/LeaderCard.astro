@@ -15,6 +15,12 @@ interface Props {
 }
 const { name, title, photo, href, know = 'Know him', heading = 'h3', size = 'lg' } = Astro.props;
 const Tag = href ? 'a' : 'div';
+// "Vritti Group" sits on its own line pinned to the card bottom, so it lines up
+// across every card however long the designation is.
+const ORG = 'Vritti Group';
+const m = title.match(/^(.*?)[,\s]*Vritti Group\s*$/);
+const designation = m ? m[1] : title;
+const org = m ? ORG : '';
 const H = heading;
 ---
 <Tag class:list={['lc', `lc--${size}`, { 'lc--link': !!href }]} href={href || undefined}>
@@ -24,7 +30,8 @@ const H = heading;
   <div class="lc-info">
     <div class="lc-text">
       <H class="lc-name">{name}</H>
-      <p class="lc-title">{title}</p>
+      <p class="lc-title">{designation}</p>
+      {org && <p class="lc-org">{org}</p>}
     </div>
     <span class="lc-know" aria-hidden="true">
       {know}
@@ -50,12 +57,15 @@ const H = heading;
   }
   .lc-info {
     position: relative; flex: 1;
-    display: grid; place-items: center;
+    display: grid; align-items: stretch;
     text-align: center;
   }
   /* Name/designation and "Know him" share the same cell so the card never changes height. */
   .lc-text, .lc-know { grid-area: 1 / 1; }
-  .lc-text { width: 100%; transition: opacity 0.3s, transform 0.35s cubic-bezier(.2,.7,.2,1); }
+  .lc-text {
+    width: 100%;
+    display: flex; flex-direction: column; align-items: center;
+    transition: opacity 0.3s, transform 0.35s cubic-bezier(.2,.7,.2,1); }
   .lc-name {
     margin: 0; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.01em;
@@ -66,6 +76,8 @@ const H = heading;
     background: #e8747c;
   }
   .lc-title { margin: 0; }
+  .lc-org { margin: auto 0 0; padding-top: 10px; white-space: nowrap; }
+  .lc-know { place-self: center; }
   .lc-know {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 11px 24px; border-radius: 999px;
@@ -81,11 +93,11 @@ const H = heading;
   .lc--lg .lc-info { padding: 28px 16px 34px; }
   .lc--lg .lc-name { font-size: clamp(13px, 0.95vw, 16px); }
   .lc--lg .lc-name::after { margin: 12px auto 18px; }
-  .lc--lg .lc-title { font-size: clamp(12px, 0.85vw, 14px); }
+  .lc--lg .lc-title, .lc--lg .lc-org { font-size: clamp(12px, 0.85vw, 14px); }
   .lc--sm .lc-info { padding: 24px 12px 28px; }
   .lc--sm .lc-name { font-size: clamp(12px, 0.9vw, 15px); }
   .lc--sm .lc-name::after { margin: 12px auto 16px; }
-  .lc--sm .lc-title { font-size: clamp(11.5px, 0.8vw, 13px); }
+  .lc--sm .lc-title, .lc--sm .lc-org { font-size: clamp(11.5px, 0.8vw, 13px); }
   .lc--sm .lc-know { padding: 10px 18px; font-size: 13px; }
 
   @media (hover: hover) {

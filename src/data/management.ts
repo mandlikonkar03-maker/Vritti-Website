@@ -48,7 +48,7 @@ export const ceoProfile: LeaderProfile = {
   // TODO: replace '#' with his real profile URLs.
   socials: [
     { label: 'LinkedIn', href: '#', icon: 'linkedin' },
-    { label: 'Twitter', href: '#', icon: 'twitter' },
+    { label: 'X', href: '#', icon: 'twitter' },
   ],
   headlines: [
     {
@@ -70,6 +70,7 @@ export const leaders: Leader[] = [
     name: 'Rajesh Radhakrishnan',
     title: 'CMO, Vritti Group',
     photo: '/images/management/rajesh-radhakrishnan.jpg',
+    href: '/meet-our-management/rajesh-radhakrishnan',
   },
   {
     name: 'Shivaji Bedre',
@@ -125,7 +126,30 @@ export const jeevanProfile: LeaderProfile = {
   photo: '/images/management/jeevan-pawar.jpg',
   photoWidth: 419,
   photoHeight: 450,
+  // TODO: replace '#' with his real profile URLs (OM to send).
+  socials: [
+    { label: 'LinkedIn', href: '#', icon: 'linkedin' },
+    { label: 'X', href: '#', icon: 'twitter' },
+  ],
   bio: [
     "Mr. Jeevan Pawar is the Vice President – Business Development (India and Global Market) of Vritti Group of Companies. Having 22+ years of experience in IT and Media industry and being qualified in Computers, he is a person with strong technical knowledge, an entrepreneurial streak and a go-getter as he helped to establish a concept ‘Audio Nildhana’ for promoting films in Karnataka. He joined Vritti in 2007 and till today he is flourishing Vritti’s name in the IT and Media space. His specialty lies in Business Development of Audio Ads and Software Sales in South India. His love for technology and passion for business has contributed largely to our Group.",
+  ],
+};
+
+// Full profile page: /meet-our-management/rajesh-radhakrishnan (intro text from OM, 2026-11-19).
+export const rajeshProfile: LeaderProfile = {
+  name: 'Rajesh Radhakrishnan',
+  title: 'Co-founder & CMO',
+  photo: '/images/management/rajesh-radhakrishnan.jpg',
+  photoWidth: 448,
+  photoHeight: 462,
+  // TODO: replace '#' with his real profile URLs (OM to send).
+  socials: [
+    { label: 'LinkedIn', href: '#', icon: 'linkedin' },
+    { label: 'X', href: '#', icon: 'twitter' },
+  ],
+  bio: [
+    "Mr. Rajesh Radhakrishnan, Co-founder & CMO of Vritti Group of Companies is an expert with having a unique combination of immense technical knowledge and a deep passion for the media business. Having done his Master’s in Marketing and specialization in Digital Marketing services from IIM-Lucknow, he has brought an innovative fusion of media and technology on Vritti’s menu of offerings. Rajesh has worked with big names like Wipro, Satyam and Patni Computers for their sales, marketing and brand management. Mindwave Media, the 360 Degree Digital Arm of Vritti Group is his baby. Nobody knows the importance of rural marketing in India like he does! He has always promoted Rural Marketing, Outdoor Advertising, BTL Activation, Audio Advertisements through Audiowala Bus Stand, Brand Management and Digital Marketing services. With his 27+ years of experience, he is still playing strong in the Media & IT business and assures to take the business at a global level.",
+    "Under his able leadership, Vritti has been recognized as “The Champions of Rural Market” by Economic Times, “The Most admirable Rural Marketing” at the Asian Consumer Engagement Forum (ACEF) Awards and has won the National Media owner at the Outdoor Asia Awards.",
   ],
 };

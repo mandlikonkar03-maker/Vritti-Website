@@ -76,6 +76,7 @@ export const leaders: Leader[] = [
     name: 'Shivaji Bedre',
     title: 'VP Sales & Marketing, Vritti Group',
     photo: '/images/management/shivaji-bedre.jpg',
+    href: '/meet-our-management/shivaji-bedre',
   },
   {
     name: 'Jeevan Pawar',
@@ -151,5 +152,26 @@ export const rajeshProfile: LeaderProfile = {
   bio: [
     "Mr. Rajesh Radhakrishnan, Co-founder & CMO of Vritti Group of Companies is an expert with having a unique combination of immense technical knowledge and a deep passion for the media business. Having done his Master’s in Marketing and specialization in Digital Marketing services from IIM-Lucknow, he has brought an innovative fusion of media and technology on Vritti’s menu of offerings. Rajesh has worked with big names like Wipro, Satyam and Patni Computers for their sales, marketing and brand management. Mindwave Media, the 360 Degree Digital Arm of Vritti Group is his baby. Nobody knows the importance of rural marketing in India like he does! He has always promoted Rural Marketing, Outdoor Advertising, BTL Activation, Audio Advertisements through Audiowala Bus Stand, Brand Management and Digital Marketing services. With his 27+ years of experience, he is still playing strong in the Media & IT business and assures to take the business at a global level.",
     "Under his able leadership, Vritti has been recognized as “The Champions of Rural Market” by Economic Times, “The Most admirable Rural Marketing” at the Asian Consumer Engagement Forum (ACEF) Awards and has won the National Media owner at the Outdoor Asia Awards.",
+  ],
+};
+
+// Full profile page: /meet-our-management/shivaji-bedre (intro text from OM, 2026-11-19).
+export const shivajiProfile: LeaderProfile = {
+  name: 'Shivaji Bedre',
+  title: 'Vice President – Sales & Marketing',
+  photo: '/images/management/shivaji-bedre.jpg',
+  photoWidth: 416,
+  photoHeight: 450,
+  // TODO: replace '#' with his real profile URLs (OM to send).
+  socials: [
+    { label: 'LinkedIn', href: '#', icon: 'linkedin' },
+    { label: 'X', href: '#', icon: 'twitter' },
+  ],
+  bio: [
+    "Mr. Shivaji Bedre, a PGDM graduate in Marketing, serves as the Vice President of Vritti Group of Companies, bringing over two decades of experience in sales, media and technology-led business transformation.",
+    "He plays a key role in establishing Vritti as a strong force in mass advertising by driving innovative, scalable solutions. He is instrumental in building and expanding the Audiowala Bus Stand platform, enabling impactful audio and audio-visual communication for retail, corporate and government clients.",
+    "Known for his strategic mindset and ability to scale businesses efficiently, Mr. Bedre has successfully transitioned operations from micro-level initiatives to large-scale deployments. He is also pivotal in acquiring and managing high-value government and enterprise accounts, strengthening the company’s market presence.",
+    "With a strong focus on customer-centricity, structured processes and KPI-driven performance, he consistently delivers sustainable growth and operational excellence.",
+    "Beyond his corporate role, Mr. Bedre leads the Vritti Foundation, actively contributing to social initiatives and reinforcing the organization’s commitment to community impact.",
   ],
 };

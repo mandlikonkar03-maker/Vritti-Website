@@ -30,7 +30,7 @@ export const travelTourismTimesArticle: PressArticle = {
   source: 'The Travel and Tourism Times',
   href: 'https://thetravelandtourismtimes.com/ttt-special-from-fragmented-data-to-connected-journeys-the-next-step-for-travel-businesses/',
   image: '/images/press/travel-tourism-times-veerendra-jamdade.jpg',
-  alt: 'The Travel and Tourism Times article by Veerendra Jamdade',
+  alt: 'Veerendra Jamdade at the Vritti 20 years celebration',
 };
 
 export const marksmenDailyArticle: PressArticle = {
@@ -38,7 +38,7 @@ export const marksmenDailyArticle: PressArticle = {
   source: 'Marksmen Daily',
   href: 'https://marksmendaily.com/business/why-digital-trust-will-shape-the-next-decade-of-growth/',
   image: '/images/press/marksmen-daily-veerendra-jamdade.jpg',
-  alt: 'Marksmen Daily article by Veerendra Jamdade',
+  alt: 'Illustration of a digital handshake with a lock',
 };
 
 export const ceoIndiaArticle: PressArticle = {
@@ -54,7 +54,7 @@ export const indianPrinterPublisherArticle: PressArticle = {
   source: 'Indian Printer & Publisher',
   href: 'https://indianprinterpublisher.com/blog/2026/05/traditional-erp-systems-india/',
   image: '/images/press/indian-printer-publisher-erp.jpg',
-  alt: 'Indian Printer & Publisher article on ERP systems in India',
+  alt: 'Illustration of cloud servers connected to devices',
 };
 
 // Order shown under "Making Headlines" on the CEO profile (newest first).

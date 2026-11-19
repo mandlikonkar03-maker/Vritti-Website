@@ -97,7 +97,7 @@ export const journey: JourneyMilestone[] = [
         icon: 'speaker',
         title: '[[Audiowala Bus Stand]] is born',
         points: ['First bus stand at Swargate, Pune'],
-        image: { src: '/images/about/journey/swargate-bus-stand.jpg', width: 300, height: 135, alt: 'Swargate bus stand, the first Audiowala Bus Stand' },
+        image: { src: '/images/about/journey/audiowala-bus-stand-born.jpg', width: 1200, height: 675, alt: 'Audiowala Bus Stand is born at Swargate bus stand, Pune' },
       },
       {
         icon: 'award',

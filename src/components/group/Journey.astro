@@ -249,7 +249,7 @@ const rich = (t: string) =>
   .j-step.has-parts .j-copy { padding-top: 0; }
   .j-step.has-parts .j-people li { flex-direction: row; width: auto; text-align: left; gap: 16px; }
   @media (min-width: 769px) {
-    .j-step.has-parts { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 0; align-items: stretch; }
+    .j-step.has-parts { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; align-items: stretch; }
     .j-step.has-parts .j-part { display: flex; flex-direction: column; gap: clamp(14px, 2.4vh, 24px); padding-right: clamp(24px, 3.5vw, 56px); }
     .j-step.has-parts .j-part + .j-part {
       position: relative; padding-right: 0; padding-left: clamp(24px, 3.5vw, 56px);
@@ -370,27 +370,31 @@ const rich = (t: string) =>
 
     // Words marked [[like this]] in about.ts type themselves in each time their year is shown.
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let typeTimer = 0;
+    // A year can have more than one (e.g. two events side by side): they all type at once.
+    let typeTimers: number[] = [];
     function typeIn(step: HTMLElement) {
-      window.clearInterval(typeTimer);
+      typeTimers.forEach((t) => { window.clearInterval(t); window.clearTimeout(t); });
+      typeTimers = [];
       root.querySelectorAll('.j-type.is-typing').forEach((el) => el.classList.remove('is-typing'));
-      const el = step.querySelector<HTMLElement>('.j-type');
-      if (!el || reduceMotion) return;
-      const word = el.dataset.type || '';
-      const typed = el.querySelector<HTMLElement>('.j-typed')!;
-      let k = 0;
-      typed.textContent = '';
-      el.classList.add('is-typing');
-      window.setTimeout(() => {
-        typeTimer = window.setInterval(() => {
-          k += 1;
-          typed.textContent = word.slice(0, k);
-          if (k >= word.length) {
-            window.clearInterval(typeTimer);
-            window.setTimeout(() => el.classList.remove('is-typing'), 900);
-          }
-        }, 110);
-      }, 450);
+      if (reduceMotion) return;
+      step.querySelectorAll<HTMLElement>('.j-type').forEach((el) => {
+        const word = el.dataset.type || '';
+        const typed = el.querySelector<HTMLElement>('.j-typed')!;
+        let k = 0;
+        typed.textContent = '';
+        el.classList.add('is-typing');
+        typeTimers.push(window.setTimeout(() => {
+          const t = window.setInterval(() => {
+            k += 1;
+            typed.textContent = word.slice(0, k);
+            if (k >= word.length) {
+              window.clearInterval(t);
+              typeTimers.push(window.setTimeout(() => el.classList.remove('is-typing'), 900));
+            }
+          }, 110);
+          typeTimers.push(t);
+        }, 450));
+      });
     }
 
     function show(i: number) {

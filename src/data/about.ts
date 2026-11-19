@@ -84,10 +84,19 @@ export const journey: JourneyMilestone[] = [
   },
   {
     year: '2007',
-    icon: 'speaker',
-    title: '[[Audiowala Bus Stand]] is born',
-    points: ['First bus stand at Swargate, Pune', 'Microsoft Award 2007'],
-    image: { src: '/images/about/journey/swargate-bus-stand.jpg', width: 300, height: 135, alt: 'Swargate bus stand, the first Audiowala Bus Stand' },
+    title: 'Audiowala Bus Stand is born, and Vritti Solutions Limited won the Microsoft Award',
+    parts: [
+      {
+        icon: 'speaker',
+        title: '[[Audiowala Bus Stand]] is born',
+        points: ['First bus stand at Swargate, Pune'],
+        image: { src: '/images/about/journey/swargate-bus-stand.jpg', width: 300, height: 135, alt: 'Swargate bus stand, the first Audiowala Bus Stand' },
+      },
+      {
+        icon: 'award',
+        title: '[[Vritti Solutions Limited]] won the **Microsoft Award**',
+      },
+    ],
   },
   {
     year: '2008',

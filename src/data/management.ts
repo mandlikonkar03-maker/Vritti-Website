@@ -80,6 +80,7 @@ export const leaders: Leader[] = [
     name: 'Jeevan Pawar',
     title: 'VP-BD (India & Global Market), Vritti Group',
     photo: '/images/management/jeevan-pawar.jpg',
+    href: '/meet-our-management/jeevan-pawar',
   },
   {
     name: 'Sangeeta Jamdade',
@@ -114,5 +115,17 @@ export const sangeetaProfile: LeaderProfile = {
     "Continuing her commitment to social transformation, Mrs. Jamdade also conducts Prison SMART programmes at Yerwada Central Jail for women inmates and at juvenile correctional facilities for inmates below the age of 18. Through these initiatives, she works towards rehabilitation, emotional healing, stress management, and helping individuals rebuild their confidence and outlook towards life.",
     "Beyond her professional accomplishments, Mrs. Jamdade exemplifies discipline, teamwork, and perseverance. During her college years, she captained her hockey team and won several medals, experiences that continue to influence her collaborative leadership style and commitment to excellence.",
     "As Director – Human Resources, Mrs. Sangeeta Jamdade continues to champion employee development, leadership excellence, organizational culture, and people empowerment. Her unique blend of entrepreneurial experience, grassroots community leadership, and unwavering commitment to human potential has played a defining role in shaping Vritti’s culture. She firmly believes that an organization’s greatest strength lies in its people, and that lasting success is built by nurturing individuals, inspiring leaders, and creating opportunities for everyone to thrive.",
+  ],
+};
+
+// Full profile page: /meet-our-management/jeevan-pawar (intro text from OM, 2026-11-19).
+export const jeevanProfile: LeaderProfile = {
+  name: 'Jeevan Pawar',
+  title: 'Vice President – Business Development (India and Global Market)',
+  photo: '/images/management/jeevan-pawar.jpg',
+  photoWidth: 419,
+  photoHeight: 450,
+  bio: [
+    "Mr. Jeevan Pawar is the Vice President – Business Development (India and Global Market) of Vritti Group of Companies. Having 22+ years of experience in IT and Media industry and being qualified in Computers, he is a person with strong technical knowledge, an entrepreneurial streak and a go-getter as he helped to establish a concept ‘Audio Nildhana’ for promoting films in Karnataka. He joined Vritti in 2007 and till today he is flourishing Vritti’s name in the IT and Media space. His specialty lies in Business Development of Audio Ads and Software Sales in South India. His love for technology and passion for business has contributed largely to our Group.",
   ],
 };

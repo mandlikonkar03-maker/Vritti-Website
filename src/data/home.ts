@@ -1,5 +1,5 @@
 // Content for the Vritti Group home page (src/pages/index.astro).
-import { sugermintInterview } from './press';
+import { sugermintInterview, ceoIndiaArticle } from './press';
 // Edit text, links and images here; the page layout reads everything from this file.
 
 export const hero = {
@@ -109,6 +109,8 @@ export const legacy = {
       title: 'The Hustle Behind the Empire | CEO India Magazine',
       image: '/images/home/ceo-india.jpg',
       alt: 'Vritti founder featured in CEO India Magazine',
+      href: ceoIndiaArticle.href,
+      external: true,
     },
     {
       title: '20+ years with expansion across enterprise tech and rural media-led marketing',

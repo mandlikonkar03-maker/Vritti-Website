@@ -76,7 +76,7 @@ export const journey: JourneyMilestone[] = [
       },
       {
         icon: 'office',
-        title: '**Vritti Solutions Limited** was founded',
+        title: '[[Vritti Solutions Limited]] was founded',
         points: ['IT, Media and Rural Marketing under one roof'],
         image: { src: '/images/about/journey/vritti-solutions-office.jpg', width: 353, height: 158, alt: 'Vritti Solutions Limited office signboard' },
       },

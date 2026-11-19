@@ -117,7 +117,7 @@ export const journey: JourneyMilestone[] = [
     parts: [
       {
         icon: 'speaker',
-        title: '**AudioWala** Bus Stand in **8** states with **550+** bus stands',
+        title: '**Audiowala** Bus Stand in **8** states with **550+** bus stands',
         points: ['Maharashtra, Karnataka, Punjab, Rajasthan, Himachal Pradesh, Haryana, Goa, Gujarat'],
         image: { src: '/images/about/journey/audiowala-states-map.svg', width: 333, height: 372, alt: 'Map of India marking the 8 states with Audiowala Bus Stands', plain: true },
       },

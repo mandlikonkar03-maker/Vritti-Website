@@ -81,21 +81,19 @@ const { showStrip = true } = Astro.props;
   .g-video {
     background: #000;
     margin-top: 24px;
-    padding-top: 8px;
     overflow: hidden;
   }
   .g-video-media,
   .g-video-empty {
     display: block;
     width: 100%;
-    /* The video is 1920 x 420. On wide screens show it whole at a smaller
-       height (centred, edges faded into the black band) instead of
-       stretching it to the full page width. */
-    height: clamp(110px, 13vw, 190px);
-    object-fit: contain;
+    /* The video is 1920 x 420 with ~12% empty black above and below the
+       faces. Fill the full width and trim only that black, so the photos
+       still scroll end to end but the band is shorter. */
+    height: max(96px, 17vw);
+    max-height: 330px;
+    object-fit: cover;
     background: #000;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
   }
   .g-video-empty {
     display: grid;
@@ -175,13 +173,6 @@ const { showStrip = true } = Astro.props;
     .g-footer-cols { flex-wrap: wrap; row-gap: 24px; }
   }
   @media (max-width: 700px) {
-    .g-video { padding-top: 0; }
-    .g-video-media, .g-video-empty {
-      height: 96px;
-      object-fit: cover;
-      -webkit-mask-image: none;
-      mask-image: none;
-    }
     .g-footer { padding-top: 40px; }
     .g-footer-cols {
       display: grid;

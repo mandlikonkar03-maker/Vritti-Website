@@ -1,4 +1,5 @@
 // Content for the Vritti Group home page (src/pages/index.astro).
+import { sugermintInterview } from './press';
 // Edit text, links and images here; the page layout reads everything from this file.
 
 export const hero = {
@@ -97,7 +98,8 @@ export const businesses: Business[] = [
   },
 ];
 
-export type Story = { title: string; image: string; alt: string; href?: string; upper?: boolean };
+// external: opens href in a new tab (press articles on other sites).
+export type Story = { title: string; image: string; alt: string; href?: string; upper?: boolean; external?: boolean };
 
 export const legacy = {
   title: 'Legacy & Leadership',
@@ -112,6 +114,13 @@ export const legacy = {
       title: '20+ years with expansion across enterprise tech and rural media-led marketing',
       image: '/images/home/vritti-20-years.jpg',
       alt: 'Vritti leadership at the 20 years celebration',
+    },
+    {
+      title: `${sugermintInterview.title} | ${sugermintInterview.source}`,
+      image: sugermintInterview.image,
+      alt: sugermintInterview.alt,
+      href: sugermintInterview.href,
+      external: true,
     },
   ] as Story[],
 };

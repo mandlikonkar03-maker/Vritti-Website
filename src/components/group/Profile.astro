@@ -46,12 +46,14 @@ const headlines = p.headlines ?? [];
       {headlines.length > 0 && <div class="headlines">
         <h2 class="headlines-title">Making Headlines.</h2>
         <ul class="headline-grid">
-          {headlines.map((h) => (
-            <li class="headline">
-              <a href={h.href}>
+          {headlines.map((h) => {
+            const article = h.kind === 'article';
+            return (
+            <li class:list={['headline', { 'headline--article': article }]}>
+              <a href={h.href} {...(article ? { target: '_blank', rel: 'noopener' } : {})}>
                 <div class="headline-thumb">
                   {h.thumbnail ? (
-                    <img src={h.thumbnail} alt="" loading="lazy" />
+                    <img src={h.thumbnail} alt={h.alt ?? ''} loading="lazy" />
                   ) : (
                     <div class="thumb-placeholder" aria-hidden="true">
                       <div class="thumb-text">
@@ -61,14 +63,17 @@ const headlines = p.headlines ?? [];
                       <img src={p.photo} alt="" loading="lazy" />
                     </div>
                   )}
-                  <span class="play" aria-hidden="true">
+                  {!article && <span class="play" aria-hidden="true">
                     <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M8 5v14l11-7z" /></svg>
-                  </span>
+                  </span>}
                 </div>
+                {article && h.source && <span class="headline-source">{h.source}</span>}
                 <p>{h.caption}</p>
+                {article && <span class="headline-more">Read article <span aria-hidden="true">↗</span><span class="visually-hidden"> (opens in a new tab)</span></span>}
               </a>
             </li>
-          ))}
+            );
+          })}
         </ul>
       </div>}
     </div>
@@ -153,6 +158,25 @@ const headlines = p.headlines ?? [];
   .headline a { color: var(--g-ink); text-decoration: none; display: block; }
   .headline p { margin: 10px 0 0; font-size: 13px; line-height: 1.5; color: var(--g-text); }
   .headline a:hover p { color: var(--g-blue); }
+  .headline--article .headline-thumb > img { transition: transform 0.4s; object-position: center 20%; }
+  .headline--article a:hover .headline-thumb > img { transform: scale(1.03); }
+  .headline--article p { font-size: 15px; font-weight: 600; color: var(--g-ink); line-height: 1.4; margin-top: 6px; }
+  .headline-source {
+    display: block;
+    margin-top: 12px;
+    color: var(--g-orange);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .headline-more {
+    display: inline-block;
+    margin-top: 8px;
+    color: var(--g-blue);
+    font-size: 13px;
+    font-weight: 600;
+  }
   .headline-thumb {
     position: relative;
     aspect-ratio: 16 / 9;

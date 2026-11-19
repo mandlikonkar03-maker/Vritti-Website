@@ -9,11 +9,16 @@ interface Props {
 const { story, wide = false } = Astro.props;
 const Tag = story.href ? 'a' : 'article';
 ---
-<Tag class:list={['story', { 'story--wide': wide }]} href={story.href}>
+<Tag
+  class:list={['story', { 'story--wide': wide }]}
+  href={story.href}
+  target={story.external ? '_blank' : undefined}
+  rel={story.external ? 'noopener' : undefined}
+>
   <img src={story.image} alt={story.alt} loading="lazy" />
   <div class="story-body">
     <h3 class:list={{ upper: story.upper }}>{story.title}</h3>
-    <span class="story-more">Read more <span aria-hidden="true">→</span></span>
+    <span class="story-more">Read more <span aria-hidden="true">{story.external ? '↗' : '→'}</span>{story.external && <span class="visually-hidden"> (opens in a new tab)</span>}</span>
   </div>
 </Tag>
 

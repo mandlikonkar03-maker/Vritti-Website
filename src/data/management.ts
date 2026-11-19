@@ -1,5 +1,6 @@
 // Content for the "Meet our Management" page (src/pages/meet-our-management.astro).
 // Edit names, titles, photos and the CEO message here.
+import { sugermintInterview, founderMediaArticle } from './press';
 
 export const hero = {
   title: 'Meet our Leaders',
@@ -29,7 +30,8 @@ export type LeaderProfile = {
   photoHeight: number;
   bio: string[];
   socials?: { label: string; href: string; icon: 'linkedin' | 'twitter' }[];
-  headlines?: { href: string; thumbnail: string; caption: string }[];
+  // kind 'article' = press article (opens in a new tab, shows the source); default 'video'.
+  headlines?: { href: string; thumbnail: string; caption: string; kind?: 'video' | 'article'; source?: string; alt?: string }[];
   thumbRole?: string;
 };
 
@@ -52,11 +54,20 @@ export const ceoProfile: LeaderProfile = {
   ],
   headlines: [
     {
-      // TODO: link to the real video/article, and add a thumbnail image (leave empty to show the drawn placeholder).
-      href: '#',
-      thumbnail: '',
-      caption:
-        'The Indian market is crowded with global ERP and CRM players. Where does Ekatm compete most effectively, and what does Vritti Solutions offer mid-sized Indian businesses that larger international platforms often miss?',
+      kind: 'article',
+      href: sugermintInterview.href,
+      thumbnail: sugermintInterview.image,
+      alt: sugermintInterview.alt,
+      source: sugermintInterview.source,
+      caption: sugermintInterview.title,
+    },
+    {
+      kind: 'article',
+      href: founderMediaArticle.href,
+      thumbnail: founderMediaArticle.image,
+      alt: founderMediaArticle.alt,
+      source: founderMediaArticle.source,
+      caption: founderMediaArticle.title,
     },
   ],
 };

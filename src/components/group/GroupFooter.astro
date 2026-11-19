@@ -1,5 +1,5 @@
 ---
-import { brandVideo, groupFooter as f } from '../../data/home';
+import { teamStrip, groupFooter as f } from '../../data/home';
 import { site } from '../../data/site';
 const year = new Date().getFullYear();
 
@@ -9,22 +9,12 @@ interface Props {
 }
 const { showStrip = true } = Astro.props;
 ---
-{showStrip && <section class="g-video" aria-label={brandVideo.title}>
-  {brandVideo.src ? (
-    <video
-      class="g-video-media"
-      src={brandVideo.src}
-      poster={brandVideo.poster || undefined}
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="metadata"
-      aria-label={brandVideo.title}
-    ></video>
-  ) : (
-    <div class="g-video-empty">Video coming soon</div>
-  )}
+{showStrip && <section
+  class="g-video"
+  aria-label={teamStrip.title}
+  style={`--strip-ratio: ${teamStrip.width / teamStrip.height}; --strip-seconds: ${teamStrip.seconds}s; --strip-img: url('${teamStrip.src}');`}
+>
+  <div class="g-strip" role="img" aria-label={teamStrip.title}></div>
 </section>}
 
 <footer class={showStrip ? 'g-footer' : 'g-footer g-footer--no-strip'}>
@@ -67,14 +57,6 @@ const { showStrip = true } = Astro.props;
   </div>
 </footer>
 
-<script>
-  // Respect reduced-motion: keep the strip video still.
-  const v = document.querySelector<HTMLVideoElement>('.g-video-media');
-  if (v && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    v.removeAttribute('autoplay');
-    v.pause();
-  }
-</script>
 
 <style>
   /* Compact strip + footer: together they fit in well under one screen. */
@@ -83,25 +65,22 @@ const { showStrip = true } = Astro.props;
     margin-top: 24px;
     overflow: hidden;
   }
-  .g-video-media,
-  .g-video-empty {
-    display: block;
-    width: 100%;
-    /* The video is 1920 x 420 with ~12% empty black above and below the
-       faces. Fill the full width and trim only that black, so the photos
-       still scroll end to end but the band is shorter. */
-    height: max(96px, 17vw);
-    max-height: 330px;
-    object-fit: cover;
-    background: #000;
+  /* The photos scroll right to left in a seamless loop: the strip is three
+     copies of one loop image wide (enough for very wide screens) and
+     slides by exactly one copy. */
+  .g-video { --strip-h: clamp(72px, 9vw, 140px); padding: 10px 0 4px; }
+  .g-strip {
+    height: var(--strip-h);
+    width: calc(var(--strip-h) * var(--strip-ratio) * 3);
+    background: var(--strip-img) repeat-x left center / auto 100%;
+    animation: g-strip-scroll var(--strip-seconds) linear infinite;
+    will-change: transform;
   }
-  .g-video-empty {
-    display: grid;
-    place-items: center;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+  @keyframes g-strip-scroll {
+    to { transform: translateX(calc(var(--strip-h) * var(--strip-ratio) * -1)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .g-strip { animation: none; }
   }
 
   .g-footer {

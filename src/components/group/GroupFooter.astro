@@ -1,5 +1,5 @@
 ---
-import { brandVideo, groupFooter as f } from '../../data/home';
+import { teamStrip, groupFooter as f } from '../../data/home';
 import { site } from '../../data/site';
 const year = new Date().getFullYear();
 
@@ -9,22 +9,12 @@ interface Props {
 }
 const { showStrip = true } = Astro.props;
 ---
-{showStrip && <section class="g-video" aria-label={brandVideo.title}>
-  {brandVideo.src ? (
-    <video
-      class="g-video-media"
-      src={brandVideo.src}
-      poster={brandVideo.poster || undefined}
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="metadata"
-      aria-label={brandVideo.title}
-    ></video>
-  ) : (
-    <div class="g-video-empty">Video coming soon</div>
-  )}
+{showStrip && <section
+  class="g-video"
+  aria-label={teamStrip.title}
+  style={`--strip-ratio: ${teamStrip.width / teamStrip.height}; --strip-seconds: ${teamStrip.seconds}s; --strip-img: url('${teamStrip.src}');`}
+>
+  <div class="g-strip" role="img" aria-label={teamStrip.title}></div>
 </section>}
 
 <footer class={showStrip ? 'g-footer' : 'g-footer g-footer--no-strip'}>
@@ -49,61 +39,55 @@ const { showStrip = true } = Astro.props;
 
       <div class="g-fgroup g-fgroup--right">
         <ul class="g-fmain">{f.rightMain.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
-        <div class="g-fcol">
+        <div class="g-fcol g-fcol--quick">
           <p class="g-fhead g-fhead--quick">Quick Links</p>
-          {f.quickLinks.map((group) => (
-            <ul>{group.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
-          ))}
+          <div class="g-fquick">
+            {f.quickLinks.map((group) => (
+              <ul>{group.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+            ))}
+          </div>
         </div>
       </div>
     </div>
 
     <div class="g-fbottom">
-      <p>© {year} {site.company}</p>
+      <p>{`© ${year} ${site.company}`}</p>
       <ul>{f.legal.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
     </div>
   </div>
 </footer>
 
-<script>
-  // Respect reduced-motion: keep the strip video still.
-  const v = document.querySelector<HTMLVideoElement>('.g-video-media');
-  if (v && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    v.removeAttribute('autoplay');
-    v.pause();
-  }
-</script>
 
 <style>
+  /* Compact strip + footer: together they fit in well under one screen. */
   .g-video {
     background: #000;
     margin-top: 24px;
-    padding-top: clamp(12px, 2vw, 36px);
     overflow: hidden;
   }
-  .g-video-media,
-  .g-video-empty {
-    display: block;
-    width: 100%;
-    height: max(150px, 21.875vw); /* the video is 1920 x 420 */
-    max-height: 420px;
-    object-fit: cover;
-    background: #000;
+  /* The photos scroll right to left in a seamless loop: the strip is three
+     copies of one loop image wide (enough for very wide screens) and
+     slides by exactly one copy. */
+  .g-video { --strip-h: clamp(72px, 9vw, 140px); padding: 10px 0 4px; }
+  .g-strip {
+    height: var(--strip-h);
+    width: calc(var(--strip-h) * var(--strip-ratio) * 3);
+    background: var(--strip-img) repeat-x left center / auto 100%;
+    animation: g-strip-scroll var(--strip-seconds) linear infinite;
+    will-change: transform;
   }
-  .g-video-empty {
-    display: grid;
-    place-items: center;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+  @keyframes g-strip-scroll {
+    to { transform: translateX(calc(var(--strip-h) * var(--strip-ratio) * -1)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .g-strip { animation: none; }
   }
 
   .g-footer {
     position: relative;
     background: #fff;
     color: var(--g-ink);
-    padding-top: clamp(40px, 5vw, 84px);
+    padding-top: clamp(52px, 5.2vw, 76px);
   }
   .g-footer--no-strip { margin-top: clamp(24px, 4vw, 64px); }
   .g-curve {
@@ -111,72 +95,77 @@ const { showStrip = true } = Astro.props;
     top: -1px;
     left: 0;
     width: 100%;
-    height: calc(10.95vw + 1px);
+    height: calc(clamp(24px, 3.6vw, 52px) + 1px);
     display: block;
   }
   .g-swirl {
     position: absolute;
-    top: 0.6vw;
+    top: 2px;
     left: 50%;
     transform: translateX(-50%);
-    width: clamp(36px, 5.3vw, 88px);
+    width: clamp(22px, 2.4vw, 36px);
     height: auto;
   }
   .g-footer-cols {
     position: relative;
     display: flex;
     justify-content: space-between;
-    gap: 40px;
+    gap: 32px;
   }
-  .g-fgroup { display: flex; gap: clamp(28px, 4vw, 70px); }
-  .g-fstack { display: flex; flex-direction: column; gap: 30px; }
+  .g-fgroup { display: flex; gap: clamp(28px, 4vw, 64px); }
+  .g-fstack { display: flex; gap: clamp(28px, 4vw, 64px); }
   .g-footer ul { list-style: none; margin: 0; padding: 0; }
   .g-footer a { color: inherit; text-decoration: none; }
   .g-footer a:hover { color: var(--g-blue); }
   .g-fhead {
     display: block;
-    margin: 0 0 8px;
-    font-size: 16px;
+    margin: 0 0 6px;
+    font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
   }
   .g-fhead--quick { text-transform: none; }
-  .g-fcol li { font-size: 14px; line-height: 1.75; }
-  .g-fcol ul + ul { margin-top: 14px; }
+  .g-fcol li { font-size: 13.5px; line-height: 1.75; }
+  .g-fquick { display: flex; gap: 28px; }
   .g-fmain {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    margin-top: 104px !important;
+    gap: 10px;
   }
-  .g-fgroup--right .g-fmain { margin-top: 96px !important; }
-  .g-fmain a { font-size: 16px; font-weight: 600; text-transform: uppercase; }
+  .g-fmain a { font-size: 14px; font-weight: 600; text-transform: uppercase; }
 
   .g-fbottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 16px 40px;
+    gap: 8px 40px;
     flex-wrap: wrap;
-    margin-top: 80px;
-    padding: 56px 0 48px;
-    border-top: 1px solid #333;
-    font-size: 14px;
+    margin-top: 28px;
+    padding: 16px 0 20px;
+    border-top: 1px solid #ddd;
+    font-size: 13px;
   }
   .g-fbottom p { margin: 0; }
-  .g-fbottom ul { display: flex; flex-wrap: wrap; gap: 8px 44px; }
+  .g-fbottom ul { display: flex; flex-wrap: wrap; gap: 6px 32px; }
 
-  @media (max-width: 1200px) {
-    .g-fhead, .g-fmain a { font-size: 15px; }
-    .g-fcol li, .g-fbottom { font-size: 13.5px; }
+  @media (max-width: 1100px) {
+    .g-footer-cols { flex-wrap: wrap; row-gap: 24px; }
   }
-  @media (max-width: 900px) {
-    .g-footer { padding-top: max(56px, 12vw); }
-    .g-footer-cols { flex-direction: column; gap: 32px; }
-    .g-fgroup { flex-wrap: wrap; }
-    .g-fmain, .g-fgroup--right .g-fmain { margin-top: 0 !important; }
-    .g-fgroup--right { flex-direction: column-reverse; }
-    .g-fbottom { margin-top: 40px; padding: 28px 0 32px; flex-direction: column; align-items: flex-start; }
-    .g-fbottom ul { gap: 8px 24px; }
+  @media (max-width: 700px) {
+    .g-footer { padding-top: 40px; }
+    .g-footer-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 16px;
+    }
+    .g-fgroup, .g-fstack { display: contents; }
+    .g-fcol--quick { grid-column: 1 / -1; }
+    .g-fquick { gap: 16px; }
+    .g-fquick ul { flex: 1; }
+    .g-fhead, .g-fmain a { font-size: 13px; }
+    .g-fcol li { font-size: 13px; line-height: 1.7; }
+    .g-fmain { gap: 8px; }
+    .g-fbottom { margin-top: 20px; padding: 12px 0 16px; font-size: 12px; }
+    .g-fbottom ul { gap: 4px 18px; }
   }
 </style>

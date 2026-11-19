@@ -182,6 +182,20 @@ export const brandVideo = {
   title: 'The people of Vritti',
 };
 
+/**
+ * Black team-photo strip above the group footer. One seamless loop of the
+ * photos from vritti-group.mp4, stitched into a single image so the strip
+ * can be any height and still scroll end to end across the full width.
+ */
+export const teamStrip = {
+  src: '/images/home/team-strip.jpg',
+  width: 5347,
+  height: 340,
+  /** Seconds for one full loop (matches the original video's speed). */
+  seconds: 26,
+  title: 'The people of Vritti',
+};
+
 export type NavLink = { label: string; href: string };
 /** A dropdown entry; `items` are smaller grey sub-links listed under it (e.g. Technology › Ekatm). */
 export type NavChild = NavLink & { items?: NavLink[] };

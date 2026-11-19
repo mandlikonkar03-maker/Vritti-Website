@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+<defs><radialGradient id="bg" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#f3f8fe"/><stop offset="1" stop-color="#e3effb"/></radialGradient></defs>
+<circle cx="64" cy="64" r="60" fill="url(#bg)"/>
+<rect x="22" y="40" width="70" height="56" rx="7" fill="#2f7fd8"/>
+<rect x="30" y="48" width="34" height="22" rx="3" fill="#fff"/>
+<path d="M35 64l7-7 6 5 9-9" fill="none" stroke="#2f7fd8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="32" cy="82" r="4" fill="#f4a43c"/><circle cx="44" cy="82" r="4" fill="#8fc0f1"/><rect x="54" y="78" width="30" height="8" rx="4" fill="#1d5fb0"/>
+<rect x="26" y="96" width="10" height="8" rx="2" fill="#1d5fb0"/><rect x="78" y="96" width="10" height="8" rx="2" fill="#1d5fb0"/>
+<g transform="translate(90 44)">
+<path d="M-4-22h8l1.5 6 5 2 5.5-3.3 5.7 5.7L21.4-6l2 5 6.6 1.5v8L24 10l-2 5 3.3 5.5-5.7 5.7L14 23l-5 2L7.5 31h-8L-2 25l-5-2-5.5 3.3-5.7-5.7L-14.9 15l-2-5L-23 8.5v-8L-17-1l2-5-3.3-5.5 5.7-5.7L-7-14l5-2z" transform="translate(-0.5 -4.5) scale(.82)" fill="#1d5fb0"/>
+<circle cx="-0.5" cy="-1" r="7.5" fill="#fff"/>
+</g>
+</svg>

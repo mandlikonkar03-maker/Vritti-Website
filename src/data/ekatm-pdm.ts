@@ -17,18 +17,19 @@ export const workflow = {
   title: 'Define What the Product Is—',
   titleBreak: 'and How It Will Be Manufactured.',
   text: 'Product engineering does not stop with an item number or a drawing. Manufacturing needs the product structure, process sequence, machines and lines, quality parameters and the cost created by the engineered definition.',
-  // In flow order. Shown as two rows of five on desktop.
+  // In flow order. Shown as two rows of five on desktop, like the Sales
+  // Order to Cash journey. Illustrations are in public/images/ekatm-pdm/.
   steps: [
-    { label: 'Product', icon: 'cube' },
-    { label: 'BOM', icon: 'tree' },
-    { label: 'Process', icon: 'process' },
-    { label: 'Routing', icon: 'route' },
-    { label: 'Machine', icon: 'gear' },
-    { label: 'Line', icon: 'line' },
-    { label: 'Quality', icon: 'check' },
-    { label: 'Costing', icon: 'calculator' },
-    { label: 'MRP', icon: 'analytics' },
-    { label: 'Production', icon: 'cubes' },
+    { image: 'product', label: 'Product', text: 'Define the item and its specs' },
+    { image: 'bom', label: 'BOM', text: 'Structure components and quantities' },
+    { image: 'process', label: 'Process', text: 'Set the operation sequence' },
+    { image: 'routing', label: 'Routing', text: 'Route work across stations' },
+    { image: 'machine', label: 'Machine', text: 'Assign machines and times' },
+    { image: 'line', label: 'Line', text: 'Map production lines' },
+    { image: 'quality', label: 'Quality', text: 'Attach QC parameters' },
+    { image: 'costing', label: 'Costing', text: 'Roll up engineered cost' },
+    { image: 'mrp', label: 'MRP', text: 'Plan material requirements' },
+    { image: 'production', label: 'Production', text: 'Execute on the shop floor' },
   ],
 };
 

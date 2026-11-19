@@ -102,7 +102,7 @@ const rich = (t: string) =>
                       )}
                     </div>
                     {b.image && (
-                      <figure class="j-photo" style={`--ar:${b.image.width}/${b.image.height}`}>
+                      <figure class:list={['j-photo', { 'j-photo--plain': b.image.plain }]} style={`--ar:${b.image.width}/${b.image.height}`}>
                         <img src={b.image.src} alt={b.image.alt} width={b.image.width} height={b.image.height} loading="lazy" decoding="async" />
                       </figure>
                     )}
@@ -228,6 +228,8 @@ const rich = (t: string) =>
     box-shadow: 0 20px 44px rgba(15, 42, 61, 0.16);
   }
   .j-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .j-photo--plain { background: none; box-shadow: none; border-radius: 0; }
+  .j-photo--plain img { object-fit: contain; }
   .j-people { list-style: none; margin: clamp(16px, 3vh, 28px) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 14px 28px; }
   .j-people li { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 170px; text-align: center; }
   .j-people img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; object-position: top; border: 3px solid #fff; box-shadow: 0 4px 14px rgba(15, 42, 61, 0.18); flex: none; }
@@ -343,7 +345,8 @@ const rich = (t: string) =>
     .j-step.has-parts .j-people img { width: 60px; height: 60px; }
     .j-step.has-parts .j-people span { font-size: 12px; }
     .j-step.has-parts .j-people strong { font-size: 13.5px; }
-    .j-step.has-parts .j-photo { --max-h: 22svh; justify-self: center; }
+    .j-step.has-parts .j-photo { --max-h: 19svh; justify-self: center; }
+    .j-step.has-parts .j-photo--plain { --max-h: 150px; }
     .journey:not(.is-live) .j-steps { gap: 36px; }
   }
   @media (prefers-reduced-motion: reduce) {

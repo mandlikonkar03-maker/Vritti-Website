@@ -19,7 +19,8 @@ export type JourneyMilestone = {
   points?: string[];
   // Photos from the journey PDF are small (about 300px wide); swap in larger ones when available.
   // width/height: the picture's real pixel size, so the frame keeps its shape and nothing is cropped.
-  image?: { src: string; width: number; height: number; alt: string };
+  // plain: no frame or shadow (for a map or logo drawn on white).
+  image?: { src: string; width: number; height: number; alt: string; plain?: boolean };
   people?: JourneyPerson[];
   // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, handshake, globe.
   icon?: string;
@@ -112,14 +113,21 @@ export const journey: JourneyMilestone[] = [
   },
   {
     year: '2018',
-    icon: 'handshake',
-    title: '**Landmark MOU for Progress**',
-    text: 'A strategic MOU with **ICAI** and **Simplify Practice** to drive innovation and transform professional practice.',
-    points: [
-      'Audiowala Bus Stand in 8 states with 550+ bus stands',
-      'Maharashtra, Karnataka, Rajasthan, Punjab, Himachal Pradesh, Haryana, Goa, Gujarat',
+    title: 'Audiowala Bus Stand in 8 states, and a landmark MOU with ICAI and Simplify Practice',
+    parts: [
+      {
+        icon: 'speaker',
+        title: '**AudioWala** Bus Stand in **8** states with **550+** bus stands',
+        points: ['Maharashtra, Karnataka, Punjab, Rajasthan, Himachal Pradesh, Haryana, Goa, Gujarat'],
+        image: { src: '/images/about/journey/audiowala-states-map.svg', width: 333, height: 372, alt: 'Map of India marking the 8 states with Audiowala Bus Stands', plain: true },
+      },
+      {
+        icon: 'handshake',
+        title: '**Landmark MOU for Progress**',
+        text: 'A strategic MOU with **ICAI** and **Simplify Practice** to drive innovation and transform professional practice.',
+        image: { src: '/images/about/journey/icai-mou.jpg', width: 287, height: 145, alt: 'The Institute of Chartered Accountants of India' },
+      },
     ],
-    image: { src: '/images/about/journey/icai-mou.jpg', width: 287, height: 145, alt: 'The Institute of Chartered Accountants of India' },
   },
   {
     year: '2023',

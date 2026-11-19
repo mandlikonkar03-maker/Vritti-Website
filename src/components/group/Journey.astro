@@ -243,25 +243,27 @@ const rich = (t: string) =>
     .j-step.no-photo .j-people span { font-size: 14px; }
   }
 
-  /* ---------- A year with two events (parts in about.ts): stacked, split by a line ---------- */
+  /* ---------- A year with two events (parts in about.ts): side by side, split by a line ---------- */
   .j-part { display: contents; }
-  .j-step.has-parts { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: calc(var(--j-yf) + clamp(14px, 2.4vh, 28px)); }
-  .j-step.has-parts .j-part { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
+  .j-step.has-parts { padding-top: calc(var(--j-yf) + clamp(14px, 2.4vh, 28px)); }
   .j-step.has-parts .j-copy { padding-top: 0; }
-  .j-step.has-parts .j-part + .j-part {
-    position: relative; margin-top: clamp(18px, 3vh, 30px); padding-top: clamp(18px, 3vh, 30px);
-    border-top: 1px solid var(--j-line);
-  }
-  .j-step.has-parts .j-part + .j-part::before {
-    content: ''; position: absolute; top: -5px; left: 17px; width: 10px; height: 10px; border-radius: 50%; background: var(--g-orange);
-  }
-  /* Person who joined: photo beside the name, in line with the heading text. */
-  .j-step.has-parts .j-people { margin-top: clamp(10px, 1.8vh, 18px); padding-left: 58px; }
   .j-step.has-parts .j-people li { flex-direction: row; width: auto; text-align: left; gap: 16px; }
-  .j-step.has-parts .j-people img { width: 88px; height: 88px; }
-  .j-step.has-parts .j-people span { font-size: 13.5px; }
-  .j-step.has-parts .j-people strong { font-size: 15px; }
-  .j-step.has-parts .j-photo { --max-h: clamp(150px, 26svh, 240px); justify-self: center; }
+  @media (min-width: 769px) {
+    .j-step.has-parts { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 0; align-items: stretch; }
+    .j-step.has-parts .j-part { display: flex; flex-direction: column; gap: clamp(14px, 2.4vh, 24px); padding-right: clamp(24px, 3.5vw, 56px); }
+    .j-step.has-parts .j-part + .j-part {
+      position: relative; padding-right: 0; padding-left: clamp(24px, 3.5vw, 56px);
+      border-left: 1px solid var(--j-line);
+    }
+    .j-step.has-parts .j-part + .j-part::before {
+      content: ''; position: absolute; left: -6px; top: 12px; width: 11px; height: 11px; border-radius: 50%; background: var(--g-orange);
+    }
+    .j-step.has-parts .j-people { margin-top: clamp(14px, 2.6vh, 26px); padding-left: 58px; }
+    .j-step.has-parts .j-people img { width: clamp(110px, 9vw, 140px); height: auto; aspect-ratio: 1; border-width: 4px; }
+    .j-step.has-parts .j-people span { font-size: 14px; }
+    .j-step.has-parts .j-people strong { font-size: 16px; }
+    .j-step.has-parts .j-photo { --max-h: clamp(150px, 30svh, 260px); justify-self: start; align-self: flex-start; margin-left: 58px; width: min(calc(100% - 58px), calc(var(--max-h) * var(--ar))); }
+  }
 
   /* ---------- Without JS: a plain list of milestones ---------- */
   .journey:not(.is-live) .j-rail,
@@ -333,9 +335,10 @@ const rich = (t: string) =>
     .j-people span { font-size: 11.5px; }
     .j-people strong { font-size: 13px; }
     .j-step.has-parts { padding-top: calc(var(--j-yf) + 12px); }
-    .j-step.has-parts .j-part { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-    .j-step.has-parts .j-part + .j-part { margin-top: 14px; padding-top: 14px; }
-    .j-step.has-parts .j-part + .j-part::before { left: 12px; }
+    .j-step.has-parts { gap: 0; }
+    .j-step.has-parts .j-part { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .j-step.has-parts .j-part + .j-part { position: relative; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--j-line); }
+    .j-step.has-parts .j-part + .j-part::before { content: ''; position: absolute; top: -5px; left: 12px; width: 10px; height: 10px; border-radius: 50%; background: var(--g-orange); }
     .j-step.has-parts .j-people { display: flex; padding-left: 46px; margin-top: 10px; }
     .j-step.has-parts .j-people img { width: 60px; height: 60px; }
     .j-step.has-parts .j-people span { font-size: 12px; }

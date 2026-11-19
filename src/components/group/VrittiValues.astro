@@ -27,9 +27,6 @@ const icons: Record<string, string> = {
             <span class="vsf-face vsf-front" aria-hidden="true">
               <span class="vsf-letter">{v.letter}</span>
               <span class="vsf-word">{v.word}</span>
-              <span class="vsf-hint">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4"/></svg>
-              </span>
             </span>
             <span class="vsf-face vsf-back" aria-hidden="true">
               <span class="vsf-icon">
@@ -96,12 +93,6 @@ const icons: Record<string, string> = {
     text-transform: uppercase; letter-spacing: 0.06em;
     color: var(--g-orange);
   }
-  .vsf-hint {
-    position: absolute; top: 10px; right: 10px;
-    display: grid; place-items: center;
-    width: 24px; height: 24px; border-radius: 50%;
-    background: #f1f5f9; color: #8a96a3;
-  }
 
   /* Back: blue card with icon, word and one line */
   .vsf-back {
@@ -162,7 +153,6 @@ const icons: Record<string, string> = {
   @media (max-width: 480px) {
     .vsf-card { aspect-ratio: 5 / 8; }
     .vsf-word { letter-spacing: 0.02em; }
-    .vsf-hint { top: 6px; right: 6px; width: 20px; height: 20px; }
   }
 
   @media (prefers-reduced-motion: reduce) {

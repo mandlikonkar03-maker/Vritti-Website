@@ -23,7 +23,12 @@ export type JourneyMilestone = {
   people?: JourneyPerson[];
   // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, handshake, globe.
   icon?: string;
+  // A year with two separate events: list them here and they are shown one under
+  // the other, split by a line, each with its own title, text, people and photo.
+  // (The year's own title is then not shown; keep it as a one-line summary.)
+  parts?: JourneyPart[];
 };
+export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon'>;
 
 // People on the timeline show their current photo and designation from
 // Meet our Management (src/data/management.ts), so a title change there shows here too.
@@ -62,11 +67,20 @@ export const journey: JourneyMilestone[] = [
   },
   {
     year: '2005',
-    icon: 'office',
-    title: 'Vritti Solutions Limited was founded',
-    points: ['IT, Media and Rural Marketing under one roof', 'Mr. Rajesh Radhakrishnan joined'],
-    image: { src: '/images/about/journey/vritti-solutions-office.jpg', width: 353, height: 158, alt: 'Vritti Solutions Limited office signboard' },
-    people: [leader('Rajesh Radhakrishnan')],
+    title: 'Mr. Rajesh Radhakrishnan joined, and Vritti Solutions Limited was founded',
+    parts: [
+      {
+        icon: 'team',
+        title: '**Mr. Rajesh Radhakrishnan** joined',
+        people: [leader('Rajesh Radhakrishnan')],
+      },
+      {
+        icon: 'office',
+        title: '**Vritti Solutions Limited** was founded',
+        points: ['IT, Media and Rural Marketing under one roof'],
+        image: { src: '/images/about/journey/vritti-solutions-office.jpg', width: 353, height: 158, alt: 'Vritti Solutions Limited office signboard' },
+      },
+    ],
   },
   {
     year: '2007',

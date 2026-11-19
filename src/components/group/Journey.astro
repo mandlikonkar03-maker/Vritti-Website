@@ -70,39 +70,44 @@ const rich = (t: string) =>
 
           <ol class="j-steps" aria-live="polite">
             {journey.map((m, i) => (
-              <li class:list={['j-step', { 'is-active': i === 0, 'no-photo': !m.image }]} data-j-step={i} data-year={m.year}>
-                <div class="j-copy">
-                  <p class="j-step-year">{m.year}</p>
-                  <h3>
-                    {m.icon && icons[m.icon] && (
-                      <span class={`j-icon j-icon--${m.icon}`} aria-hidden="true">
-                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[m.icon]} />
-                      </span>
+              <li class:list={['j-step', { 'is-active': i === 0, 'no-photo': !m.image && !m.parts, 'has-parts': !!m.parts }]} data-j-step={i} data-year={m.year}>
+                {m.parts && <p class="j-step-year">{m.year}</p>}
+                {(m.parts ?? [m]).map((b) => (
+                  <div class="j-part">
+                    <div class="j-copy">
+                      {!m.parts && <p class="j-step-year">{m.year}</p>}
+                      <h3>
+                        {b.icon && icons[b.icon] && (
+                          <span class={`j-icon j-icon--${b.icon}`} aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[b.icon]} />
+                          </span>
+                        )}
+                        <span set:html={rich(b.title)} />
+                      </h3>
+                      {b.text && <p class="j-text" set:html={rich(b.text)} />}
+                      {b.points && (
+                        <ul class="j-points">
+                          {b.points.map((p) => <li set:html={rich(p)} />)}
+                        </ul>
+                      )}
+                      {b.people && (
+                        <ul class="j-people">
+                          {b.people.map((p) => (
+                            <li>
+                              <img src={p.photo} alt="" width="72" height="72" loading="lazy" decoding="async" />
+                              <span><strong>{p.name}</strong>{p.role}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                    {b.image && (
+                      <figure class="j-photo" style={`--ar:${b.image.width}/${b.image.height}`}>
+                        <img src={b.image.src} alt={b.image.alt} width={b.image.width} height={b.image.height} loading="lazy" decoding="async" />
+                      </figure>
                     )}
-                    <span set:html={rich(m.title)} />
-                  </h3>
-                  {m.text && <p class="j-text" set:html={rich(m.text)} />}
-                  {m.points && (
-                    <ul class="j-points">
-                      {m.points.map((p) => <li set:html={rich(p)} />)}
-                    </ul>
-                  )}
-                  {m.people && (
-                    <ul class="j-people">
-                      {m.people.map((p) => (
-                        <li>
-                          <img src={p.photo} alt="" width="72" height="72" loading="lazy" decoding="async" />
-                          <span><strong>{p.name}</strong>{p.role}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-                {m.image && (
-                  <figure class="j-photo" style={`--ar:${m.image.width}/${m.image.height}`}>
-                    <img src={m.image.src} alt={m.image.alt} width={m.image.width} height={m.image.height} loading="lazy" decoding="async" />
-                  </figure>
-                )}
+                  </div>
+                ))}
               </li>
             ))}
           </ol>
@@ -238,13 +243,34 @@ const rich = (t: string) =>
     .j-step.no-photo .j-people span { font-size: 14px; }
   }
 
+  /* ---------- A year with two events (parts in about.ts): stacked, split by a line ---------- */
+  .j-part { display: contents; }
+  .j-step.has-parts { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: calc(var(--j-yf) + clamp(14px, 2.4vh, 28px)); }
+  .j-step.has-parts .j-part { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
+  .j-step.has-parts .j-copy { padding-top: 0; }
+  .j-step.has-parts .j-part + .j-part {
+    position: relative; margin-top: clamp(18px, 3vh, 30px); padding-top: clamp(18px, 3vh, 30px);
+    border-top: 1px solid var(--j-line);
+  }
+  .j-step.has-parts .j-part + .j-part::before {
+    content: ''; position: absolute; top: -5px; left: 17px; width: 10px; height: 10px; border-radius: 50%; background: var(--g-orange);
+  }
+  /* Person who joined: photo beside the name, in line with the heading text. */
+  .j-step.has-parts .j-people { margin-top: clamp(10px, 1.8vh, 18px); padding-left: 58px; }
+  .j-step.has-parts .j-people li { flex-direction: row; width: auto; text-align: left; gap: 16px; }
+  .j-step.has-parts .j-people img { width: 88px; height: 88px; }
+  .j-step.has-parts .j-people span { font-size: 13.5px; }
+  .j-step.has-parts .j-people strong { font-size: 15px; }
+  .j-step.has-parts .j-photo { --max-h: clamp(150px, 26svh, 240px); justify-self: center; }
+
   /* ---------- Without JS: a plain list of milestones ---------- */
   .journey:not(.is-live) .j-rail,
   .journey:not(.is-live) .j-year { display: none; }
   .journey:not(.is-live) .j-inner { padding-bottom: var(--section-y); }
   .journey:not(.is-live) .j-steps { gap: 48px; }
   .journey:not(.is-live) .j-step { grid-area: auto; }
-  .journey:not(.is-live) .j-copy { padding-top: 0; }
+  .journey:not(.is-live) .j-copy,
+  .journey:not(.is-live) .j-step.has-parts { padding-top: 0; }
   .journey:not(.is-live) .j-step-year { display: block; margin: 0 0 10px; font-size: 38px; font-weight: 700; color: var(--g-blue); line-height: 1; }
 
   /* ---------- Interactive mode (JS on): one year at a time, page scrolls normally ---------- */
@@ -306,6 +332,15 @@ const rich = (t: string) =>
     .j-people img { width: 64px; height: 64px; border-width: 2px; }
     .j-people span { font-size: 11.5px; }
     .j-people strong { font-size: 13px; }
+    .j-step.has-parts { padding-top: calc(var(--j-yf) + 12px); }
+    .j-step.has-parts .j-part { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+    .j-step.has-parts .j-part + .j-part { margin-top: 14px; padding-top: 14px; }
+    .j-step.has-parts .j-part + .j-part::before { left: 12px; }
+    .j-step.has-parts .j-people { display: flex; padding-left: 46px; margin-top: 10px; }
+    .j-step.has-parts .j-people img { width: 60px; height: 60px; }
+    .j-step.has-parts .j-people span { font-size: 12px; }
+    .j-step.has-parts .j-people strong { font-size: 13.5px; }
+    .j-step.has-parts .j-photo { --max-h: 22svh; justify-self: center; }
     .journey:not(.is-live) .j-steps { gap: 36px; }
   }
   @media (prefers-reduced-motion: reduce) {

@@ -1,6 +1,6 @@
 // Global Presence section on the home page (/).
 // OM's list so far (2026-11-12): Pune (HQ), Mumbai, Bengaluru, Chandigarh, Goa, Jaipur, plus Dubai
-// (international). 2026-11-17: Shimla (Himachal Pradesh) added. More cities to come.
+// (international). 2026-11-17: Shimla (Himachal Pradesh) added. 2026-11-19: count changed to 11 states (OM). More offices to come.
 // x / y are % positions on public/images/home/presence/dots-map.svg, which covers
 // longitude 50–96°E and latitude 6–34°N: x = (lon - 50) / 46 * 100, y = (34 - lat) / 28 * 100.
 // The map is plain land dots with no borders drawn, faded at the edges.
@@ -22,10 +22,10 @@ export type Office = {
 
 export const presence = {
   title: 'Global Presence',
-  subtitle: '11 cities. 2 countries. One Vritti.',
-  intro: 'From our headquarters in Pune, Vritti Group works with clients through offices in 11 cities across India, and internationally from the UAE.',
+  subtitle: '11 states. 2 countries. One Vritti.',
+  intro: 'From our headquarters in Pune, Vritti Group works with clients through offices across 11 states in India, and internationally from the UAE.',
   stats: [
-    { value: '11', label: 'Cities in India' },
+    { value: '11', label: 'States in India' },
     { value: '2', label: 'Countries' },
   ],
   map: '/images/home/presence/dots-map.svg',

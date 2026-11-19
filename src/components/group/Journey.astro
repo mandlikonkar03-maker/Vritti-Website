@@ -71,7 +71,7 @@ const rich = (t: string) =>
 
           <ol class="j-steps" aria-live="polite">
             {journey.map((m, i) => (
-              <li class:list={['j-step', { 'is-active': i === 0, 'no-photo': !m.image && !m.parts, 'has-parts': !!m.parts }]} data-j-step={i} data-year={m.year}>
+              <li class:list={['j-step', { 'is-active': i === 0, 'no-photo': !m.image && !m.slides && !m.parts, 'has-parts': !!m.parts }]} data-j-step={i} data-year={m.year}>
                 {m.parts && <p class="j-step-year">{m.year}</p>}
                 {(m.parts ?? [m]).map((b) => (
                   <div class="j-part">
@@ -106,6 +106,25 @@ const rich = (t: string) =>
                       <div class="j-photo j-photo--plain j-map" style="--ar:333/372">
                         <AudiowalaMap />
                       </div>
+                    )}
+                    {b.slides && b.pair && (
+                      <figure class="j-pair" style={`--ar:${2 * b.slides[0].width + 24}/${b.slides[0].height}`} data-j-pair>
+                        {[0, 1].map((f) => (
+                          <span class="j-photo j-slides">
+                            {b.slides!.map((sl, si) => (
+                              <img class:list={{ 'is-on': si === f }} src={sl.src} alt={f === 0 ? sl.alt : ''} width={sl.width} height={sl.height} loading="lazy" decoding="async" />
+                            ))}
+                          </span>
+                        ))}
+                      </figure>
+                    )}
+                    {b.slides && !b.pair && (
+                      <figure class="j-photo j-slides" style={`--ar:${b.slides[0].width}/${b.slides[0].height}`} data-j-slides>
+                        {b.slides.map((sl, si) => (
+                          <img class:list={{ 'is-on': si === 0 }} src={sl.src} alt={sl.alt} width={sl.width} height={sl.height} loading="lazy" decoding="async" />
+                        ))}
+                        <span class="j-slide-dots" aria-hidden="true">{b.slides.map((_, si) => <span class:list={{ 'is-on': si === 0 }} />)}</span>
+                      </figure>
                     )}
                     {b.image && (
                       <figure class:list={['j-photo', { 'j-photo--plain': b.image.plain }]} style={`--ar:${b.image.width}/${b.image.height}`}>
@@ -234,6 +253,23 @@ const rich = (t: string) =>
     box-shadow: 0 20px 44px rgba(15, 42, 61, 0.16);
   }
   .j-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* Slideshow: photos sit on top of each other and fade from one to the next. */
+  .j-slides { position: relative; --max-h: min(calc(100svh - var(--j-top) - 170px), 460px); }
+  .j-slides img { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; }
+  .j-slides img.is-on { opacity: 1; }
+  .j-slide-dots { position: absolute; left: 0; right: 0; bottom: 12px; display: flex; justify-content: center; gap: 6px; }
+  .j-slide-dots span { width: 7px; height: 7px; border-radius: 50%; background: rgba(255, 255, 255, 0.55); transition: background 0.3s, transform 0.3s; }
+  .j-slide-dots span.is-on { background: #fff; transform: scale(1.25); }
+  .journey:not(.is-live) .j-slide-dots { display: none; }
+  /* Two photos side by side; one of them changes at a time. */
+  .j-pair {
+    --max-h: min(calc(100svh - var(--j-top) - 170px), 460px);
+    margin: 0; justify-self: center; align-self: center;
+    width: min(100%, calc(var(--max-h) * var(--ar)));
+    aspect-ratio: var(--ar);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .j-pair .j-photo { width: 100%; height: 100%; aspect-ratio: auto; }
   .j-photo--plain { background: none; box-shadow: none; border-radius: 0; overflow: visible; }
   .j-photo--plain img { object-fit: contain; }
   .j-people { list-style: none; margin: clamp(16px, 3vh, 28px) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 14px 28px; }
@@ -338,6 +374,7 @@ const rich = (t: string) =>
     .j-points li { font-size: 13.5px; line-height: 1.4; }
     .j-points li::before { left: -18px; }
     .j-photo { --max-h: 26svh; border-radius: 12px; }
+    .j-slides, .j-pair { --max-h: 32svh; }
     .j-people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
     .j-people li { width: auto; gap: 8px; }
     .j-people img { width: 64px; height: 64px; border-width: 2px; }
@@ -407,6 +444,40 @@ const rich = (t: string) =>
         }, 450));
       });
     }
+
+    // Slideshows rotate every 2.6s while their year is the one shown.
+    root.querySelectorAll<HTMLElement>('[data-j-slides]').forEach((fig) => {
+      const imgs = Array.from(fig.querySelectorAll('img'));
+      const marks = Array.from(fig.querySelectorAll('.j-slide-dots span'));
+      const step = fig.closest('.j-step');
+      let k = 0;
+      if (imgs.length < 2 || reduceMotion) return;
+      window.setInterval(() => {
+        if (!step?.classList.contains('is-active') || document.hidden) return;
+        k = (k + 1) % imgs.length;
+        imgs.forEach((im, n) => im.classList.toggle('is-on', n === k));
+        marks.forEach((d, n) => d.classList.toggle('is-on', n === k));
+      }, 2600);
+    });
+
+    // Side-by-side pairs: every 2.6s the photo that has been up longer swaps
+    // for the one not shown, so 3 photos cycle through 2 frames.
+    root.querySelectorAll<HTMLElement>('[data-j-pair]').forEach((fig) => {
+      const frames = Array.from(fig.querySelectorAll<HTMLElement>('.j-slides')).map((f) => Array.from(f.querySelectorAll('img')));
+      const step = fig.closest('.j-step');
+      const total = frames[0]?.length ?? 0;
+      if (frames.length < 2 || total < 3 || reduceMotion) return;
+      const on = [0, 1];
+      let turn = 0;
+      window.setInterval(() => {
+        if (!step?.classList.contains('is-active') || document.hidden) return;
+        let nx = (Math.max(...on) + 1) % total;
+        while (on.includes(nx)) nx = (nx + 1) % total;
+        on[turn] = nx;
+        frames[turn].forEach((im, n) => im.classList.toggle('is-on', n === nx));
+        turn = 1 - turn;
+      }, 2600);
+    });
 
     function show(i: number) {
       i = Math.min(n - 1, Math.max(0, i));

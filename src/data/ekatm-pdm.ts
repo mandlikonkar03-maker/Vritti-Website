@@ -17,19 +17,19 @@ export const workflow = {
   title: 'Define What the Product Is—',
   titleBreak: 'and How It Will Be Manufactured.',
   text: 'Product engineering does not stop with an item number or a drawing. Manufacturing needs the product structure, process sequence, machines and lines, quality parameters and the cost created by the engineered definition.',
-  // In flow order. Shown as two rows of five on desktop, like the Sales
-  // Order to Cash journey. Illustrations are in public/images/ekatm-pdm/.
+  // In flow order. Compact numbered cards in one row on desktop, styled like the
+  // Sales Order to Cash journey. Illustrations are in public/images/ekatm-pdm/.
   steps: [
-    { image: 'product', label: 'Product', text: 'Define the item and its specs' },
-    { image: 'bom', label: 'BOM', text: 'Structure components and quantities' },
-    { image: 'process', label: 'Process', text: 'Set the operation sequence' },
-    { image: 'routing', label: 'Routing', text: 'Route work across stations' },
-    { image: 'machine', label: 'Machine', text: 'Assign machines and times' },
-    { image: 'line', label: 'Line', text: 'Map production lines' },
-    { image: 'quality', label: 'Quality', text: 'Attach QC parameters' },
-    { image: 'costing', label: 'Costing', text: 'Roll up engineered cost' },
-    { image: 'mrp', label: 'MRP', text: 'Plan material requirements' },
-    { image: 'production', label: 'Production', text: 'Execute on the shop floor' },
+    { image: 'product', label: 'Product' },
+    { image: 'bom', label: 'BOM' },
+    { image: 'process', label: 'Process' },
+    { image: 'routing', label: 'Routing' },
+    { image: 'machine', label: 'Machine' },
+    { image: 'line', label: 'Line' },
+    { image: 'quality', label: 'Quality' },
+    { image: 'costing', label: 'Costing' },
+    { image: 'mrp', label: 'MRP' },
+    { image: 'production', label: 'Production' },
   ],
 };
 
@@ -77,12 +77,12 @@ export const changes = {
   titleBreak: 'Before They Reach the Shop Floor',
   text: 'Engineering changes need controlled approval, traceability and a defined point of effect.',
   items: [
-    { title: 'Engineering Change Note', text: 'Track engineering changes.' },
-    { title: 'Approval Workflow', text: 'Route changes through controlled approval.' },
-    { title: 'Revision Control', text: 'Maintain engineering revisions.' },
-    { title: 'Effective Date', text: 'Define when a change becomes applicable.' },
-    { title: 'Impact Tracking', text: 'Record impact on drawings, BOM, routing/process and QC-related engineering.' },
-    { title: 'Audit Traceability', text: 'Track who changed what, when, who approved and when effective.' },
+    { title: 'Engineering Change Note' },
+    { title: 'Approval Workflow' },
+    { title: 'Revision Control' },
+    { title: 'Effective Date' },
+    { title: 'Impact Tracking' },
+    { title: 'Audit Traceability' },
   ],
   highlight: {
     title: 'Protect Existing Production During Engineering Changes',
@@ -97,9 +97,9 @@ export const costing = {
   title: 'Engineering-Based Product Costing',
   text: 'Connect product structure and manufacturing process to product cost.',
   items: [
-    { icon: 'layers', title: 'BOM Costing', text: 'Product cost derives from the BOM definition.' },
-    { icon: 'route', title: 'Routing Costing', text: 'Product cost derives from routing/process data.' },
-    { icon: 'calculator', title: 'Integrated Cost', text: 'BOM + routing data contribute to the engineered product cost.' },
+    { icon: 'layers', title: 'BOM Costing' },
+    { icon: 'route', title: 'Routing Costing' },
+    { icon: 'calculator', title: 'Integrated Cost' },
   ],
 };
 
@@ -107,9 +107,9 @@ export const execution = {
   title: 'Engineering Data That Moves into Execution',
   text: 'Ekatm connects engineering definitions to the operational ERP processes that depend on them.',
   items: [
-    { icon: 'analytics', title: 'MRP', text: 'Engineering definitions feed material requirements planning.' },
-    { icon: 'line', title: 'Production', text: 'Engineering definitions feed production execution.' },
-    { icon: 'shield', title: 'Quality', text: 'QC definitions are integrated into product and process execution.' },
+    { icon: 'analytics', title: 'MRP' },
+    { icon: 'line', title: 'Production' },
+    { icon: 'shield', title: 'Quality' },
   ],
 };
 
@@ -117,12 +117,12 @@ export const why = {
   title: 'Why Ekatm PDM?',
   text: 'The value is in the connected engineering model—not simply the number of features.',
   items: [
-    { icon: 'process', title: 'Connected Engineering-to-Production', text: 'Product, BOM, process, routing, machines, lines, quality and costing connect with MRP and production.' },
-    { icon: 'change', title: 'Controlled Engineering Changes', text: 'ECN combines approval, revision, effective date and impact tracking.' },
-    { icon: 'line', title: 'Engineering Built for Manufacturing', text: 'The model includes machines, machine groups, production lines, operation times and manufacturing costs.' },
-    { icon: 'pin', title: 'Plant-Aware Definition', text: 'Engineering and execution can reflect differences between plants.' },
-    { icon: 'shield', title: 'Engineering-Driven Quality & Costing', text: 'Quality parameters and product costs are connected to engineered product/process definitions.' },
-    { icon: 'history', title: 'Traceability', text: 'Engineering changes and revisions retain an auditable history.' },
+    { icon: 'process', title: 'Connected Engineering-to-Production' },
+    { icon: 'change', title: 'Controlled Engineering Changes' },
+    { icon: 'line', title: 'Engineering Built for Manufacturing' },
+    { icon: 'pin', title: 'Plant-Aware Definition' },
+    { icon: 'shield', title: 'Engineering-Driven Quality & Costing' },
+    { icon: 'history', title: 'Traceability' },
   ],
 };
 

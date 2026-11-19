@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+<defs><radialGradient id="bg" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#f3f8fe"/><stop offset="1" stop-color="#e3effb"/></radialGradient></defs>
+<circle cx="64" cy="64" r="60" fill="url(#bg)"/>
+<path d="M64 46v12M38 58h52M38 58v10M64 58v10M90 58v10" fill="none" stroke="#1d5fb0" stroke-width="4" stroke-linecap="round"/>
+<rect x="46" y="24" width="36" height="24" rx="5" fill="#2f7fd8"/>
+<path d="M54 33h20M54 40h13" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+<rect x="24" y="68" width="28" height="22" rx="5" fill="#8fc0f1"/>
+<rect x="50" y="68" width="28" height="22" rx="5" fill="#2f7fd8"/>
+<rect x="76" y="68" width="28" height="22" rx="5" fill="#8fc0f1"/>
+<path d="M31 77h14M57 77h14M83 77h14M31 83h8M57 83h8M83 83h8" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+<path d="M38 90v8M90 90v8" stroke="#1d5fb0" stroke-width="3" stroke-linecap="round"/>
+<rect x="31" y="98" width="14" height="10" rx="3" fill="#f4a43c"/><rect x="83" y="98" width="14" height="10" rx="3" fill="#f4a43c"/>
+</svg>

@@ -5,6 +5,7 @@
 // takes over. The page scrolls normally past it. Without JavaScript (or for print) every milestone
 // is shown as a plain list instead. Content lives in src/data/about.ts.
 import { journey, journeyIntro } from '../../data/about';
+import AudiowalaMap from './AudiowalaMap.astro';
 
 const icons: Record<string, string> = {
   rocket: '<path d="M12 15.5 8.5 12C10 7 13.5 4 19.5 4.5 20 10.5 17 14 12 15.5z"/><circle cx="15" cy="9" r="1.6"/><path d="M8.5 12 5 11.5l2.5-3h4M12 15.5l.5 3.5 3-2.5v-4M6.5 17.5c-1 1-1.5 2.5-1.5 2.5s1.5-.5 2.5-1.5"/>',
@@ -101,6 +102,11 @@ const rich = (t: string) =>
                         </ul>
                       )}
                     </div>
+                    {b.map === 'audiowala' && (
+                      <div class="j-photo j-photo--plain j-map" style="--ar:333/372">
+                        <AudiowalaMap />
+                      </div>
+                    )}
                     {b.image && (
                       <figure class:list={['j-photo', { 'j-photo--plain': b.image.plain }]} style={`--ar:${b.image.width}/${b.image.height}`}>
                         <img src={b.image.src} alt={b.image.alt} width={b.image.width} height={b.image.height} loading="lazy" decoding="async" />
@@ -228,7 +234,7 @@ const rich = (t: string) =>
     box-shadow: 0 20px 44px rgba(15, 42, 61, 0.16);
   }
   .j-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .j-photo--plain { background: none; box-shadow: none; border-radius: 0; }
+  .j-photo--plain { background: none; box-shadow: none; border-radius: 0; overflow: visible; }
   .j-photo--plain img { object-fit: contain; }
   .j-people { list-style: none; margin: clamp(16px, 3vh, 28px) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 14px 28px; }
   .j-people li { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 170px; text-align: center; }
@@ -265,6 +271,7 @@ const rich = (t: string) =>
     .j-step.has-parts .j-people span { font-size: 14px; }
     .j-step.has-parts .j-people strong { font-size: 16px; }
     .j-step.has-parts .j-photo { --max-h: clamp(150px, 30svh, 260px); justify-self: start; align-self: flex-start; margin-left: 58px; width: min(calc(100% - 58px), calc(var(--max-h) * var(--ar))); }
+    .j-step.has-parts .j-map { --max-h: clamp(220px, 40svh, 340px); }
   }
 
   /* ---------- Without JS: a plain list of milestones ---------- */
@@ -347,6 +354,7 @@ const rich = (t: string) =>
     .j-step.has-parts .j-people strong { font-size: 13.5px; }
     .j-step.has-parts .j-photo { --max-h: 19svh; justify-self: center; }
     .j-step.has-parts .j-photo--plain { --max-h: 150px; }
+    .j-step.has-parts .j-map { --max-h: 230px; }
     .journey:not(.is-live) .j-steps { gap: 36px; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -416,6 +424,7 @@ const rich = (t: string) =>
       fill.style.setProperty('--p', String(n > 1 ? i / (n - 1) : 1));
       count.textContent = String(i + 1).padStart(2, '0');
       typeIn(steps[i]);
+      steps[i].dispatchEvent(new CustomEvent('j-show'));
       prev.disabled = i === 0;
       next.disabled = i === n - 1;
     }

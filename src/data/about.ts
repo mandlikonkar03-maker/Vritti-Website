@@ -22,6 +22,8 @@ export type JourneyMilestone = {
   // plain: no frame or shadow (for a map or logo drawn on white).
   image?: { src: string; width: number; height: number; alt: string; plain?: boolean };
   people?: JourneyPerson[];
+  // An animated map instead of a photo (src/components/group/AudiowalaMap.astro).
+  map?: 'audiowala';
   // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, handshake, globe.
   icon?: string;
   // A year with two separate events: list them here and they are shown one under
@@ -29,7 +31,7 @@ export type JourneyMilestone = {
   // (The year's own title is then not shown; keep it as a one-line summary.)
   parts?: JourneyPart[];
 };
-export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon'>;
+export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map'>;
 
 // People on the timeline show their current photo and designation from
 // Meet our Management (src/data/management.ts), so a title change there shows here too.
@@ -119,7 +121,7 @@ export const journey: JourneyMilestone[] = [
         icon: 'speaker',
         title: '**Audiowala** Bus Stand in **8** states with **550+** bus stands',
         points: ['Maharashtra, Karnataka, Punjab, Rajasthan, Himachal Pradesh, Haryana, Goa, Gujarat'],
-        image: { src: '/images/about/journey/audiowala-states-map.svg', width: 333, height: 372, alt: 'Map of India marking the 8 states with Audiowala Bus Stands', plain: true },
+        map: 'audiowala',
       },
       {
         icon: 'handshake',

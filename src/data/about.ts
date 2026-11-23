@@ -30,7 +30,7 @@ export type JourneyMilestone = {
   pair?: boolean;
   // An animated map instead of a photo (src/components/group/AudiowalaMap.astro).
   map?: 'audiowala';
-  // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, handshake, globe.
+  // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, mobile, handshake, globe.
   icon?: string;
   // A year with two separate events: list them here and they are shown one under
   // the other, split by a line, each with its own title, text, people and photo.
@@ -142,6 +142,21 @@ export const journey: JourneyMilestone[] = [
     icon: 'erp',
     title: 'A New Era of Business Transformation with [[EKATM ERP]]',
     image: { src: '/images/about/journey/ekatm-erp-launch.jpg', width: 1200, height: 675, alt: 'Ekatm ERP launch: one system for finance, sales, inventory, purchase, production and HR' },
+  },
+  {
+    year: '2016',
+    until: '2017',
+    title: 'Ekatm ERP web version and Ekatm mobile application launched',
+    parts: [
+      {
+        icon: 'erp',
+        title: '**Ekatm ERP** web version was launched',
+      },
+      {
+        icon: 'mobile',
+        title: '**Ekatm** mobile application launched',
+      },
+    ],
   },
   {
     year: '2018',

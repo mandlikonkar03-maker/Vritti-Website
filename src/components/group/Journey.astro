@@ -14,6 +14,7 @@ const icons: Record<string, string> = {
   speaker: '<path d="M4 9.5h3.5L13 5v14l-5.5-4.5H4z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/>',
   award: '<circle cx="12" cy="9" r="5.5"/><path d="m12 6.2 1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2-1.6-1.5 2.2-.3zM8.5 13.5 7 20.5l5-2.5 5 2.5-1.5-7"/>',
   erp: '<rect x="3.5" y="4.5" width="13" height="10" rx="1.5"/><rect x="15" y="9" width="5.5" height="10.5" rx="1.2"/><path d="M7 18.5h6M10 14.5v4"/>',
+  mobile: '<rect x="7" y="3" width="10" height="18" rx="2"/><path d="M10.5 6h3M11 18h2"/>',
   handshake: '<path d="m3 11 4-4 3 1 2-1.5 3 .5 6 4.5"/><path d="M3 11l5.5 6c.8.8 2 .8 2.7 0M10 16l1.5 1.5c.8.8 2 .8 2.7 0M12.5 14.5l1.5 1.5c.8.8 2 .8 2.7 0l2.3-2.5"/><path d="M12 7.5 9 10.5c-.6.6-.6 1.5 0 2s1.5.6 2 0l2-2"/>',
   globe: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.5 5.4 3.5 8.5s-1 5.9-3.5 8.5c-2.5-2.6-3.5-5.4-3.5-8.5s1-5.9 3.5-8.5z"/>',
 };
@@ -235,7 +236,7 @@ const rich = (t: string) =>
   .j-icon--rocket { background: #f6b800; }
   .j-icon--team, .j-icon--office { background: #69b52e; }
   .j-icon--speaker { background: #e3141b; }
-  .j-icon--erp, .j-icon--globe { background: #1288d0; }
+  .j-icon--erp, .j-icon--mobile, .j-icon--globe { background: #1288d0; }
   .j-icon--handshake { background: #6a3fb0; }
   .j-step h3 :global(strong) { font-weight: 800; }
   /* A heading with a bold or typed word: only that word is bold, the rest normal weight. */

@@ -132,7 +132,7 @@ export const journey: JourneyMilestone[] = [
       {
         icon: 'award',
         title: '[[Vritti Solutions Limited]] won the **Microsoft Award**',
-        image: { src: '/images/about/journey/microsoft-award.jpg', width: 1000, height: 750, alt: 'Microsoft Award trophy' },
+        image: { src: '/images/about/journey/microsoft-award.jpg', width: 1200, height: 675, alt: 'Microsoft Award trophy' },
       },
     ],
   },

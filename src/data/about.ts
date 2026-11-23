@@ -71,10 +71,19 @@ export const journey: JourneyMilestone[] = [
   {
     year: '2000',
     until: '2002',
-    icon: 'team',
-    title: '**Mr. Jeevan Pawar** & **Mr. Shivaji Bedre** joined as Partners',
-    points: ['**AdatSoft** and **PetroSoft** spread across Maharashtra, Karnataka and Telangana'],
-    people: [leader('Jeevan Pawar'), leader('Shivaji Bedre')],
+    title: 'Jeevan Pawar & Shivaji Bedre joined as Partners, and AdatSoft and PetroSoft spread across three states',
+    parts: [
+      {
+        icon: 'team',
+        title: '**Mr. Jeevan Pawar** & **Mr. Shivaji Bedre** joined as Partners',
+        people: [leader('Jeevan Pawar'), leader('Shivaji Bedre')],
+      },
+      {
+        icon: 'globe',
+        title: '**AdatSoft** & **PetroSoft** spread out in geography',
+        points: ['Maharashtra', 'Karnataka', 'Telangana'],
+      },
+    ],
   },
   {
     year: '2004',

@@ -11,6 +11,8 @@ export const aboutHero = {
 export type JourneyPerson = { name: string; role: string; photo: string };
 export type JourneyMilestone = {
   year: string;
+  // Optional end year for an event that spans several years (e.g. year '2000', until '2002').
+  until?: string;
   // title, text and points: wrap words in **double asterisks** for bold, or in
   // [[double brackets]] for bold text that types itself in when the year is shown.
   title: string;
@@ -61,30 +63,33 @@ export const journey: JourneyMilestone[] = [
     people: [leader('Sangeeta Jamdade'), leader('Veerendra Jamdade')],
   },
   {
+    year: '1999',
+    icon: 'rocket',
+    title: 'Launch of [[PetroSoft]]',
+    points: ['First customer: **APM Fuel**, Vashi, Mumbai'],
+  },
+  {
     year: '2000',
+    until: '2002',
     icon: 'team',
-    title: 'Mr. Jeevan Pawar joined',
-    people: [leader('Jeevan Pawar')],
+    title: '**Mr. Jeevan Pawar** & **Mr. Shivaji Bedre** joined as Partners',
+    points: ['**AdatSoft** and **PetroSoft** spread across Maharashtra, Karnataka and Telangana'],
+    people: [leader('Jeevan Pawar'), leader('Shivaji Bedre')],
   },
   {
-    year: '2002',
-    icon: 'team',
-    title: 'Mr. Shivaji Bedre joined',
-    people: [leader('Shivaji Bedre')],
-  },
-  {
-    year: '2005',
-    title: 'Mr. Rajesh Radhakrishnan joined, and Vritti Solutions Limited was founded',
+    year: '2004',
+    until: '2005',
+    title: 'Mr. Rajesh Radhakrishnan joined hands, and Vritti Solutions Limited was formed',
     parts: [
       {
         icon: 'team',
-        title: '**Mr. Rajesh Radhakrishnan** joined',
+        title: '**Mr. Rajesh Radhakrishnan** joined hands',
         people: [leader('Rajesh Radhakrishnan')],
       },
       {
         icon: 'office',
-        title: '[[Vritti Solutions Limited]] was founded',
-        points: ['IT, Media and Rural Marketing under one roof'],
+        title: '[[Vritti Solutions Limited]] was formed',
+        points: ['Primary focus: services on IBM mid-series server ERPs'],
         image: { src: '/images/about/journey/vritti-solutions-office.jpg', width: 353, height: 158, alt: 'Vritti Solutions Limited office signboard' },
       },
     ],
@@ -96,7 +101,7 @@ export const journey: JourneyMilestone[] = [
       {
         icon: 'speaker',
         title: '[[Audiowala Bus Stand]] is born',
-        points: ['First bus stand at Swargate, Pune'],
+        points: ['Started by **Vritti iMedia** in Maharashtra with **19** bus stations', 'First bus stand at Swargate, Pune'],
         image: { src: '/images/about/journey/audiowala-bus-stand-born.jpg', width: 1200, height: 675, alt: 'Audiowala Bus Stand is born at Swargate bus stand, Pune' },
       },
       {
@@ -110,6 +115,23 @@ export const journey: JourneyMilestone[] = [
     icon: 'speaker',
     title: 'Activation business starts at Pandharpur',
     image: { src: '/images/about/journey/pandharpur-activation.jpg', width: 353, height: 195, alt: 'Brand activation event at Pandharpur' },
+  },
+  {
+    year: '2009',
+    icon: 'speaker',
+    title: '**Vritti iMedia** expands Audiowala Bus Stand to **80** bus stations in Maharashtra',
+  },
+  {
+    year: '2012',
+    icon: 'globe',
+    title: 'Audiowala Bus Stand extends to **Karnataka** and **Punjab**',
+  },
+  {
+    year: '2013',
+    icon: 'rocket',
+    title: '[[Mindwave Media]] is launched',
+    points: ['The 360° digital marketing arm of Vritti Group'],
+    image: { src: '/images/home/hero/mindwave-media.jpg', width: 1152, height: 864, alt: 'Mindwave Media on stage at a marketing awards night' },
   },
   {
     year: '2014',

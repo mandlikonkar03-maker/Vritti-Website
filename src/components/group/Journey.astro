@@ -18,6 +18,8 @@ const icons: Record<string, string> = {
   globe: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.5 5.4 3.5 8.5s-1 5.9-3.5 8.5c-2.5-2.6-3.5-5.4-3.5-8.5s1-5.9 3.5-8.5z"/>',
 };
 const first = journey[0].year;
+// "2000–2002" for an event over several years, else just the year.
+const span = (m: { year: string; until?: string }) => (m.until ? `${m.year}–${m.until}` : m.year);
 
 // **bold** and [[typed bold]] markup from about.ts, with everything else escaped.
 const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -38,17 +40,19 @@ const rich = (t: string) =>
     <div class="j-pin">
       <div class="g-container j-inner">
         <nav class="j-rail" aria-label="Journey years">
+          <div class="j-rail-in">
           <span class="j-rail-line" aria-hidden="true"><span class="j-rail-fill" data-j-fill></span></span>
           <ol>
             {journey.map((m, i) => (
               <li>
-                <button type="button" data-j-go={i} aria-current={i === 0 ? 'step' : undefined}>
+                <button type="button" data-j-go={i} aria-current={i === 0 ? 'step' : undefined} aria-label={span(m)}>
                   <span class="j-dot" aria-hidden="true"></span>
-                  <span class="j-rail-year">{m.year}</span>
+                  <span class="j-rail-year" aria-hidden="true">{m.year}{m.until && <span class="j-rail-until">–{m.until.slice(2)}</span>}</span>
                 </button>
               </li>
             ))}
           </ol>
+          </div>
         </nav>
 
         <div class="j-stage">
@@ -58,6 +62,7 @@ const rich = (t: string) =>
                 <span class="j-digit-strip">{'0123456789'.split('').map((x) => <span>{x}</span>)}</span>
               </span>
             ))}
+            <span class="j-until" data-j-until aria-hidden="true">{journey[0].until ? `–${journey[0].until}` : ''}</span>
             <span class="j-count" aria-hidden="true"><span data-j-count>01</span> / {String(journey.length).padStart(2, '0')}</span>
             <div class="j-nav">
               <button type="button" class="j-arrow" data-j-prev aria-label="Previous year">
@@ -71,12 +76,12 @@ const rich = (t: string) =>
 
           <ol class="j-steps" aria-live="polite">
             {journey.map((m, i) => (
-              <li class:list={['j-step', { 'is-active': i === 0, 'no-photo': !m.image && !m.slides && !m.parts, 'has-parts': !!m.parts }]} data-j-step={i} data-year={m.year}>
-                {m.parts && <p class="j-step-year">{m.year}</p>}
+              <li class:list={['j-step', { 'is-active': i === 0, 'no-photo': !m.image && !m.slides && !m.parts, 'has-parts': !!m.parts }]} data-j-step={i} data-year={m.year} data-until={m.until}>
+                {m.parts && <p class="j-step-year">{span(m)}</p>}
                 {(m.parts ?? [m]).map((b) => (
                   <div class="j-part">
                     <div class="j-copy">
-                      {!m.parts && <p class="j-step-year">{m.year}</p>}
+                      {!m.parts && <p class="j-step-year">{span(m)}</p>}
                       <h3>
                         {b.icon && icons[b.icon] && (
                           <span class={`j-icon j-icon--${b.icon}`} aria-hidden="true">
@@ -203,6 +208,11 @@ const rich = (t: string) =>
   }
   .j-digit-strip span { height: 1em; display: block; text-align: center; }
   .j-digit:nth-child(4) { color: var(--g-orange); }
+  /* End year of an event over several years ("– 2002"), smaller beside the big year. */
+  .j-until { font-size: 0.5em; margin-left: 0.15em; color: var(--g-blue); white-space: nowrap; transition: opacity 0.4s; }
+  .j-until:empty { display: none; }
+  .j-rail-until { font-weight: 500; }
+  .j-rail-in { position: relative; }
   .j-count { margin-left: 18px; font-size: 14px; font-weight: 600; letter-spacing: 0.08em; color: #8a96a3; }
   .j-count span { color: var(--g-orange); font-size: 18px; }
 
@@ -359,6 +369,13 @@ const rich = (t: string) =>
     .j-dot { width: 16px; height: 16px; }
     .j-dot::after { width: 6px; height: 6px; }
     .j-rail-line { top: 7px; }
+    /* Many years: the rail scrolls sideways on phones and follows the year shown. */
+    .j-rail { overflow-x: auto; scrollbar-width: none; margin-left: -16px; margin-right: -16px; padding: 0 16px 4px; }
+    .j-rail::-webkit-scrollbar { display: none; }
+    .j-rail-in { width: max-content; min-width: 100%; }
+    .j-rail ol { gap: 22px; }
+    /* No room for the "03 / 13" counter beside a year range on phones. */
+    .j-year:has(.j-until:not(:empty)) .j-count { visibility: hidden; }
     .j-rail button { gap: 6px; }
     .j-count { margin-left: auto; align-self: center; }
     .journey.is-live .j-nav { margin-left: 12px; gap: 8px; }
@@ -411,6 +428,8 @@ const rich = (t: string) =>
     const prev = root.querySelector<HTMLButtonElement>('[data-j-prev]')!;
     const next = root.querySelector<HTMLButtonElement>('[data-j-next]')!;
     const stage = root.querySelector<HTMLElement>('.j-stage')!;
+    const rail = root.querySelector<HTMLElement>('.j-rail')!;
+    const until = root.querySelector<HTMLElement>('[data-j-until]')!;
     const n = steps.length;
     let current = -1;
 
@@ -492,6 +511,13 @@ const rich = (t: string) =>
       });
       const year = steps[i].dataset.year || '';
       year.split('').forEach((ch, k) => digits[k]?.style.setProperty('--d', ch));
+      const end = steps[i].dataset.until;
+      until.textContent = end ? `–${end}` : '';
+      // Keep the year shown in view when the rail scrolls (phones).
+      if (rail.scrollWidth > rail.clientWidth) {
+        const b = dots[i];
+        rail.scrollTo({ left: b.offsetLeft + b.offsetWidth / 2 - rail.clientWidth / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
       fill.style.setProperty('--p', String(n > 1 ? i / (n - 1) : 1));
       count.textContent = String(i + 1).padStart(2, '0');
       typeIn(steps[i]);

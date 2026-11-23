@@ -71,6 +71,7 @@ export const journey: JourneyMilestone[] = [
     icon: 'rocket',
     title: 'Launch of [[PetroSoft]]',
     points: ['First customer: **APM Fuel**, Vashi, Mumbai'],
+    image: { src: '/images/about/journey/petrosoft-india-launch.jpg', width: 1200, height: 675, alt: 'PetroSoft India: petrol pump software for pump operations, tank and inventory monitoring, billing and station management' },
   },
   {
     year: '2000',

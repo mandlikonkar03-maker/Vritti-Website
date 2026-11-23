@@ -7,8 +7,7 @@ export const applyEmail = 'enquiry@vritti.co.in';
 export const careersHero = {
   title: 'Your dreams.',
   highlight: 'Fulfilled at Vritti.',
-  // placeholder
-  text: "The all-in-one CA Practising firm Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966,",
+  text: 'At Vritti, we believe in turning aspirations into achievements. We empower our people with opportunities to learn, grow, innovate, and build a fulfilling career while creating a meaningful impact together.',
   // Hero image (OM's photo, 2026-11-23). Leave empty to show a grey placeholder.
   image: '/images/careers/hero.jpg' as string,
   imageAlt: 'Vritti team working together around a laptop',

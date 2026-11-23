@@ -8,9 +8,9 @@ export const careersHero = {
   title: 'Your dreams.',
   highlight: 'Fulfilled at Vritti.',
   text: 'At Vritti, we believe in turning aspirations into achievements. We empower our people with opportunities to learn, grow, innovate, and build a fulfilling career while creating a meaningful impact together.',
-  // Hero image (OM's photo, 2026-11-23). Leave empty to show a grey placeholder.
-  image: '/images/careers/hero.jpg' as string,
-  imageAlt: 'Vritti team working together around a laptop',
+  // Hero image (OM's careers graphic, replaced 2026-11-23). Leave empty to show a grey placeholder.
+  image: '/images/careers/hero-graphic.jpg' as string,
+  imageAlt: 'Smiling Vritti professional with highlights: 250+ team members, open roles, career growth, learning, growing opportunities and team culture',
 };
 
 export type CareerBusiness = { slug: string; label: string; image: string; alt: string };

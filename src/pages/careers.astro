@@ -133,7 +133,8 @@ import { careersHero, careerBusinesses, benefits, testimonials } from '../data/c
     object-fit: cover;
     border-radius: 4px;
   }
-  .c-hero-media img { object-position: center 30%; }
+  /* OM's hero graphic has text cards near its edges, so show it whole (4:3) instead of cropping. */
+  .c-hero-media img { aspect-ratio: 4 / 3; object-position: center; }
   .c-placeholder { background: #d9d9d9; }
 
   /* Business cards */

@@ -176,6 +176,8 @@ export const journey: JourneyMilestone[] = [
         laptop: true,
         slides: [
           { src: '/images/about/journey/ekatm-web-dashboard.jpg', width: 1600, height: 724, alt: 'Ekatm ERP web application dashboard' },
+          { src: '/images/about/journey/ekatm-web-work.jpg', width: 1600, height: 740, alt: 'Ekatm ERP web Work Management screen' },
+          { src: '/images/about/journey/ekatm-web-crm.jpg', width: 1600, height: 742, alt: 'Ekatm ERP web CRM screen' },
         ],
       },
       {

@@ -8,9 +8,18 @@ export const careersHero = {
   title: 'Your dreams.',
   highlight: 'Fulfilled at Vritti.',
   text: 'At Vritti, we believe in turning aspirations into achievements. We empower our people with opportunities to learn, grow, innovate, and build a fulfilling career while creating a meaningful impact together.',
-  // Hero image (OM's photo, 2026-11-23). Leave empty to show a grey placeholder.
-  image: '/images/careers/hero.jpg' as string,
-  imageAlt: 'Vritti team working together around a laptop',
+  // Hero: OM's careers graphic with the office background removed (cut-out person), and the
+  // "pop-up" cards from the graphic rebuilt as floating HTML cards around it.
+  person: '/images/careers/hero-person.webp',
+  personAlt: 'Smiling Vritti professional holding a laptop',
+  pops: [
+    { pos: 'tl', icon: 'team', tone: 'blue', big: '250+', label: 'Team Members', depth: 70 },
+    { pos: 'ml', icon: 'bag', tone: 'orange', label: 'Open Roles', href: '#openings', depth: 110 },
+    { pos: 'bl', icon: 'sprout', tone: 'green', label: 'Growing Opportunities', depth: 50 },
+    { pos: 'tr', icon: 'growth', tone: 'green', label: 'Career Growth', depth: 90 },
+    { pos: 'mr', icon: 'book', tone: 'blue', label: 'Learning', depth: 60 },
+    { pos: 'br', icon: 'team', tone: 'orange', label: 'Team Culture', depth: 100 },
+  ] as { pos: string; icon: string; tone: string; big?: string; label: string; href?: string; depth: number }[],
 };
 
 export type CareerBusiness = { slug: string; label: string; image: string; alt: string };

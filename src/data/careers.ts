@@ -8,8 +8,9 @@ export const careersHero = {
   title: 'Your dreams.',
   highlight: 'Fulfilled at Vritti.',
   text: 'At Vritti, we believe in turning aspirations into achievements. We empower our people with opportunities to learn, grow, innovate, and build a fulfilling career while creating a meaningful impact together.',
-  // Hero: OM's careers graphic with the office background removed (cut-out person), and the
-  // "pop-up" cards from the graphic rebuilt as floating HTML cards around it.
+  // Hero (full-bleed, like the home page): a blurred version of OM's careers photo as the backdrop,
+  // the cut-out person on the right, and the graphic's "pop-up" cards rebuilt as floating HTML cards.
+  background: '/images/careers/hero-bg.jpg',
   person: '/images/careers/hero-person.webp',
   personAlt: 'Smiling Vritti professional holding a laptop',
   pops: [

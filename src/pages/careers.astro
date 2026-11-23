@@ -3,48 +3,46 @@ import GroupLayout from '../layouts/GroupLayout.astro';
 import { careersHero, careerBusinesses, benefits, testimonials } from '../data/careers';
 ---
 <GroupLayout title="Careers – Vritti Group" description="Your dreams. Fulfilled at Vritti. Careers in technology, media and marketing at Vritti Group.">
-  <section class="g-section c-hero">
-    <div class="g-container c-hero-grid">
+  <!-- Full-bleed hero like the home page: photo backdrop, white text on the left,
+       cut-out photo on the right with the floating "pop-up" cards. -->
+  <section class="c-hero">
+    <img class="c-hero-bg" src={careersHero.background} alt="" aria-hidden="true" fetchpriority="high" />
+    <div class="g-container c-hero-inner">
       <div class="c-hero-copy">
         <h1>
           <span class="c-hero-l1">{careersHero.title}</span>
           <span class="c-hero-l2">{careersHero.highlight}</span>
         </h1>
         <p>{careersHero.text}</p>
+        <a class="c-hero-cta" href="#openings">View open roles
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+        </a>
       </div>
-      <div class="c-stage" data-stage>
-        <div class="c-stage-inner">
-          <div class="c-stage-bg" aria-hidden="true">
-            <svg viewBox="0 0 600 600" preserveAspectRatio="none">
-              <path class="c-swoosh-blue" d="M70 560 C 170 330, 330 150, 600 60 L 600 170 C 400 230, 260 380, 190 600 Z" />
-              <path class="c-swoosh-orange" d="M330 600 C 420 520, 520 470, 600 450 L 600 600 Z" />
-            </svg>
-          </div>
-          <img class="c-person" src={careersHero.person} alt={careersHero.personAlt} width="737" height="1016" fetchpriority="high" />
-          <ul class="c-pops" aria-label="Why work at Vritti">
-            {careersHero.pops.map((pop, i) => {
-              const Tag = pop.href ? 'a' : 'div';
-              return (
-                <li class={`c-pop c-pop--${pop.pos}`} style={`--i:${i}; --depth:${pop.depth}`}>
-                  <Tag class="c-pop-card" href={pop.href}>
-                    <span class={`c-pop-icon c-pop-icon--${pop.tone}`} aria-hidden="true">
-                      {pop.icon === 'team' && <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><circle cx="16.5" cy="9" r="2.6"/><path d="M3 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5z"/><path d="M14.5 14.2c.6-.2 1.3-.3 2-.3 2.6 0 4.5 1.8 4.5 4.6h-5"/></svg>}
-                      {pop.icon === 'bag' && <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>}
-                      {pop.icon === 'growth' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>}
-                      {pop.icon === 'book' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 5.5C5.5 4.5 9 4.5 12 6.5c3-2 6.5-2 9-1V19c-2.5-1-6-1-9 1-3-2-6.5-2-9-1z"/><path d="M12 6.5V20"/></svg>}
-                      {pop.icon === 'sprout' && <svg viewBox="0 0 24 24"><path d="M12 21v-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M12 13C12 8.5 8.5 6 4 6c0 4.5 3.5 7 8 7z"/><path d="M12 13c0-4.5 3.5-7 8-7 0 4.5-3.5 7-8 7z"/></svg>}
-                    </span>
-                    <span class="c-pop-text">
-                      {pop.big && <strong>{pop.big}</strong>}
-                      <span>{pop.label}</span>
-                    </span>
-                    {pop.href && <span class="c-pop-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>}
-                  </Tag>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+      <div class="c-hero-visual" data-stage>
+        <img class="c-person" src={careersHero.person} alt={careersHero.personAlt} width="737" height="1016" />
+        <ul class="c-pops" aria-label="Why work at Vritti">
+          {careersHero.pops.map((pop, i) => {
+            const Tag = pop.href ? 'a' : 'div';
+            return (
+              <li class={`c-pop c-pop--${pop.pos}`} style={`--i:${i}; --depth:${pop.depth}`}>
+                <Tag class="c-pop-card" href={pop.href}>
+                  <span class={`c-pop-icon c-pop-icon--${pop.tone}`} aria-hidden="true">
+                    {pop.icon === 'team' && <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><circle cx="16.5" cy="9" r="2.6"/><path d="M3 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5z"/><path d="M14.5 14.2c.6-.2 1.3-.3 2-.3 2.6 0 4.5 1.8 4.5 4.6h-5"/></svg>}
+                    {pop.icon === 'bag' && <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>}
+                    {pop.icon === 'growth' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>}
+                    {pop.icon === 'book' && <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 5.5C5.5 4.5 9 4.5 12 6.5c3-2 6.5-2 9-1V19c-2.5-1-6-1-9 1-3-2-6.5-2-9-1z"/><path d="M12 6.5V20"/></svg>}
+                    {pop.icon === 'sprout' && <svg viewBox="0 0 24 24"><path d="M12 21v-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M12 13C12 8.5 8.5 6 4 6c0 4.5 3.5 7 8 7z"/><path d="M12 13c0-4.5 3.5-7 8-7 0 4.5-3.5 7-8 7z"/></svg>}
+                  </span>
+                  <span class="c-pop-text">
+                    {pop.big && <strong>{pop.big}</strong>}
+                    <span>{pop.label}</span>
+                  </span>
+                  {pop.href && <span class="c-pop-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>}
+                </Tag>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   </section>
@@ -130,58 +128,99 @@ import { careersHero, careerBusinesses, benefits, testimonials } from '../data/c
     clip: rect(0 0 0 0); white-space: nowrap;
   }
 
-  /* Hero */
-  .c-hero-grid {
+  /* Hero: full-bleed photo like the home page hero */
+  .c-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    color: #fff;
+    background: #0a2540;
+    min-height: clamp(460px, 44vw, min(680px, calc(100vh - 84px)));
+    display: flex;
+    align-items: stretch;
+  }
+  .c-hero-bg {
+    position: absolute; inset: 0; z-index: -2;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scale(1.06);
+    animation: c-hero-zoom 8s ease-out both;
+  }
+  /* Darken on the left behind the text (same treatment as the home hero). */
+  .c-hero::before {
+    content: '';
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(90deg, rgba(4, 30, 58, 0.9) 0%, rgba(4, 30, 58, 0.7) 40%, rgba(4, 30, 58, 0.15) 75%, rgba(4, 30, 58, 0.05) 100%),
+      linear-gradient(0deg, rgba(4, 30, 58, 0.35), transparent 35%);
+  }
+  .c-hero-inner {
+    position: relative;
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(28px, 4vw, 56px);
-    align-items: start;
+    align-items: center;
+    gap: 24px;
   }
+  .c-hero-copy { padding-block: 56px; }
   .c-hero h1 {
     margin: 0;
-    font-size: var(--fs-page-title);
-    font-weight: var(--fw-heading);
+    font-size: clamp(30px, 3vw, 44px);
+    font-weight: 700;
     line-height: 1.12;
     text-transform: uppercase;
   }
   .c-hero h1 span { display: block; }
-  .c-hero-l1 { color: var(--g-ink); }
-  .c-hero-l2 { color: var(--g-blue); }
+  .c-hero-l1 { color: #fff; }
+  .c-hero-l2 { color: var(--g-orange); }
   .c-hero-copy p {
-    margin: 20px 0 0;
-    max-width: 480px;
-    color: #222;
-    font-size: var(--fs-body);
-    line-height: 1.8;
+    max-width: 470px;
+    margin: clamp(16px, 1.6vw, 24px) 0 0;
+    font-size: clamp(15px, 1.2vw, 18px);
+    line-height: 1.6;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
   }
-  /* Hero stage: cut-out photo with "pop-up" cards floating at different depths.
-     The stage tilts slightly toward the pointer (JS below sets --rx/--ry); cards float gently. */
-  .c-stage { perspective: 1200px; }
-  .c-stage-inner {
+  .c-hero-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: clamp(22px, 2.2vw, 32px);
+    padding: 13px 22px;
+    border-radius: 999px;
+    background: var(--g-orange);
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    box-shadow: 0 10px 24px rgba(235, 158, 46, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .c-hero-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(235, 158, 46, 0.45); }
+  .c-hero-cta svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Right side: cut-out photo standing on the bottom edge, cards floating around her. */
+  .c-hero-visual {
     position: relative;
-    aspect-ratio: 1 / 0.92;
+    align-self: stretch;
+    min-height: 100%;
+    perspective: 1200px;
+  }
+  .c-person {
+    position: absolute; left: 50%; bottom: 0;
+    height: 92%; width: auto; max-width: none;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.35));
+    pointer-events: none;
+  }
+  @keyframes c-hero-zoom { from { transform: scale(1.14); } to { transform: scale(1.06); } }
+
+  .c-pops {
+    list-style: none; margin: 0; padding: 0;
+    position: absolute; inset: 0;
     transform-style: preserve-3d;
     transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
     transition: transform 0.25s ease-out;
-  }
-  .c-stage-bg {
-    position: absolute; inset: 6% 0 0;
-    border-radius: 28px;
-    overflow: hidden;
-    background: radial-gradient(120% 90% at 30% 20%, #f4f8fc 0%, #e4eff9 55%, #d6e7f6 100%);
-    box-shadow: inset 0 0 0 1px rgba(6, 97, 169, 0.06);
-  }
-  .c-stage-bg svg { width: 100%; height: 100%; display: block; }
-  .c-swoosh-blue { fill: var(--g-blue); opacity: 0.85; }
-  .c-swoosh-orange { fill: var(--g-orange); opacity: 0.9; }
-  .c-person {
-    position: absolute; left: 50%; bottom: 0;
-    height: 100%; width: auto; max-width: none;
-    transform: translateX(-50%);
-    filter: drop-shadow(0 24px 30px rgba(15, 42, 61, 0.22));
     pointer-events: none;
   }
-  .c-pops { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; transform-style: preserve-3d; pointer-events: none; }
   .c-pop-card { pointer-events: auto; }
   .c-pop {
     position: absolute;
@@ -189,12 +228,12 @@ import { careersHero, careerBusinesses, benefits, testimonials } from '../data/c
     animation: c-pop-in 0.6s cubic-bezier(.2, .9, .3, 1.25) both;
     animation-delay: calc(0.25s + var(--i) * 0.12s);
   }
-  .c-pop--tl { left: -4%; top: 12%; }
-  .c-pop--ml { left: -8%; top: 40%; }
-  .c-pop--bl { left: -2%; top: 68%; }
-  .c-pop--tr { right: -4%; top: 10%; }
-  .c-pop--mr { right: -7%; top: 39%; }
-  .c-pop--br { right: -3%; top: 66%; }
+  .c-pop--tl { left: 0; top: 16%; }
+  .c-pop--ml { left: 2%; top: 44%; }
+  .c-pop--bl { left: 2%; top: 72%; }
+  .c-pop--tr { right: 0; top: 14%; }
+  .c-pop--mr { right: -4%; top: 43%; }
+  .c-pop--br { right: 2%; top: 70%; }
   .c-pop-card {
     display: flex; align-items: center; gap: 10px;
     padding: 10px 14px 10px 10px;
@@ -242,21 +281,11 @@ import { careersHero, careerBusinesses, benefits, testimonials } from '../data/c
     50% { transform: translateY(-8px); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .c-pop, .c-pop-card { animation: none; }
-    .c-stage-inner { transform: none; }
+    .c-pop, .c-pop-card, .c-hero-bg { animation: none; }
+    .c-pops { transform: none; }
   }
-
-  .c-placeholder {
-    display: block;
-    width: 100%;
-    aspect-ratio: 5 / 3;
-    object-fit: cover;
-    border-radius: 4px;
-  }
-  .c-placeholder { background: #d9d9d9; }
 
   /* Business cards */
-  .c-biz { padding-top: 0; }
   .c-biz-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -389,12 +418,15 @@ import { careersHero, careerBusinesses, benefits, testimonials } from '../data/c
     .c-testi-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 768px) {
-    .c-stage { margin: 8px 12px 0; }
+    .c-hero-inner { grid-template-columns: 1fr; gap: 0; }
+    .c-hero-copy { padding: 40px 0 8px; }
+    .c-hero-visual { min-height: 0; height: 400px; }
+    .c-hero::before { background: linear-gradient(180deg, rgba(4, 30, 58, 0.88) 0%, rgba(4, 30, 58, 0.7) 45%, rgba(4, 30, 58, 0.2) 100%); }
     .c-pop--bl, .c-pop--br { display: none; }
-    .c-pop--tl { left: -3%; top: 14%; }
-    .c-pop--tr { right: -3%; top: 12%; }
-    .c-pop--ml { left: -3%; top: 46%; }
-    .c-pop--mr { right: -3%; top: 44%; }
+    .c-pop--tl { left: 1%; top: 14%; }
+    .c-pop--tr { right: 1%; top: 10%; }
+    .c-pop--ml { left: 1%; top: 50%; }
+    .c-pop--mr { right: 1%; top: 46%; }
     .c-pop-card { padding: 7px 10px 7px 7px; gap: 7px; border-radius: 12px; }
     .c-pop-icon { width: 28px; height: 28px; }
     .c-pop-icon svg { width: 15px; height: 15px; }
@@ -402,7 +434,6 @@ import { careersHero, careerBusinesses, benefits, testimonials } from '../data/c
     .c-pop-text strong { font-size: 15px; }
     .c-pop-text strong + span { font-size: 10px; }
     .c-pop-arrow { width: 20px; height: 20px; }
-    .c-hero-grid { grid-template-columns: 1fr; }
     .c-biz-grid, .c-benefit-grid { grid-template-columns: 1fr; }
     .c-biz-card { aspect-ratio: 16 / 10; }
     .c-benefit-grid { gap: 32px; }
@@ -413,9 +444,9 @@ import { careersHero, careerBusinesses, benefits, testimonials } from '../data/c
 </style>
 
 <script>
-  // Gentle 3D tilt of the hero stage toward the pointer (desktop pointers only).
+  // Gentle 3D tilt of the floating cards toward the pointer (desktop pointers only).
   const stage = document.querySelector<HTMLElement>('[data-stage]');
-  const inner = stage?.querySelector<HTMLElement>('.c-stage-inner');
+  const inner = stage?.querySelector<HTMLElement>('.c-pops');
   const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (stage && inner && fine && !still) {

@@ -126,11 +126,6 @@ export const journey: JourneyMilestone[] = [
     image: { src: '/images/about/journey/pandharpur-activation.jpg', width: 353, height: 195, alt: 'Brand activation event at Pandharpur' },
   },
   {
-    year: '2009',
-    icon: 'speaker',
-    title: '**Vritti iMedia** expands Audiowala Bus Stand to **80** bus stations in Maharashtra',
-  },
-  {
     year: '2012',
     icon: 'globe',
     title: 'Audiowala Bus Stand extends to **Karnataka** and **Punjab**',

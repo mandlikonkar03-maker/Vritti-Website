@@ -14,9 +14,6 @@ import { careersHero, careerBusinesses, benefits, testimonials } from '../data/c
           <span class="c-hero-l2">{careersHero.highlight}</span>
         </h1>
         <p>{careersHero.text}</p>
-        <a class="c-hero-cta" href="#openings">View open roles
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </a>
       </div>
       <div class="c-hero-visual" data-stage>
         <img class="c-person" src={careersHero.person} alt={careersHero.personAlt} width="737" height="1016" />
@@ -181,21 +178,6 @@ import { careersHero, careerBusinesses, benefits, testimonials } from '../data/c
     font-weight: 500;
     color: rgba(255, 255, 255, 0.9);
   }
-  .c-hero-cta {
-    display: inline-flex; align-items: center; gap: 10px;
-    margin-top: clamp(22px, 2.2vw, 32px);
-    padding: 13px 22px;
-    border-radius: 999px;
-    background: var(--g-orange);
-    color: #fff;
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    box-shadow: 0 10px 24px rgba(235, 158, 46, 0.35);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .c-hero-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(235, 158, 46, 0.45); }
-  .c-hero-cta svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 
   /* Right side: cut-out photo standing on the bottom edge, cards floating around her. */
   .c-hero-visual {

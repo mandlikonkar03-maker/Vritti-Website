@@ -11,11 +11,14 @@ import map from '../../data/audiowala-map.json';
 // states: only these states, in this order (default: all, as in the JSON).
 // branch: the bus starts every leg from the first state (e.g. Maharashtra to Karnataka,
 // then Maharashtra to Punjab) instead of driving state to state.
-interface Props { states?: string[]; branch?: boolean }
-const { states, branch = false } = Astro.props;
+// logos: instead of the bus, these logos travel the road together on a small white card.
+// label: what the map shows, for screen readers.
+interface Props { states?: string[]; branch?: boolean; logos?: { src: string; alt: string }[]; label?: string }
+const { states, branch = false, logos, label: what = 'Audiowala Bus Stands' } = Astro.props;
 const all = map as {
   w: number; h: number; r: number;
-  stops: { state: string; city: string; xy: [number, number]; dots: [number, number][] }[];
+  // extra: a state shown only when asked for by name (not part of the 2018 Audiowala map).
+  stops: { state: string; city: string; xy: [number, number]; dots: [number, number][]; extra?: boolean }[];
 };
 const { w, h, r } = all;
 const stops = states
@@ -24,7 +27,7 @@ const stops = states
       if (!s) throw new Error(`AudiowalaMap: no state named ${n} in audiowala-map.json`);
       return s;
     })
-  : all.stops;
+  : all.stops.filter((s) => !s.extra);
 
 // Gentle S-curves between stops, so it reads as a road and not a straight line.
 let road = `M${stops[0].xy[0]},${stops[0].xy[1]}`;
@@ -45,8 +48,12 @@ const side: Record<string, [number, number, string]> = {
   Haryana: [10, 5, 'start'],
   Punjab: [-10, -2, 'end'],
   'Himachal Pradesh': [10, -8, 'start'],
+  Telangana: [10, 4, 'start'],
 };
-const label = 'Map of India: Audiowala Bus Stands in ' + stops.map((s) => s.state).join(', ');
+const label = `Map of India: ${what} in ` + stops.map((s) => s.state).join(', ');
+// Logo card: logos stacked, 4:1 each, card hangs just below the road point (labels sit to the side and above).
+const LW = 64, LH = 16, PAD = 5;
+const cardH = logos ? logos.length * LH + (logos.length + 1) * PAD : 0;
 ---
 <figure class="aw-map" data-aw role="img" aria-label={label} style={`--ar:${w}/${h}`}>
   <img src="/images/about/journey/india-dots-base.svg" alt="" width={w} height={h} loading="lazy" decoding="async" />
@@ -65,11 +72,22 @@ const label = 'Map of India: Audiowala Bus Stands in ' + stops.map((s) => s.stat
       </g>
     ))}
     <g class="aw-bus" data-aw-bus transform={`translate(${stops.at(-1)!.xy[0]},${stops.at(-1)!.xy[1] - 2})`}>
-      <rect x="-9" y="-6" width="18" height="11" rx="3" class="aw-bus-body" />
-      <rect x="-6" y="-4" width="5" height="4" rx="1" class="aw-bus-win" />
-      <rect x="1" y="-4" width="5" height="4" rx="1" class="aw-bus-win" />
-      <circle cx="-5" cy="5.5" r="2" class="aw-bus-wheel" />
-      <circle cx="5" cy="5.5" r="2" class="aw-bus-wheel" />
+      {logos ? (
+        <g transform={`translate(0,${cardH / 2 + 8})`}>
+          <rect x={-(LW / 2 + PAD)} y={-cardH / 2} width={LW + 2 * PAD} height={cardH} rx="5" class="aw-card" />
+          {logos.map((l, i) => (
+            <image href={l.src} x={-LW / 2} y={-cardH / 2 + PAD + i * (LH + PAD)} width={LW} height={LH} preserveAspectRatio="xMidYMid meet"><title>{l.alt}</title></image>
+          ))}
+        </g>
+      ) : (
+        <>
+          <rect x="-9" y="-6" width="18" height="11" rx="3" class="aw-bus-body" />
+          <rect x="-6" y="-4" width="5" height="4" rx="1" class="aw-bus-win" />
+          <rect x="1" y="-4" width="5" height="4" rx="1" class="aw-bus-win" />
+          <circle cx="-5" cy="5.5" r="2" class="aw-bus-wheel" />
+          <circle cx="5" cy="5.5" r="2" class="aw-bus-wheel" />
+        </>
+      )}
     </g>
   </svg>
 </figure>
@@ -88,6 +106,7 @@ const label = 'Map of India: Audiowala Bus Stands in ' + stops.map((s) => s.stat
   .aw-bus-body { fill: var(--g-blue, #0661a9); }
   .aw-bus-win { fill: #fff; }
   .aw-bus-wheel { fill: #14212b; }
+  .aw-card { fill: #fff; stroke: #dfe4ea; stroke-width: 1; filter: drop-shadow(0 2px 4px rgba(15, 42, 61, 0.18)); }
 </style>
 
 <script>

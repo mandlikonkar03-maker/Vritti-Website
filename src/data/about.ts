@@ -133,8 +133,8 @@ export const journey: JourneyMilestone[] = [
   {
     year: '2013',
     icon: 'rocket',
-    title: '[[Mindwave Media]] is launched',
-    points: ['The 360° digital marketing arm of Vritti Group'],
+    title: '[[Mindwave Media]] was established',
+    points: ['To provide rural marketing solutions'],
     image: { src: '/images/home/hero/mindwave-media.jpg', width: 1152, height: 864, alt: 'Mindwave Media on stage at a marketing awards night' },
   },
   {

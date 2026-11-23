@@ -28,6 +28,8 @@ export type JourneyMilestone = {
   slides?: { src: string; width: number; height: number; alt: string }[];
   /** Show the slides two at a time, side by side, instead of one by one. */
   pair?: boolean;
+  /** Show the slides on the screen of a laptop drawing (app screenshots). */
+  laptop?: boolean;
   // An animated map instead of a photo (src/components/group/AudiowalaMap.astro).
   map?: 'audiowala';
   // Only these states on the map, in the order the bus visits them (default: all 8).
@@ -44,7 +46,7 @@ export type JourneyMilestone = {
   // (The year's own title is then not shown; keep it as a one-line summary.)
   parts?: JourneyPart[];
 };
-export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'mapStates' | 'mapBranch' | 'mapLogos' | 'mapLabel' | 'slides' | 'pair'>;
+export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'mapStates' | 'mapBranch' | 'mapLogos' | 'mapLabel' | 'slides' | 'pair' | 'laptop'>;
 
 // People on the timeline show their current photo and designation from
 // Meet our Management (src/data/management.ts), so a title change there shows here too.
@@ -171,6 +173,10 @@ export const journey: JourneyMilestone[] = [
       {
         icon: 'erp',
         title: '**Ekatm ERP** web version was launched',
+        laptop: true,
+        slides: [
+          { src: '/images/about/journey/ekatm-web-dashboard.jpg', width: 1600, height: 724, alt: 'Ekatm ERP web application dashboard' },
+        ],
       },
       {
         icon: 'mobile',

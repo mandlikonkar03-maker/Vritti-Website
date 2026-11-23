@@ -11,6 +11,8 @@ export const aboutHero = {
 export type JourneyPerson = { name: string; role: string; photo: string };
 export type JourneyMilestone = {
   year: string;
+  // Optional end year for an event that spans several years (e.g. year '2000', until '2002').
+  until?: string;
   // title, text and points: wrap words in **double asterisks** for bold, or in
   // [[double brackets]] for bold text that types itself in when the year is shown.
   title: string;
@@ -28,14 +30,18 @@ export type JourneyMilestone = {
   pair?: boolean;
   // An animated map instead of a photo (src/components/group/AudiowalaMap.astro).
   map?: 'audiowala';
-  // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, handshake, globe.
+  // Only these states on the map, in the order the bus visits them (default: all 8).
+  mapStates?: string[];
+  // The bus drives every leg from the first state instead of state to state.
+  mapBranch?: boolean;
+  // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, mobile, handshake, globe.
   icon?: string;
   // A year with two separate events: list them here and they are shown one under
   // the other, split by a line, each with its own title, text, people and photo.
   // (The year's own title is then not shown; keep it as a one-line summary.)
   parts?: JourneyPart[];
 };
-export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'slides' | 'pair'>;
+export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'mapStates' | 'mapBranch' | 'slides' | 'pair'>;
 
 // People on the timeline show their current photo and designation from
 // Meet our Management (src/data/management.ts), so a title change there shows here too.
@@ -61,30 +67,42 @@ export const journey: JourneyMilestone[] = [
     people: [leader('Sangeeta Jamdade'), leader('Veerendra Jamdade')],
   },
   {
+    year: '1999',
+    icon: 'rocket',
+    title: 'Launch of [[PetroSoft]]',
+    points: ['First customer: **APM Fuel**, Vashi, Mumbai'],
+  },
+  {
     year: '2000',
-    icon: 'team',
-    title: 'Mr. Jeevan Pawar joined',
-    people: [leader('Jeevan Pawar')],
-  },
-  {
-    year: '2002',
-    icon: 'team',
-    title: 'Mr. Shivaji Bedre joined',
-    people: [leader('Shivaji Bedre')],
-  },
-  {
-    year: '2005',
-    title: 'Mr. Rajesh Radhakrishnan joined, and Vritti Solutions Limited was founded',
+    until: '2002',
+    title: 'Jeevan Pawar & Shivaji Bedre joined as Partners, and AdatSoft and PetroSoft spread across three states',
     parts: [
       {
         icon: 'team',
-        title: '**Mr. Rajesh Radhakrishnan** joined',
+        title: '**Mr. Jeevan Pawar** & **Mr. Shivaji Bedre** joined as Partners',
+        people: [leader('Jeevan Pawar'), leader('Shivaji Bedre')],
+      },
+      {
+        icon: 'globe',
+        title: '**AdatSoft** & **PetroSoft** spread out in geography',
+        points: ['Maharashtra', 'Karnataka', 'Telangana'],
+      },
+    ],
+  },
+  {
+    year: '2004',
+    until: '2005',
+    title: 'Mr. Rajesh Radhakrishnan joined hands, and Vritti Solutions Limited was formed',
+    parts: [
+      {
+        icon: 'team',
+        title: '**Mr. Rajesh Radhakrishnan** joined hands',
         people: [leader('Rajesh Radhakrishnan')],
       },
       {
         icon: 'office',
-        title: '[[Vritti Solutions Limited]] was founded',
-        points: ['IT, Media and Rural Marketing under one roof'],
+        title: '[[Vritti Solutions Limited]] was formed',
+        points: ['Primary focus: services on IBM mid-series server ERPs'],
         image: { src: '/images/about/journey/vritti-solutions-office.jpg', width: 353, height: 158, alt: 'Vritti Solutions Limited office signboard' },
       },
     ],
@@ -96,7 +114,7 @@ export const journey: JourneyMilestone[] = [
       {
         icon: 'speaker',
         title: '[[Audiowala Bus Stand]] is born',
-        points: ['First bus stand at Swargate, Pune'],
+        points: ['Started by **Vritti iMedia** in Maharashtra with **19** bus stations', 'First bus stand at Swargate, Pune'],
         image: { src: '/images/about/journey/audiowala-bus-stand-born.jpg', width: 1200, height: 675, alt: 'Audiowala Bus Stand is born at Swargate bus stand, Pune' },
       },
       {
@@ -112,10 +130,40 @@ export const journey: JourneyMilestone[] = [
     image: { src: '/images/about/journey/pandharpur-activation.jpg', width: 353, height: 195, alt: 'Brand activation event at Pandharpur' },
   },
   {
+    year: '2012',
+    icon: 'speaker',
+    title: 'Audiowala Bus Stand extends to **Karnataka** and **Punjab**',
+    map: 'audiowala',
+    mapStates: ['Maharashtra', 'Karnataka', 'Punjab'],
+    mapBranch: true,
+  },
+  {
+    year: '2013',
+    icon: 'rocket',
+    title: '[[Mindwave Media]] was established',
+    points: ['To provide rural marketing solutions'],
+    image: { src: '/images/home/hero/mindwave-media.jpg', width: 1152, height: 864, alt: 'Mindwave Media on stage at a marketing awards night' },
+  },
+  {
     year: '2014',
     icon: 'erp',
     title: 'A New Era of Business Transformation with [[EKATM ERP]]',
     image: { src: '/images/about/journey/ekatm-erp-launch.jpg', width: 1200, height: 675, alt: 'Ekatm ERP launch: one system for finance, sales, inventory, purchase, production and HR' },
+  },
+  {
+    year: '2016',
+    until: '2017',
+    title: 'Ekatm ERP web version and Ekatm mobile application launched',
+    parts: [
+      {
+        icon: 'erp',
+        title: '**Ekatm ERP** web version was launched',
+      },
+      {
+        icon: 'mobile',
+        title: '**Ekatm** mobile application launched',
+      },
+    ],
   },
   {
     year: '2018',

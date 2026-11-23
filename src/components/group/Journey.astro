@@ -110,7 +110,7 @@ const rich = (t: string) =>
                     </div>
                     {b.map === 'audiowala' && (
                       <div class="j-photo j-photo--plain j-map" style="--ar:333/372">
-                        <AudiowalaMap states={b.mapStates} branch={b.mapBranch} />
+                        <AudiowalaMap states={b.mapStates} branch={b.mapBranch} logos={b.mapLogos} label={b.mapLabel} />
                       </div>
                     )}
                     {b.slides && b.pair && (

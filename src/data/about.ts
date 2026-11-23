@@ -34,6 +34,9 @@ export type JourneyMilestone = {
   mapStates?: string[];
   // The bus drives every leg from the first state instead of state to state.
   mapBranch?: boolean;
+  // Logos that travel the road instead of the bus, and what the map shows (for screen readers).
+  mapLogos?: { src: string; alt: string }[];
+  mapLabel?: string;
   // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, mobile, handshake, globe.
   icon?: string;
   // A year with two separate events: list them here and they are shown one under
@@ -41,7 +44,7 @@ export type JourneyMilestone = {
   // (The year's own title is then not shown; keep it as a one-line summary.)
   parts?: JourneyPart[];
 };
-export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'mapStates' | 'mapBranch' | 'slides' | 'pair'>;
+export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'mapStates' | 'mapBranch' | 'mapLogos' | 'mapLabel' | 'slides' | 'pair'>;
 
 // People on the timeline show their current photo and designation from
 // Meet our Management (src/data/management.ts), so a title change there shows here too.
@@ -86,7 +89,15 @@ export const journey: JourneyMilestone[] = [
       {
         icon: 'globe',
         title: '**AdatSoft** & **PetroSoft** spread out in geography',
-        points: ['Maharashtra', 'Karnataka', 'Telangana'],
+        points: ['Maharashtra, Karnataka and Telangana'],
+        map: 'audiowala',
+        mapStates: ['Maharashtra', 'Telangana', 'Karnataka'],
+        mapBranch: true,
+        mapLabel: 'AdatSoft and PetroSoft customers',
+        mapLogos: [
+          { src: '/images/about/journey/petrosoft-logo.png', alt: 'PetroSoft India' },
+          { src: '/images/about/journey/adatsoft-logo.png', alt: 'AdatSoft' },
+        ],
       },
     ],
   },
@@ -128,7 +139,7 @@ export const journey: JourneyMilestone[] = [
     year: '2008',
     icon: 'speaker',
     title: 'Activation business starts at Pandharpur',
-    image: { src: '/images/about/journey/pandharpur-activation.jpg', width: 353, height: 195, alt: 'Brand activation event at Pandharpur' },
+    image: { src: '/images/about/journey/pandharpur-activation.jpg', width: 1200, height: 600, alt: 'BHIM UPI activation van with a free charging station for warkaris at Pandharpur' },
   },
   {
     year: '2012',

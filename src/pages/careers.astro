@@ -1,9 +1,6 @@
 ---
 import GroupLayout from '../layouts/GroupLayout.astro';
-import { careersHero, careerBusinesses, benefits, testimonials, applyEmail } from '../data/careers';
-
-const applyHref = (label: string) =>
-  `mailto:${applyEmail}?subject=${encodeURIComponent(`Job application – Vritti ${label}`)}`;
+import { careersHero, careerBusinesses, benefits, testimonials } from '../data/careers';
 ---
 <GroupLayout title="Careers – Vritti Group" description="Your dreams. Fulfilled at Vritti. Careers in technology, media and marketing at Vritti Group.">
   <section class="g-section c-hero">
@@ -29,13 +26,13 @@ const applyHref = (label: string) =>
       <div class="c-biz-grid">
         {careerBusinesses.map((b) => (
           <article class="c-biz-card">
-            <img src={b.image} alt={b.alt} loading="lazy" />
+            <a class="c-biz-img" href={`/careers/${b.slug}`} tabindex="-1" aria-hidden="true"><img src={b.image} alt="" loading="lazy" /></a>
             <div class="c-biz-foot">
               <div>
                 <span class="c-biz-brand">Vritti</span>
-                <h3>{b.label}</h3>
+                <h3><a class="c-biz-link" href={`/careers/${b.slug}`}>{b.label}</a></h3>
               </div>
-              <a class="c-apply" href={applyHref(b.label)}>Apply Now</a>
+              <a class="c-apply" href={`/careers/${b.slug}`} aria-label={`Apply Now: Vritti ${b.label} job openings`}>Apply Now</a>
             </div>
           </article>
         ))}
@@ -174,6 +171,9 @@ const applyHref = (label: string) =>
     font-weight: var(--fw-heading);
     line-height: 1.1;
   }
+  /* The whole card opens the business's job openings page. */
+  .c-biz-link { color: inherit; text-decoration: none; }
+  .c-biz-img { position: absolute; inset: 0; }
   .c-apply {
     flex: none;
     padding: 7px 14px;

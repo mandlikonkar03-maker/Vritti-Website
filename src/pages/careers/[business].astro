@@ -1,0 +1,236 @@
+---
+// Job openings for one business: /careers/technology, /careers/media, /careers/marketing.
+import GroupLayout from '../../layouts/GroupLayout.astro';
+import { careerBusinesses, jobs, applyEmail } from '../../data/careers';
+
+export function getStaticPaths() {
+  return careerBusinesses.map((b) => ({ params: { business: b.slug }, props: { business: b } }));
+}
+
+const { business } = Astro.props;
+const list = jobs[business.slug] ?? [];
+const types = [...new Set(list.map((j) => j.type))].sort();
+const locations = [...new Set(list.map((j) => j.location))].sort();
+const applyHref = (title: string, rrf: string) =>
+  `mailto:${applyEmail}?subject=${encodeURIComponent(`Job application – ${title} (${rrf}), Vritti ${business.label}`)}`;
+---
+<GroupLayout title={`Vritti ${business.label} Jobs – Careers at Vritti Group`} description={`Current job openings at Vritti ${business.label}.`}>
+  <section class="j-banner" style={`--banner: url('${business.image}')`}>
+    <div class="g-container">
+      <p class="j-crumb"><a href="/careers">Careers</a> <span aria-hidden="true">/</span> {business.label}</p>
+      <h1>Vritti {business.label}</h1>
+    </div>
+  </section>
+
+  <section class="g-section j-list">
+    <div class="g-container">
+      <form class="j-filters" role="search" aria-label="Filter job openings" onsubmit="return false">
+        <label class="j-field">
+          <span class="visually-hidden">Job title, skill or keyword</span>
+          <input type="search" name="q" placeholder="Job Title, Skill, Keyword" autocomplete="off" />
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5L21 21" /></svg>
+        </label>
+        <label class="j-field">
+          <span class="visually-hidden">Job type</span>
+          <select name="type">
+            <option value="">Select Job Type</option>
+            {types.map((t) => <option value={t}>{t}</option>)}
+          </select>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+        </label>
+        <label class="j-field">
+          <span class="visually-hidden">Location</span>
+          <select name="location">
+            <option value="">Select Location</option>
+            {locations.map((l) => <option value={l}>{l}</option>)}
+          </select>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+        </label>
+      </form>
+
+      <p class="j-count" aria-live="polite"><span data-count>{list.length}</span> Job Openings</p>
+
+      <div class="j-grid">
+        {list.map((j) => (
+          <a
+            class="j-card"
+            href={applyHref(j.title, j.rrf)}
+            data-text={`${j.title} ${j.department} ${j.location} ${j.rrf}`.toLowerCase()}
+            data-type={j.type}
+            data-location={j.location}
+          >
+            <div class="j-card-top">
+              <h2>{j.title}</h2>
+              <p class="j-meta">{j.location}</p>
+              <p class="j-meta">{j.department} · {j.type}</p>
+              <p class="j-rrf">{j.rrf}</p>
+            </div>
+            <div class="j-card-bottom">
+              <p>{j.summary}</p>
+              <span class="j-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M8 16L16 8M9 8h7v7" /></svg>
+              </span>
+              <span class="visually-hidden">Apply for {j.title}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="j-empty" hidden>No openings match your search. Try another keyword, job type or location.</p>
+    </div>
+  </section>
+</GroupLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('.j-filters');
+  const cards = [...document.querySelectorAll<HTMLElement>('.j-card')];
+  const count = document.querySelector('[data-count]');
+  const empty = document.querySelector<HTMLElement>('.j-empty');
+  const apply = () => {
+    if (!form) return;
+    const q = (form.elements.namedItem('q') as HTMLInputElement).value.trim().toLowerCase();
+    const type = (form.elements.namedItem('type') as HTMLSelectElement).value;
+    const loc = (form.elements.namedItem('location') as HTMLSelectElement).value;
+    let shown = 0;
+    for (const c of cards) {
+      const ok =
+        (!q || q.split(/\s+/).every((w) => c.dataset.text!.includes(w))) &&
+        (!type || c.dataset.type === type) &&
+        (!loc || c.dataset.location === loc);
+      c.hidden = !ok;
+      if (ok) shown++;
+    }
+    if (count) count.textContent = String(shown);
+    if (empty) empty.hidden = shown > 0;
+  };
+  form?.addEventListener('input', apply);
+  form?.addEventListener('change', apply);
+</script>
+
+<style>
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+
+  /* Banner: the business photo behind a light wash so the dark title reads, as in the grey Figma banner. */
+  .j-banner {
+    display: flex; align-items: center;
+    min-height: clamp(180px, 20vw, 290px);
+    background:
+      linear-gradient(90deg, rgba(240, 242, 245, 0.95) 0%, rgba(240, 242, 245, 0.85) 40%, rgba(240, 242, 245, 0.35) 100%),
+      #d9d9d9 var(--banner) center 35% / cover no-repeat;
+  }
+  .j-banner h1 {
+    margin: 6px 0 0;
+    color: var(--g-ink);
+    font-size: var(--fs-page-title);
+    font-weight: var(--fw-heading);
+  }
+  .j-crumb { margin: 0; font-size: var(--fs-small); color: var(--g-text); }
+  .j-crumb a { color: var(--g-blue); text-decoration: none; }
+  .j-crumb a:hover { text-decoration: underline; }
+
+  /* Filters */
+  .j-filters {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr 1fr;
+    gap: clamp(12px, 1.6vw, 24px);
+  }
+  .j-field { position: relative; display: block; }
+  .j-field input,
+  .j-field select {
+    width: 100%;
+    height: 54px;
+    padding: 0 48px 0 20px;
+    border: 1.5px solid var(--g-blue);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--g-ink);
+    font: 500 16px var(--font);
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .j-field input::placeholder { color: #333; opacity: 1; }
+  .j-field input:focus, .j-field select:focus { outline: 3px solid rgba(6, 97, 169, 0.2); outline-offset: 1px; }
+  .j-field svg {
+    position: absolute; right: 16px; top: 50%;
+    width: 22px; height: 22px; transform: translateY(-50%);
+    fill: none; stroke: var(--g-blue); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+    pointer-events: none;
+  }
+
+  .j-count {
+    margin: 22px 0 var(--section-head-gap);
+    color: #8a8a8a;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Job cards */
+  .j-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2.2vw, 28px);
+  }
+  .j-card {
+    display: flex; flex-direction: column;
+    border: 1.5px solid var(--g-blue);
+    border-radius: 8px;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .j-card[hidden] { display: none; }
+  .j-card:hover, .j-card:focus-visible { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(6, 97, 169, 0.16); }
+  .j-card-top { flex: 1; padding: 18px 18px 14px; background: #f3f3f3; }
+  .j-card h2 {
+    color: var(--g-blue);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-heading);
+    line-height: 1.3;
+  }
+  .j-meta { margin: 8px 0 0; color: #222; font-size: var(--fs-small); line-height: 1.4; }
+  .j-meta + .j-meta { margin-top: 4px; }
+  .j-rrf { margin: 14px 0 0; color: #222; font-size: 15px; }
+  .j-card-bottom {
+    position: relative;
+    padding: 16px 18px 52px;
+    background: var(--g-blue);
+    color: #fff;
+  }
+  .j-card-bottom p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0.92;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .j-arrow {
+    position: absolute; right: 14px; bottom: 12px;
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .j-arrow svg { width: 16px; height: 16px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .j-card:hover .j-arrow { background: #fff; border-color: #fff; }
+  .j-card:hover .j-arrow svg { stroke: var(--g-blue); }
+
+  .j-empty { margin: 8px 0 0; color: var(--g-text); }
+
+  @media (max-width: 1024px) {
+    .j-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .j-filters { grid-template-columns: 1fr; }
+    .j-field input, .j-field select { height: 48px; font-size: 15px; }
+    .j-grid { grid-template-columns: 1fr; }
+  }
+</style>

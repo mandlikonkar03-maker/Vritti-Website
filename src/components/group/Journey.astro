@@ -77,7 +77,7 @@ const rich = (t: string) =>
 
           <ol class="j-steps" aria-live="polite">
             {journey.map((m, i) => (
-              <li class:list={['j-step', { 'is-active': i === 0, 'no-photo': !m.image && !m.slides && !m.parts, 'has-parts': !!m.parts }]} data-j-step={i} data-year={m.year} data-until={m.until}>
+              <li class:list={['j-step', { 'is-active': i === 0, 'no-photo': !m.image && !m.slides && !m.map && !m.parts, 'has-parts': !!m.parts }]} data-j-step={i} data-year={m.year} data-until={m.until}>
                 {m.parts && <p class="j-step-year">{span(m)}</p>}
                 {(m.parts ?? [m]).map((b) => (
                   <div class="j-part">
@@ -110,7 +110,7 @@ const rich = (t: string) =>
                     </div>
                     {b.map === 'audiowala' && (
                       <div class="j-photo j-photo--plain j-map" style="--ar:333/372">
-                        <AudiowalaMap />
+                        <AudiowalaMap states={b.mapStates} branch={b.mapBranch} />
                       </div>
                     )}
                     {b.slides && b.pair && (

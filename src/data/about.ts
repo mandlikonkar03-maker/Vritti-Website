@@ -30,6 +30,10 @@ export type JourneyMilestone = {
   pair?: boolean;
   // An animated map instead of a photo (src/components/group/AudiowalaMap.astro).
   map?: 'audiowala';
+  // Only these states on the map, in the order the bus visits them (default: all 8).
+  mapStates?: string[];
+  // The bus drives every leg from the first state instead of state to state.
+  mapBranch?: boolean;
   // Optional icon shown beside the title: rocket, team, office, speaker, award, erp, mobile, handshake, globe.
   icon?: string;
   // A year with two separate events: list them here and they are shown one under
@@ -37,7 +41,7 @@ export type JourneyMilestone = {
   // (The year's own title is then not shown; keep it as a one-line summary.)
   parts?: JourneyPart[];
 };
-export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'slides' | 'pair'>;
+export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'mapStates' | 'mapBranch' | 'slides' | 'pair'>;
 
 // People on the timeline show their current photo and designation from
 // Meet our Management (src/data/management.ts), so a title change there shows here too.
@@ -127,8 +131,11 @@ export const journey: JourneyMilestone[] = [
   },
   {
     year: '2012',
-    icon: 'globe',
+    icon: 'speaker',
     title: 'Audiowala Bus Stand extends to **Karnataka** and **Punjab**',
+    map: 'audiowala',
+    mapStates: ['Maharashtra', 'Karnataka', 'Punjab'],
+    mapBranch: true,
   },
   {
     year: '2013',

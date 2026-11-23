@@ -1,5 +1,5 @@
 ---
-// Animated India map for the 2018 "Audiowala Bus Stand in 8 states" event on the
+// Animated India map for the 2012 and 2018 "Audiowala Bus Stand in 8 states" event on the
 // Our Journey timeline. A road is drawn from Bengaluru up to Shimla, a small bus
 // drives along it, and each state turns orange as the bus reaches it. It plays each
 // time its year is shown (Journey.astro sends a "j-show" event to the step).
@@ -8,16 +8,30 @@
 // public/images/about/journey/india-dots-base.svg (same grid, same viewBox).
 import map from '../../data/audiowala-map.json';
 
-const { w, h, r, stops } = map as {
+// states: only these states, in this order (default: all, as in the JSON).
+// branch: the bus starts every leg from the first state (e.g. Maharashtra to Karnataka,
+// then Maharashtra to Punjab) instead of driving state to state.
+interface Props { states?: string[]; branch?: boolean }
+const { states, branch = false } = Astro.props;
+const all = map as {
   w: number; h: number; r: number;
   stops: { state: string; city: string; xy: [number, number]; dots: [number, number][] }[];
 };
+const { w, h, r } = all;
+const stops = states
+  ? states.map((n) => {
+      const s = all.stops.find((x) => x.state === n);
+      if (!s) throw new Error(`AudiowalaMap: no state named ${n} in audiowala-map.json`);
+      return s;
+    })
+  : all.stops;
 
 // Gentle S-curves between stops, so it reads as a road and not a straight line.
 let road = `M${stops[0].xy[0]},${stops[0].xy[1]}`;
 for (let i = 1; i < stops.length; i++) {
-  const [x0, y0] = stops[i - 1].xy;
+  const [x0, y0] = branch ? stops[0].xy : stops[i - 1].xy;
   const [x1, y1] = stops[i].xy;
+  if (branch && i > 1) road += ` M${x0},${y0}`;
   road += ` Q${((x0 + x1) / 2 + (i % 2 ? 14 : -14)).toFixed(1)},${((y0 + y1) / 2).toFixed(1)} ${x1},${y1}`;
 }
 

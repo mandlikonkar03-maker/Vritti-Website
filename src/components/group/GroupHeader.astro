@@ -47,7 +47,7 @@ const isCurrent = (href: string) => !href.includes('#') && (current === href || 
             </li>
           ) : (
             <li>
-              <a href={item.href} aria-current={item.href !== '/' && current === item.href ? 'page' : undefined}>
+              <a href={item.href} aria-current={item.href !== '/' && isCurrent(item.href) ? 'page' : undefined}>
                 {item.label}
               </a>
             </li>

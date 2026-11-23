@@ -40,11 +40,12 @@ export type Testimonial = { quote: string; name: string; role: string; initials:
 export const testimonials = {
   title: 'Great Place to Work',
   subtitle: 'What our family says.',
-  // All placeholders from the design.
+  // Anonymous employee reviews from AmbitionBox (ambitionbox.com/reviews/vritti-solutions-reviews), used for now
+  // with job title and city in place of a name. OM will replace them with named quotes from the team.
   items: [
-    { quote: 'Phasellus faucibus, nisi sed commodo auctor, ante elit sagittis felis.', name: 'John Smith', role: 'Marketing Director · Creative Agency', initials: 'JS' },
-    { quote: 'Aliquam erat volutpat. Suspendisse potenti. Etiam non velit lorem.', name: 'Jane Doe', role: 'Project Manager · Tech Innovations', initials: 'JD' },
-    { quote: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum', name: 'Customer name', role: 'Designation · Company name', initials: 'CN' },
-    { quote: 'Curabitur ut metus nec nunc lacinia tincidunt a ac magna.', name: 'Emily Johnson', role: 'Lead Developer · Software Solutions', initials: 'EJ' },
+    { quote: 'Great learning opportunity for freshers. They give full support for learning new technologies.', name: 'Software Developer', role: 'Pune', initials: 'SD' },
+    { quote: 'Organization provide good support and great incentive structure. Work environment is good.', name: 'Senior Operations Manager', role: 'Mumbai', initials: 'SO' },
+    { quote: 'My colleagues are so helpful. Overall environment of company is healthy.', name: 'Software Tester', role: 'Pune', initials: 'ST' },
+    { quote: 'Management is very supportive, the owner of the company is too much helpful and supportive.', name: 'Team Lead', role: 'Pune', initials: 'TL' },
   ] as Testimonial[],
 };

@@ -25,10 +25,10 @@ export type JourneyMilestone = {
   image?: { src: string; width: number; height: number; alt: string; plain?: boolean };
   people?: JourneyPerson[];
   // Several photos shown as an auto-rotating slideshow instead of one photo (all the same shape).
-  slides?: { src: string; width: number; height: number; alt: string }[];
+  slides?: { src: string; width: number; height: number; alt: string; label?: string }[];
   /** Show the slides two at a time, side by side, instead of one by one. */
   pair?: boolean;
-  /** Show the slides on the screen of a laptop drawing (app screenshots). */
+  /** Show each slide on its own laptop; the laptops take turns at the front (app screenshots). */
   laptop?: boolean;
   // An animated map instead of a photo (src/components/group/AudiowalaMap.astro).
   map?: 'audiowala';
@@ -175,9 +175,9 @@ export const journey: JourneyMilestone[] = [
         title: '**Ekatm ERP** web version was launched',
         laptop: true,
         slides: [
-          { src: '/images/about/journey/ekatm-web-dashboard.jpg', width: 1600, height: 724, alt: 'Ekatm ERP web application dashboard' },
-          { src: '/images/about/journey/ekatm-web-work.jpg', width: 1600, height: 740, alt: 'Ekatm ERP web Work Management screen' },
-          { src: '/images/about/journey/ekatm-web-crm.jpg', width: 1600, height: 742, alt: 'Ekatm ERP web CRM screen' },
+          { src: '/images/about/journey/ekatm-web-dashboard.jpg', width: 1600, height: 724, alt: 'Ekatm ERP web application dashboard', label: 'Dashboard' },
+          { src: '/images/about/journey/ekatm-web-work.jpg', width: 1600, height: 740, alt: 'Ekatm ERP web Work Management screen', label: 'Work Management' },
+          { src: '/images/about/journey/ekatm-web-crm.jpg', width: 1600, height: 742, alt: 'Ekatm ERP web CRM screen', label: 'CRM' },
         ],
       },
       {

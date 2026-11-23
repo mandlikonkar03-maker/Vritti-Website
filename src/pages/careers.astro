@@ -17,7 +17,7 @@ const applyHref = (label: string) =>
       </div>
       <div class="c-hero-media">
         {careersHero.image
-          ? <img src={careersHero.image} alt={careersHero.imageAlt} />
+          ? <img src={careersHero.image} alt={careersHero.imageAlt} width="1448" height="1086" fetchpriority="high" />
           : <div class="c-placeholder" role="img" aria-label="Photo coming soon"></div>}
       </div>
     </div>
@@ -136,6 +136,7 @@ const applyHref = (label: string) =>
     object-fit: cover;
     border-radius: 4px;
   }
+  .c-hero-media img { object-position: center 30%; }
   .c-placeholder { background: #d9d9d9; }
 
   /* Business cards */

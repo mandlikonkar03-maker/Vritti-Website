@@ -19,6 +19,16 @@ import {
 const placeholders = Array.from({ length: whoWeAre.placeholderCount });
 // Enough copies of "The Vritti Way" to fill a wide screen twice (the strip scrolls by half its width).
 const wayItems = Array.from({ length: 16 }, () => vrittiWay);
+
+// Line icons for the award cards (24x24, stroke-based).
+const awardIcons: Record<string, string> = {
+  trophy: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+  medal: '<path d="M7.2 2 4 7l4.5 5M16.8 2 20 7l-4.5 5M7.2 2h9.6M10 2l2 5 2-5"/><circle cx="12" cy="15" r="5"/><path d="m12 13 .8 1.6 1.7.2-1.2 1.2.3 1.7-1.6-.8-1.6.8.3-1.7-1.2-1.2 1.7-.2z"/>',
+  layers: '<path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/>',
+  star: '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/>',
+  users: '<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 4.1a4 4 0 0 1 0 7.8M22 21a7 7 0 0 0-4-6.3"/>',
+  monitor: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M9 10l2 2 4-4"/>',
+};
 ---
 <GroupLayout
   title="Vritti Group – Building Businesses. Enabling Growth."
@@ -193,8 +203,35 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
     <div class="g-container">
       <h2 class="g-title awards-title">{awards.title}</h2>
       <ul class="awards-grid">
-        {Array.from({ length: awards.slotCount }).map(() => <li class="award tile--empty"></li>)}
-        <li class="award award--more">{awards.more}</li>
+        {awards.items.map((a) =>
+          a.kind === 'photo' ? (
+            <li class="award award--photo" style={`--aw-bg: url('${a.src}')`}>
+              <img src={a.src} alt={a.alt} loading="lazy" decoding="async" />
+            </li>
+          ) : (
+            <li class="award award--icon">
+              <span class="award-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <Fragment set:html={awardIcons[a.icon]} />
+                </svg>
+              </span>
+              <h3 class="award-title">{a.title}</h3>
+              <span class="award-label">{awards.label}</span>
+            </li>
+          )
+        )}
+        <li class="award award--more">
+          {(() => {
+            const Tag = awards.more.href ? 'a' : 'div';
+            return (
+              <Tag class="award-more-inner" href={awards.more.href}>
+                <strong>{awards.more.count}</strong>
+                <span>{awards.more.label}</span>
+                <em>{awards.more.cta} <span aria-hidden="true">&rarr;</span></em>
+              </Tag>
+            );
+          })()}
+        </li>
       </ul>
     </div>
   </section>
@@ -689,21 +726,85 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
     list-style: none;
     margin: 0 auto;
     padding: 0;
-    max-width: 1040px;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: clamp(12px, 1.8vw, 26px);
+    grid-template-columns: repeat(8, 1fr);
+    gap: clamp(8px, 0.9vw, 14px);
   }
-  .award { aspect-ratio: 1; }
-  .award--more {
+  .award {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .award:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(6, 97, 169, 0.14); }
+  /* Photo card: the photo centred on a blurred, dimmed copy of itself. */
+  .award--photo { display: grid; place-items: center; background: #1b2530; }
+  .award--photo::before {
+    content: '';
+    position: absolute;
+    inset: -24px;
+    background: var(--aw-bg) center / cover no-repeat;
+    filter: blur(18px) brightness(0.7) saturate(1.1);
+  }
+  .award--photo img { position: relative; width: 100%; height: auto; display: block; }
+  /* Icon card */
+  .award--icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 8px;
+    text-align: center;
+    background: linear-gradient(180deg, #fff 0%, #eef5fb 100%);
+    border: 1px solid #e2ebf3;
+  }
+  .award-icon {
+    width: clamp(28px, 2.2vw, 34px);
+    aspect-ratio: 1;
+    border-radius: 50%;
     display: grid;
     place-items: center;
-    background: #fff;
-    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.1);
-    color: #2a5fa4;
-    font-size: clamp(18px, 1.6vw, 24px);
-    font-weight: 600;
+    background: #e3f0fb;
+    color: var(--g-blue);
+    margin-bottom: 2px;
   }
+  .award-icon svg { width: 44%; height: 44%; }
+  .award-title {
+    margin: 0;
+    font-size: clamp(11px, 0.85vw, 13px);
+    font-weight: var(--fw-heading);
+    line-height: 1.3;
+    color: var(--g-ink);
+    max-width: 14ch;
+  }
+  .award-label {
+    margin-top: 2px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--g-blue);
+  }
+  /* "99+" card */
+  /* Spans two columns so the 8-column desktop grid fills two full rows. */
+  .award--more { background: #0b5d97; color: #fff; grid-column: span 2; aspect-ratio: auto; }
+  .award-more-inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 14px;
+    text-align: center;
+    color: inherit;
+    text-decoration: none;
+  }
+  .award-more-inner strong { font-size: clamp(24px, 2vw, 30px); font-weight: 700; line-height: 1; }
+  .award-more-inner > span { font-size: clamp(10px, 0.8vw, 12px); font-weight: 500; }
+  .award-more-inner em { margin-top: 4px; font-style: normal; font-size: clamp(10px, 0.75vw, 11px); font-weight: 500; }
 
   /* Map */
   /* Foundation */
@@ -739,7 +840,8 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
     .story-row { flex-direction: column; }
     .bot-stats { flex-wrap: wrap; justify-content: center; gap: 20px 40px; }
     .values-grid { grid-template-columns: repeat(2, 1fr); max-width: 520px; row-gap: 36px; }
-    .awards-grid { grid-template-columns: repeat(3, 1fr); }
+    .awards-grid { grid-template-columns: repeat(5, 1fr); }
+    .award--more { grid-column: auto; aspect-ratio: 1; }
     .foundation-inner { grid-template-columns: 1fr; }
     .foundation-text { margin-top: 28px; }
   }
@@ -750,6 +852,16 @@ const wayItems = Array.from({ length: 16 }, () => vrittiWay);
     .pin-label { font-size: 10px; padding: 2px 7px; }
     .pin-dot { width: 12px; height: 12px; border-width: 2px; }
     .bot-grid { grid-template-columns: repeat(3, 1fr); }
+    .awards-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .award { border-radius: 10px; }
+    .award--icon { padding: 8px 6px; gap: 4px; }
+    .award-icon { width: 30px; }
+    .award-title { font-size: 11px; line-height: 1.25; }
+    .award-label { font-size: 9px; }
+    .award-more-inner { padding: 6px; gap: 2px; }
+    .award-more-inner strong { font-size: 24px; }
+    .award-more-inner > span { font-size: 10px; }
+    .award-more-inner em { font-size: 10px; }
     .bot-stats { flex-direction: column; align-items: flex-start; width: max-content; margin-inline: auto; }
   }
 </style>

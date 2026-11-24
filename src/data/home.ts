@@ -167,10 +167,39 @@ export const coreValues = {
 };
 
 // 5 x 3 grid: 14 award slots (placeholders) + a final "99+" tile.
+export type AwardIcon = 'trophy' | 'medal' | 'layers' | 'star' | 'users' | 'monitor';
+
+/**
+ * Awards grid: photo cards and icon cards, in the order shown (5 per row on desktop).
+ * Photos live in public/images/home/awards/ (cropped from OM's design; swap in originals
+ * by replacing the files). Each photo sits on a blurred copy of itself, so any shape works.
+ */
+export type Award =
+  | { kind: 'photo'; src: string; alt: string }
+  | { kind: 'icon'; title: string; icon: AwardIcon };
+
 export const awards = {
   title: 'Awards & Recognition',
-  slotCount: 14,
-  more: '99+',
+  label: 'Award',
+  items: [
+    { kind: 'photo', src: '/images/home/awards/01.jpg', alt: 'Vritti recognised among the Top 100 MSMEs, Make in India Recognition 2026' },
+    { kind: 'icon', title: 'RMAI Flame Awards 2026', icon: 'trophy' },
+    { kind: 'photo', src: '/images/home/awards/02.jpg', alt: 'Vritti Solutions named Most Influential Media & Communication House at the National Leadership Awards 2026, organised by BSE' },
+    { kind: 'photo', src: '/images/home/awards/03.jpg', alt: 'Mindwave Media wins Rural Marketing Agency of the Year' },
+    { kind: 'icon', title: 'ACEF Awards 2026', icon: 'medal' },
+    { kind: 'icon', title: 'E4M OOH Awards 2026', icon: 'layers' },
+    { kind: 'photo', src: '/images/home/awards/04.jpg', alt: 'Silver for Vritti iMedia, IT/ITES Enterprise' },
+    { kind: 'photo', src: '/images/home/awards/05.jpg', alt: 'Vritti Solutions among Forbes DGEMS 2023 Select 200 companies with global business potential' },
+    { kind: 'icon', title: 'OOH Phoenix Awards 2026', icon: 'star' },
+    { kind: 'photo', src: '/images/home/awards/06.jpg', alt: 'Silver for Best Rural Marketing Agency of the Year at the Asian Business Leadership Conclave' },
+    { kind: 'photo', src: '/images/home/awards/07.jpg', alt: "Mindwave Media runner-up, Health & Wellness Marketing Agency of the Year, e4m Media Ace Awards 2023" },
+    { kind: 'icon', title: 'World Marketing', icon: 'users' },
+    { kind: 'photo', src: '/images/home/awards/08.jpg', alt: 'Award at the RMAI Rural Conclave, Rural India @ 2030' },
+    { kind: 'icon', title: 'e4m Media Ace Awards 2023', icon: 'monitor' },
+  ] as Award[],
+  more: { count: '99+', label: 'Awards & recognitions', cta: 'View all',
+    // No awards page yet: set href (e.g. '/awards') once it exists to make the tile a link.
+    href: undefined as string | undefined },
 };
 
 export const foundation = {

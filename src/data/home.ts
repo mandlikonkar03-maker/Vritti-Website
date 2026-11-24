@@ -83,7 +83,7 @@ export const businesses: Business[] = [
     label: 'Media',
     logo: '/images/home/logo-vritti-imedia.png',
     logoAlt: 'Vritti iMedia – The Gateway to Rural',
-    logoWidth: 230,
+    logoWidth: 220,
     lead: 'Vritti iMedia',
     text: 'offers a unique & innovative Marketing Mix in Rural Marketing with our state-of-the-art technology and creativity.',
     // href: '/business/vritti-imedia',  ← add when the page exists
@@ -92,7 +92,7 @@ export const businesses: Business[] = [
     label: 'Marketing',
     logo: '/images/home/logo-mindwave.png',
     logoAlt: 'Mindwave Media – Enabling Brands',
-    logoWidth: 210,
+    logoWidth: 160,
     text: '360° marketing, BTL, experiential, outdoor and digital marketing.',
     // href: '/business/mindwave-media',
   },

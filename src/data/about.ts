@@ -30,6 +30,8 @@ export type JourneyMilestone = {
   pair?: boolean;
   /** Show each slide on its own laptop; the laptops take turns at the front (app screenshots). */
   laptop?: boolean;
+  /** The same carousel with phones (mobile app screenshots). */
+  phone?: boolean;
   // An animated map instead of a photo (src/components/group/AudiowalaMap.astro).
   map?: 'audiowala';
   // Only these states on the map, in the order the bus visits them (default: all 8).
@@ -46,7 +48,7 @@ export type JourneyMilestone = {
   // (The year's own title is then not shown; keep it as a one-line summary.)
   parts?: JourneyPart[];
 };
-export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'mapStates' | 'mapBranch' | 'mapLogos' | 'mapLabel' | 'slides' | 'pair' | 'laptop'>;
+export type JourneyPart = Pick<JourneyMilestone, 'title' | 'text' | 'points' | 'image' | 'people' | 'icon' | 'map' | 'mapStates' | 'mapBranch' | 'mapLogos' | 'mapLabel' | 'slides' | 'pair' | 'laptop' | 'phone'>;
 
 // People on the timeline show their current photo and designation from
 // Meet our Management (src/data/management.ts), so a title change there shows here too.
@@ -183,6 +185,12 @@ export const journey: JourneyMilestone[] = [
       {
         icon: 'mobile',
         title: '**Ekatm** mobile application launched',
+        phone: true,
+        slides: [
+          { src: '/images/about/journey/ekatm-mobile-workspace.jpg', width: 600, height: 1166, alt: 'Ekatm mobile app Workspace Review screen', label: 'Workspace Review' },
+          { src: '/images/about/journey/ekatm-mobile-work.jpg', width: 600, height: 1165, alt: 'Ekatm mobile app Work Management screen', label: 'Work Management' },
+          { src: '/images/about/journey/ekatm-mobile-crm.jpg', width: 600, height: 1174, alt: 'Ekatm mobile app CRM screen', label: 'CRM' },
+        ],
       },
     ],
   },

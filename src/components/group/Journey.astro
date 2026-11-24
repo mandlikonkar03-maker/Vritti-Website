@@ -127,7 +127,7 @@ const rich = (t: string) =>
                     {b.slides && b.laptop && (
                       <figure class="j-photo j-photo--plain j-laptops" style="--ar:2.05" data-j-laptops>
                         {b.slides.map((sl, si) => (
-                          <button type="button" class="j-laptop" data-pos={si} aria-label={`Show ${sl.label ?? sl.alt}`}>
+                          <button type="button" class="j-dev j-laptop" data-pos={si} aria-label={`Show ${sl.label ?? sl.alt}`}>
                             <span class="j-laptop-lid">
                               <span class="j-laptop-screen">
                                 <img src={sl.src} alt={sl.alt} width={sl.width} height={sl.height} loading="lazy" decoding="async" />
@@ -143,7 +143,23 @@ const rich = (t: string) =>
                         </figcaption>
                       </figure>
                     )}
-                    {b.slides && !b.pair && !b.laptop && (
+                    {b.slides && b.phone && (
+                      <figure class="j-photo j-photo--plain j-laptops j-phones" style="--ar:1.3" data-j-laptops>
+                        {b.slides.map((sl, si) => (
+                          <button type="button" class="j-dev j-phone" data-pos={si} aria-label={`Show ${sl.label ?? sl.alt}`}>
+                            <span class="j-phone-screen">
+                              <img src={sl.src} alt={sl.alt} width={sl.width} height={sl.height} loading="lazy" decoding="async" />
+                              <span class="j-phone-island" aria-hidden="true" />
+                              <span class="j-laptop-glare" aria-hidden="true" />
+                            </span>
+                          </button>
+                        ))}
+                        <figcaption class="j-laptops-cap">
+                          {b.slides.map((sl, si) => <span class:list={{ 'is-on': si === 0 }}>{sl.label ?? sl.alt}</span>)}
+                        </figcaption>
+                      </figure>
+                    )}
+                    {b.slides && !b.pair && !b.laptop && !b.phone && (
                       <figure class="j-photo j-slides" style={`--ar:${b.slides[0].width}/${b.slides[0].height}`} data-j-slides>
                         {b.slides.map((sl, si) => (
                           <img class:list={{ 'is-on': si === 0 }} src={sl.src} alt={sl.alt} width={sl.width} height={sl.height} loading="lazy" decoding="async" />
@@ -317,6 +333,25 @@ const rich = (t: string) =>
   .j-laptop[data-pos='1'] { z-index: 1; transform: translate(40%, -9%) scale(0.6) rotateY(-34deg); opacity: 0.8; filter: saturate(0.85) brightness(0.96); }
   .j-laptop[data-pos='2'] { z-index: 1; transform: translate(-40%, -9%) scale(0.6) rotateY(34deg); opacity: 0.8; filter: saturate(0.85) brightness(0.96); }
   .j-laptop[data-pos='0'] { cursor: default; }
+  /* Phone carousel: the same idea with iPhone-style frames (slides + phone in about.ts). */
+  .j-phone {
+    all: unset; box-sizing: border-box; cursor: pointer;
+    position: absolute; left: 33%; top: 0; width: 34%; aspect-ratio: 0.5;
+    padding: 1.8%; border-radius: 13% / 6.5%;
+    background: #0f141a;
+    /* thin black bezel + a slim titanium edge, like a current iPhone */
+    box-shadow: 0 0 0 1.5px #9aa3ad, 0 0 0 2.5px #5d6672, 0 22px 40px rgba(15, 42, 61, 0.24);
+    transform-origin: 50% 50%;
+    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 1s ease, filter 1s ease;
+  }
+  .j-phone:focus-visible { outline: 2px solid var(--g-orange); outline-offset: 4px; }
+  .j-phone[data-pos='0'] { z-index: 3; transform: none; cursor: default; }
+  .j-phone[data-pos='1'] { z-index: 1; transform: translate(92%, 4%) scale(0.8) rotateY(-30deg) rotateZ(4deg); opacity: 0.85; filter: saturate(0.85) brightness(0.96); }
+  .j-phone[data-pos='2'] { z-index: 1; transform: translate(-92%, 4%) scale(0.8) rotateY(30deg) rotateZ(-4deg); opacity: 0.85; filter: saturate(0.85) brightness(0.96); }
+  .j-phone-screen { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; border-radius: 11.5% / 5.6%; background: #fff; }
+  .j-phone-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .j-phone-island { position: absolute; left: 50%; top: 1.6%; width: 28%; height: 2.9%; transform: translateX(-50%); border-radius: 99px; background: #0d1319; z-index: 2; }
+  .j-phones .j-laptops-cap { bottom: -2px; }
   .j-laptop-lid {
     width: 88%; padding: 2.2% 2.2% 2.6%; box-sizing: border-box;
     background: #1d2733; border-radius: 14px 14px 4px 4px;
@@ -370,6 +405,8 @@ const rich = (t: string) =>
     .j-step.has-parts .j-people span { font-size: 14px; }
     .j-step.has-parts .j-people strong { font-size: 16px; }
     .j-step.has-parts .j-photo { --max-h: clamp(150px, 30svh, 260px); justify-self: start; align-self: flex-start; margin-left: 58px; margin-top: auto; width: min(calc(100% - 58px), calc(var(--max-h) * var(--ar))); }
+    .j-step.has-parts .j-phones { --max-h: clamp(260px, 46svh, 400px); }
+    .j-step.has-parts .j-laptops { margin-bottom: auto; }
     .j-step.has-parts .j-map { --max-h: clamp(220px, 40svh, 340px); }
   }
 
@@ -461,6 +498,7 @@ const rich = (t: string) =>
     .j-step.has-parts .j-people strong { font-size: 13.5px; }
     .j-step.has-parts .j-photo { --max-h: 19svh; justify-self: center; }
     .j-step.has-parts .j-photo--plain { --max-h: 150px; }
+    .j-step.has-parts .j-phones { --max-h: 30svh; }
     .j-step.has-parts .j-map { --max-h: 230px; }
     .journey:not(.is-live) .j-steps { gap: 36px; }
   }
@@ -532,9 +570,9 @@ const rich = (t: string) =>
       }, 2600);
     });
 
-    // Laptop carousel: every 3.2s the next laptop comes to the front; a click on a side one brings it forward.
+    // Laptop / phone carousel: every 3.2s the next device comes to the front; a click on a side one brings it forward.
     root.querySelectorAll<HTMLElement>('[data-j-laptops]').forEach((fig) => {
-      const tops = Array.from(fig.querySelectorAll<HTMLElement>('.j-laptop'));
+      const tops = Array.from(fig.querySelectorAll<HTMLElement>('.j-dev'));
       const caps = Array.from(fig.querySelectorAll('.j-laptops-cap span'));
       const step = fig.closest('.j-step');
       const n = tops.length;
